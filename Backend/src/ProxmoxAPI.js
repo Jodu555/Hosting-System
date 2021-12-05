@@ -15,9 +15,17 @@ class ProxmoxApi {
         this.auth = await response.json();
     }
 
+    async getNodeInformation(node) {
+        const response = await get(this.URL + '/nodes/' + node + '/status', {
+            cookie: `PVEAuthCookie=${this.auth.data.ticket};`
+        });
+        console.log(response);
+        return await response.json();
+    }
+
     async createVM(data) {
-        const response = await get(URL + '/nodes/ns3177623/lxc/100', {
-            cookie: `PVEAuthCookie=${token.data.ticket};`
+        const response = await get(this.URL + '/nodes/ns3177623/lxc/100', {
+            cookie: `PVEAuthCookie=${this.auth.data.ticket};`
         });
         console.log(response);
         console.log(await response.json());

@@ -7,14 +7,9 @@ async function run() {
         password: '8952464b73e9021544e7b6297abb74bf'
     })
 
+    await proxmoxAPI.authenticate();
 
-    const token = await authenticate();
-
-    // console.log(token);
-    console.log(await response.json());
-}
-
-async function authenticate() {
+    console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 
 }
 
