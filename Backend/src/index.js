@@ -24,6 +24,11 @@ async function run() {
     //     scsi0: 'local:32,format=qcow2'
     // });
 
+    await proxmoxAPI.cloneVM({
+        vmid: 100,
+        newid: 101
+    })
+
 }
 
 // curl -k -d  https://51.195.60.60:8006/api2/json/access/ticket
