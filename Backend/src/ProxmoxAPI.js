@@ -24,11 +24,13 @@ class ProxmoxApi {
     }
 
     async createVM(data) {
+        console.log(this.auth);
         const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`
+            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
+            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
         });
         console.log(response);
-        console.log(await response.text());
+        // console.log(await response.text());
         console.log(await response.json());
     }
 
