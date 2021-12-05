@@ -24,7 +24,6 @@ class ProxmoxApi {
     }
 
     async createVM(data) {
-        console.log(this.auth);
         const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
@@ -41,6 +40,15 @@ class ProxmoxApi {
         });
         console.log(response);
         // console.log(await response.text());
+        console.log(await response.json());
+    }
+
+    async configurate(ID, data) {
+        const response = await post(this.URL + `/nodes/ns3177623/qemu/${ID}/config`, data, {
+            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
+            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
+        });
+        console.log(response);
         console.log(await response.json());
     }
 

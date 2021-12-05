@@ -24,10 +24,21 @@ async function run() {
     //     scsi0: 'local:32,format=qcow2'
     // });
 
-    await proxmoxAPI.cloneVM({
-        vmid: 100,
-        newid: 101
-    })
+    // await proxmoxAPI.cloneVM({
+    //     vmid: 100,
+    //     newid: 103
+    // })
+
+    // await proxmoxAPI.configurate(103, {
+    //     name: 'Test-API',
+    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
+    //     cores: 3,
+    //     sockets: 3,
+    //     memory: 5024,
+    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+    //     scsi0: 'local:32,format=qcow2'
+    // })
+
 
 }
 
