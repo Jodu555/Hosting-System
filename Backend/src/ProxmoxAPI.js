@@ -24,10 +24,11 @@ class ProxmoxApi {
     }
 
     async createVM(data) {
-        const response = await get(this.URL + '/nodes/ns3177623/lxc/100', {
+        const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`
         });
         console.log(response);
+        console.log(await response.text());
         console.log(await response.json());
     }
 
@@ -42,10 +43,11 @@ async function get(url, headers) {
     return response;
 }
 
-async function post(url, data) {
+async function post(url, data, headers = {}) {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
+            ...headers,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
