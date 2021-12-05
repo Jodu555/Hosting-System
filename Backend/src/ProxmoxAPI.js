@@ -1,0 +1,49 @@
+const fetch = require('node-fetch');
+const https = require('https');
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+});
+
+class ProxmoxApi {
+    constructor(URL, credentials) {
+        this.URL = URL;
+        this.credentials = credentials;
+    }
+
+    async authenticate() {
+        const response = await post(this.URL + '/access/ticket', this.credentials)
+        this.auth = await response.json();
+    }
+
+    async createVM(data) {
+        const response = await get(URL + '/nodes/ns3177623/lxc/100', {
+            cookie: `PVEAuthCookie=${token.data.ticket};`
+        });
+        console.log(response);
+        console.log(await response.json());
+    }
+
+}
+
+async function get(url, headers) {
+    const response = await fetch(url, {
+        method: 'GET',
+        headers,
+        agent: httpsAgent,
+    });
+    return response;
+}
+
+async function post(url, data) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        agent: httpsAgent,
+    });
+    return response;
+}
+
+module.exports = ProxmoxApi
