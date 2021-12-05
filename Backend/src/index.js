@@ -1,10 +1,11 @@
 const ProxmoxAPI = require('./ProxmoxAPI')
+const dotenv = require('dotenv').config();
 
 
 async function run() {
     const proxmoxAPI = new ProxmoxAPI('https://51.195.60.60:8006/api2/json', {
         username: 'root@pam',
-        password: '8952464b73e9021544e7b6297abb74bf'
+        password: process.env.PASSWORD
     })
 
     await proxmoxAPI.authenticate();
