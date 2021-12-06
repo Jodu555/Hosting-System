@@ -13,13 +13,13 @@ async function run() {
     const node = proxmoxAPI.getNode('ns3177623');
 
 
-    console.log(await node.information());
+    // console.log(await node.information());
 
     const template = node.getVM(100);
-    template.clone({ newid: 101 });
+    await template.clone({ newid: 101 });
 
     const newVM = node.getVM(101);
-    newVM.configurate({
+    await newVM.configurate({
         name: 'Test-API',
         ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
         cores: 4,

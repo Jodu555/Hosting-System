@@ -20,7 +20,7 @@ class VM {
     }
 
     async clone(data) {
-        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${data.vmid}/clone`, data, {
+        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/clone`, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
         });
