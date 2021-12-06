@@ -8,11 +8,11 @@ async function run() {
     const ssh = new NodeSSH()
 
     ssh.connect({
-        host: 'localhost',
+        host: '103.158.223.126',
         username: 'root',
-        password: '123'
+        password: process.env.DEFAULT_ROOT_PASSWORD
     }).then(() => {
-        ssh.putFile('../test.txt', '/home/test.txt').then(() => {
+        ssh.putFile('test.txt', '/etc/network/test.txt').then(() => {
             console.log("The File thing is done")
         }, function (error) {
             console.log("Something's wrong")
