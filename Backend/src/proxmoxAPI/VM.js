@@ -15,7 +15,7 @@ class VM {
         console.log(await response.json());
     }
 
-    async cloneVM(data) {
+    async clone(data) {
         const response = await post(this.URL + `/nodes/ns3177623/qemu/${data.vmid}/clone`, data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,

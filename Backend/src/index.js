@@ -10,10 +10,13 @@ async function run() {
 
     await proxmoxAPI.authenticate();
 
-    const template = proxmoxAPI.getVM(100);
+    const node = proxmoxAPI.getNode('ns3177623');
+
+
+    const template = node.getVM(100);
     template.clone({ newid: 101 });
 
-    const newVM = proxmoxAPI.getVM(101);
+    const newVM = node.getVM(101);
     newVM.configurate({
         name: 'Test-API',
         ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',

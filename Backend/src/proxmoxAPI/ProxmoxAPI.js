@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const https = require('https');
 const VM = require('./VM');
+const Node = require('./Node');
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
@@ -16,19 +17,9 @@ class ProxmoxApi {
         this.auth = await response.json();
     }
 
-    async getNodeInformation(node) {
-        const response = await get(this.URL + '/nodes/' + node + '/status', {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`
-        });
-        console.log(response);
-        return await response.json();
+    getNode(ID) {
+        return new Node(this, ID)
     }
-
-    getVM(ID) {
-        return new VM(this, ID);
-    }
-
-
 
 }
 
