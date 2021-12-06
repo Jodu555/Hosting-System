@@ -10,8 +10,8 @@ class VM {
     async create(data) {
         data.vmid = this.ID;
         const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`, data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
+            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+            CSRFPreventionToken: this.auth.getToken(),
         });
         console.log(response);
         // console.log(await response.text());
@@ -20,8 +20,8 @@ class VM {
 
     async clone(data) {
         const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${data.vmid}/clone`, data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
+            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+            CSRFPreventionToken: this.auth.getToken(),
         });
         console.log(response);
         // console.log(await response.text());
@@ -30,8 +30,8 @@ class VM {
 
     async configurate(data) {
         const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/config`, data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
+            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+            CSRFPreventionToken: this.auth.getToken(),
         });
         console.log(response);
         console.log(await response.json());
