@@ -1,8 +1,27 @@
 const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const dotenv = require('dotenv').config();
+const { NodeSSH } = require('node-ssh')
 
 
 async function run() {
+
+    const ssh = new NodeSSH()
+
+    ssh.connect({
+        host: 'localhost',
+        username: 'root',
+        password: '123'
+    }).then(() => {
+        ssh.putFile('../test.txt', '/home/test.txt').then(() => {
+            console.log("The File thing is done")
+        }, function (error) {
+            console.log("Something's wrong")
+            console.log(error)
+        })
+    });
+
+
+    return;
     const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
         username: 'root@pam',
         password: process.env.PASSWORD
