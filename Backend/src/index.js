@@ -65,7 +65,7 @@ async function run() {
         sockets: 2,
         memory: 4048,
         net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-        scsi0: 'local:2,format=qcow2'
+        scsi0: 'local:3,format=qcow2'
     });
 
 

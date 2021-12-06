@@ -27,7 +27,21 @@ async function post(url, data, headers = {}) {
     return response;
 }
 
+async function put(url, data, headers = {}) {
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        agent: httpsAgent,
+    });
+    return response;
+}
+
 module.exports = {
     get,
-    post
+    post,
+    put
 }

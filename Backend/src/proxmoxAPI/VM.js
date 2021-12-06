@@ -1,5 +1,5 @@
 const ProxmoxAuthorizer = require('./ProxmoxAuthorizer');
-const { get, post } = require('./networking');
+const { get, post, put } = require('./networking');
 class VM {
     constructor(Node, ID) {
         this.Node = Node;
@@ -37,6 +37,10 @@ class VM {
         });
         console.log(response);
         console.log(await response.json());
+    }
+
+    async resize(data) {
+
     }
 }
 
