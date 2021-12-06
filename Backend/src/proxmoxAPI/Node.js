@@ -1,5 +1,5 @@
 const ProxmoxAuthorizer = require('./ProxmoxAuthorizer');
-
+const { get, post } = require('./networking');
 class Node {
     constructor(ProxmoxAPI, ID) {
         this.ProxmoxAPI = ProxmoxAPI;

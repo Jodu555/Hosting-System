@@ -1,3 +1,4 @@
+const { get, post } = require('./networking');
 class VM {
     constructor(ProxmoxApi, ID) {
         this.ProxmoxApi = ProxmoxApi;
