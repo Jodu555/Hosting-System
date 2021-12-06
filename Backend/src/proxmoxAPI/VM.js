@@ -40,7 +40,10 @@ class VM {
     }
 
     async resize(data) {
-
+        const response = await put(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/resize`, data, {
+            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+            CSRFPreventionToken: this.auth.getToken(),
+        });
     }
 }
 

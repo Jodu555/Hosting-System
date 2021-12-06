@@ -31,6 +31,8 @@ async function run() {
 
     const node = proxmoxAPI.getNode('ns3177623');
 
+    node.getVM('100').resize({ size: '5G' })
+
 
     // console.log(await node.information());
 
@@ -56,17 +58,17 @@ async function run() {
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 
-    const newVM = node.getVM(100);
-    await newVM.create({
-        name: 'D10-Temp',
-        vmid: 100,
-        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
-        cores: 2,
-        sockets: 2,
-        memory: 4048,
-        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-        scsi0: 'local:3,format=qcow2'
-    });
+    // const newVM = node.getVM(100);
+    // await newVM.create({
+    //     name: 'D10-Temp',
+    //     vmid: 100,
+    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
+    //     cores: 2,
+    //     sockets: 2,
+    //     memory: 4048,
+    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+    //     scsi0: 'local:3,format=qcow2'
+    // });
 
 
 }
