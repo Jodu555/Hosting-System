@@ -1,13 +1,15 @@
 const { get, post } = require('./networking');
 class VM {
-    constructor(ProxmoxApi, ID) {
-        this.ProxmoxApi = ProxmoxApi;
+    constructor(Node, ID) {
+        this.Node = Node;
+        this.ProxmoxApi = this.Node.ProxmoxApi;
         this.ID = ID;
+        this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
     }
 
     async create(data) {
         data.vmid = this.ID;
-        const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
+        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`, data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
         });
@@ -17,7 +19,7 @@ class VM {
     }
 
     async clone(data) {
-        const response = await post(this.URL + `/nodes/ns3177623/qemu/${data.vmid}/clone`, data, {
+        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${data.vmid}/clone`, data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
         });
@@ -27,7 +29,7 @@ class VM {
     }
 
     async configurate(data) {
-        const response = await post(this.URL + `/nodes/ns3177623/qemu/${this.ID}/config`, data, {
+        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/config`, data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
         });

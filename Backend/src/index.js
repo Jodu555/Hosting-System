@@ -13,7 +13,7 @@ async function run() {
     const node = proxmoxAPI.getNode('ns3177623');
 
 
-    console.log(node.information());
+    console.log(await node.information());
 
     // const template = node.getVM(100);
     // template.clone({ newid: 101 });

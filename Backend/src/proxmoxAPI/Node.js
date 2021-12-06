@@ -8,10 +8,9 @@ class Node {
     }
 
     async information(node) {
-        const response = await get(this.URL + '/nodes/' + this.ID + '/status', {
+        const response = await get(this.ProxmoxAPI.URL + '/nodes/' + this.ID + '/status', {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`
         });
-        console.log(response);
         return await response.json();
     }
 
