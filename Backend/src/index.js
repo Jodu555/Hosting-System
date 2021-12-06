@@ -1,4 +1,4 @@
-const ProxmoxAPI = require('./ProxmoxAPI')
+const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const dotenv = require('dotenv').config();
 
 

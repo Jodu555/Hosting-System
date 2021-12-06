@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const https = require('https');
+const VM = require('./VM');
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
@@ -23,34 +24,11 @@ class ProxmoxApi {
         return await response.json();
     }
 
-    async createVM(data) {
-        const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
-        });
-        console.log(response);
-        // console.log(await response.text());
-        console.log(await response.json());
+    getVM(ID) {
+        return new VM(this, ID);
     }
 
-    async cloneVM(data) {
-        const response = await post(this.URL + `/nodes/ns3177623/qemu/${data.vmid}/clone`, data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
-        });
-        console.log(response);
-        // console.log(await response.text());
-        console.log(await response.json());
-    }
 
-    async configurate(ID, data) {
-        const response = await post(this.URL + `/nodes/ns3177623/qemu/${ID}/config`, data, {
-            cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
-            CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
-        });
-        console.log(response);
-        console.log(await response.json());
-    }
 
 }
 
