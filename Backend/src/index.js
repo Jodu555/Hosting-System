@@ -60,7 +60,7 @@ async function run() {
     await newVM.create({
         name: 'D10-Temp',
         vmid: 100,
-        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
+        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
         cores: 2,
         sockets: 2,
         memory: 4048,
