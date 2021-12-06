@@ -2,14 +2,14 @@ const ProxmoxAuthorizer = require('./ProxmoxAuthorizer');
 const { get, post } = require('./networking');
 const VM = require('./VM')
 class Node {
-    constructor(ProxmoxAPI, ID) {
-        this.ProxmoxAPI = ProxmoxAPI;
+    constructor(ProxmoxApi, ID) {
+        this.ProxmoxApi = ProxmoxApi;
         this.ID = ID;
-        this.auth = new ProxmoxAuthorizer(this.ProxmoxAPI);
+        this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
     }
 
     async information(node) {
-        const response = await get(this.ProxmoxAPI.URL + '/nodes/' + this.ID + '/status', {
+        const response = await get(this.ProxmoxApi.URL + '/nodes/' + this.ID + '/status', {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`
         });
         return await response.json();
