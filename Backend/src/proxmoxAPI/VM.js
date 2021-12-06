@@ -10,6 +10,7 @@ class VM {
 
     async create(data) {
         data.vmid = this.ID;
+        data.node = this.Node.ID;
         const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
