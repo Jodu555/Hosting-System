@@ -5,6 +5,7 @@ class VM {
     }
 
     async create(data) {
+        data.vmid = this.ID;
         const response = await post(this.URL + '/nodes/ns3177623/qemu', data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
@@ -15,6 +16,7 @@ class VM {
     }
 
     async cloneVM(data) {
+        data.vmid = this.ID;
         const response = await post(this.URL + `/nodes/ns3177623/qemu/${data.vmid}/clone`, data, {
             cookie: `PVEAuthCookie=${this.auth.data.ticket};`,
             CSRFPreventionToken: this.auth.data.CSRFPreventionToken,
