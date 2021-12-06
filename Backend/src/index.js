@@ -13,19 +13,21 @@ async function run() {
     const node = proxmoxAPI.getNode('ns3177623');
 
 
-    const template = node.getVM(100);
-    template.clone({ newid: 101 });
+    console.log(node.information());
 
-    const newVM = node.getVM(101);
-    newVM.configurate({
-        name: 'Test-API',
-        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
-        cores: 3,
-        sockets: 3,
-        memory: 5024,
-        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-        scsi0: 'local:32,format=qcow2'
-    })
+    // const template = node.getVM(100);
+    // template.clone({ newid: 101 });
+
+    // const newVM = node.getVM(101);
+    // newVM.configurate({
+    //     name: 'Test-API',
+    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
+    //     cores: 3,
+    //     sockets: 3,
+    //     memory: 5024,
+    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+    //     scsi0: 'local:32,format=qcow2'
+    // })
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 

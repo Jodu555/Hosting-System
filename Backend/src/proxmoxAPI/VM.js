@@ -34,3 +34,5 @@ class VM {
         console.log(await response.json());
     }
 }
+
+module.exports = VM;

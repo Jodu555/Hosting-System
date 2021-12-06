@@ -16,3 +16,5 @@ class Node {
         return new VM(this, ID);
     }
 }
+
+module.exports = Node;
