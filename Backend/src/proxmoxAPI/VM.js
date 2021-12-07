@@ -56,6 +56,14 @@ class VM {
                 });
                 return await response.json();
             },
+            reboot: async () => {
+                const response = await get(`${this.url}/${this.ID}/status/reboot`, {
+                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+                    CSRFPreventionToken: this.auth.getToken(),
+                });
+                return await response.json();
+            },
+
         }
     }
 }
