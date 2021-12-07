@@ -45,6 +45,19 @@ class VM {
             CSRFPreventionToken: this.auth.getToken(),
         });
     }
+
+    status() {
+        return {
+            current: () => {
+                const response = await get(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/resize`, {
+                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+                    CSRFPreventionToken: this.auth.getToken(),
+                });
+            },
+        }
+    }
 }
+
+
 
 module.exports = VM;
