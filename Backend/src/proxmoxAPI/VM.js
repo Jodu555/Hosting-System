@@ -63,6 +63,13 @@ class VM {
                 });
                 return await response.json();
             },
+            reset: async (skiplock) => {
+                const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, {
+                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+                    CSRFPreventionToken: this.auth.getToken(),
+                });
+                return await response.json();
+            },
         }
     }
 }
