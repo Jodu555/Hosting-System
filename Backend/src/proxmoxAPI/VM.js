@@ -53,7 +53,7 @@ class VM {
                     cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
                     CSRFPreventionToken: this.auth.getToken(),
                 });
-                console.log(response);
+                return await response.json();
             },
         }
     }

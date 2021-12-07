@@ -33,7 +33,7 @@ async function run() {
 
     // node.getVM('100').resize({ size: '5G' })
 
-    console.log(await node.getVM(100).status.current());
+    console.log(await node.getVM(101).status.current());
 
 
     // console.log(await node.information());
