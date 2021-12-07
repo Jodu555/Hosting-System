@@ -31,7 +31,9 @@ async function run() {
 
     const node = proxmoxAPI.getNode('ns3177623');
 
-    node.getVM('100').resize({ size: '5G' })
+    // node.getVM('100').resize({ size: '5G' })
+
+    console.log(await node.getVM(100).status.current());
 
 
     // console.log(await node.information());

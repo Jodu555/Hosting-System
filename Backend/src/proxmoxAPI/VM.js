@@ -46,13 +46,14 @@ class VM {
         });
     }
 
-    status() {
+    get status() {
         return {
-            current: () => {
-                const response = await get(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/resize`, {
+            current: async () => {
+                const response = await get(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/status/current`, {
                     cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
                     CSRFPreventionToken: this.auth.getToken(),
                 });
+                console.log(response);
             },
         }
     }
