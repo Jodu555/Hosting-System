@@ -56,14 +56,13 @@ class VM {
                 });
                 return await response.json();
             },
-            reboot: async () => {
-                const response = await get(`${this.url}/${this.ID}/status/reboot`, {
+            reboot: async (timeout = 0) => {
+                const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, {
                     cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
                     CSRFPreventionToken: this.auth.getToken(),
                 });
                 return await response.json();
             },
-
         }
     }
 }
