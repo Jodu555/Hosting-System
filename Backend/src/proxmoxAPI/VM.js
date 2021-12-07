@@ -6,12 +6,13 @@ class VM {
         this.ProxmoxApi = this.Node.ProxmoxApi;
         this.ID = ID;
         this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
+        this.url = this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`;
     }
 
     async create(data) {
         data.vmid = this.ID;
         data.node = this.Node.ID;
-        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`, data, {
+        const response = await post(this.url, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
         });
@@ -21,7 +22,7 @@ class VM {
     }
 
     async clone(data) {
-        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/clone`, data, {
+        const response = await post(`${this.url}/${this.ID}/clone`, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
         });
@@ -31,7 +32,7 @@ class VM {
     }
 
     async configurate(data) {
-        const response = await post(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/config`, data, {
+        const response = await post(`${this.url}/${this.ID}/config`, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
         });
@@ -40,7 +41,7 @@ class VM {
     }
 
     async resize(data) {
-        const response = await put(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/resize`, data, {
+        const response = await put(`${this.url}/${this.ID}/resize`, data, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
             CSRFPreventionToken: this.auth.getToken(),
         });
@@ -49,7 +50,7 @@ class VM {
     get status() {
         return {
             current: async () => {
-                const response = await get(this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu/${this.ID}/status/current`, {
+                const response = await get(`${this.url}/${this.ID}/status/current`, {
                     cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
                     CSRFPreventionToken: this.auth.getToken(),
                 });
