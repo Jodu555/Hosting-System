@@ -10,28 +10,23 @@ class VM {
     }
 
     async create(data) {
-        data.vmid = this.ID;
-        data.node = this.Node.ID;
         const response = await post(this.url, data, this.auth.getHeaders());
-        console.log(response);
         console.log(await response.json());
     }
 
     async clone(data) {
         const response = await post(`${this.url}/${this.ID}/clone`, data, this.auth.getHeaders());
-        console.log(response);
-        // console.log(await response.text());
         console.log(await response.json());
     }
 
     async configurate(data) {
         const response = await post(`${this.url}/${this.ID}/config`, data, this.auth.getHeaders());
-        console.log(response);
         console.log(await response.json());
     }
 
     async resize(data) {
         const response = await put(`${this.url}/${this.ID}/resize`, data, this.auth.getHeaders());
+        console.log(await response.json());
     }
 
     get status() {
