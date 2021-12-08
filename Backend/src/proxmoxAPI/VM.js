@@ -70,6 +70,13 @@ class VM {
                 });
                 return await response.json();
             },
+            start: async (data = {}) => {
+                const response = await post(`${this.url}/${this.ID}/status/start`, data, {
+                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+                    CSRFPreventionToken: this.auth.getToken(),
+                });
+                return await response.json();
+            },
         }
     }
 }
