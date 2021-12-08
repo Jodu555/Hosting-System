@@ -12,76 +12,48 @@ class VM {
     async create(data) {
         data.vmid = this.ID;
         data.node = this.Node.ID;
-        const response = await post(this.url, data, {
-            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-            CSRFPreventionToken: this.auth.getToken(),
-        });
+        const response = await post(this.url, data, this.auth.getHeaders());
         console.log(response);
-        // console.log(await response.text());
         console.log(await response.json());
     }
 
     async clone(data) {
-        const response = await post(`${this.url}/${this.ID}/clone`, data, {
-            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-            CSRFPreventionToken: this.auth.getToken(),
-        });
+        const response = await post(`${this.url}/${this.ID}/clone`, data, this.auth.getHeaders());
         console.log(response);
         // console.log(await response.text());
         console.log(await response.json());
     }
 
     async configurate(data) {
-        const response = await post(`${this.url}/${this.ID}/config`, data, {
-            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-            CSRFPreventionToken: this.auth.getToken(),
-        });
+        const response = await post(`${this.url}/${this.ID}/config`, data, this.auth.getHeaders());
         console.log(response);
         console.log(await response.json());
     }
 
     async resize(data) {
-        const response = await put(`${this.url}/${this.ID}/resize`, data, {
-            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-            CSRFPreventionToken: this.auth.getToken(),
-        });
+        const response = await put(`${this.url}/${this.ID}/resize`, data, this.auth.getHeaders());
     }
 
     get status() {
         return {
             current: async () => {
-                const response = await get(`${this.url}/${this.ID}/status/current`, {
-                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-                    CSRFPreventionToken: this.auth.getToken(),
-                });
+                const response = await get(`${this.url}/${this.ID}/status/current`, this.auth.getHeaders());
                 return await response.json();
             },
             reboot: async (timeout = 0) => {
-                const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, {
-                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-                    CSRFPreventionToken: this.auth.getToken(),
-                });
+                const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, this.auth.getHeaders());
                 return await response.json();
             },
             reset: async (skiplock) => {
-                const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, {
-                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-                    CSRFPreventionToken: this.auth.getToken(),
-                });
+                const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
                 return await response.json();
             },
             start: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/start`, data, {
-                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-                    CSRFPreventionToken: this.auth.getToken(),
-                });
+                const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
                 return await response.json();
             },
             stop: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/stop`, data, {
-                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
-                    CSRFPreventionToken: this.auth.getToken(),
-                });
+                const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
                 return await response.json();
             },
         }

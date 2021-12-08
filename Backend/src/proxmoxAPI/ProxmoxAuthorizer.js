@@ -8,6 +8,12 @@ class ProxmoxAuthorizer {
     getToken() {
         return this.ProxmoxAPI.auth.data.CSRFPreventionToken
     }
+    getHeaders() {
+        return {
+            cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+            CSRFPreventionToken: this.auth.getToken(),
+        }
+    }
 }
 
 module.exports = ProxmoxAuthorizer;
