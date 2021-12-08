@@ -6,7 +6,7 @@ class VM {
         this.ProxmoxApi = this.Node.ProxmoxApi;
         this.ID = ID;
         this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
-        this.url = this.ProxmoxApi.URL + `/nodes/${this.Node.ID}/qemu`;
+        this.url = `${this.Node.url}/${this.Node.ID}/qemu`;
     }
 
     async create(data) {

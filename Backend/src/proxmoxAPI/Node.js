@@ -6,10 +6,11 @@ class Node {
         this.ProxmoxApi = ProxmoxApi;
         this.ID = ID;
         this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
+        this.url = `${this.ProxmoxApi.URL}/nodes`
     }
 
     async information(node) {
-        const response = await get(this.ProxmoxApi.URL + '/nodes/' + this.ID + '/status', {
+        const response = await get(`${this.url}/${this.ID}/status`, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`
         });
         return await response.json();
