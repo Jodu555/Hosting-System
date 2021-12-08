@@ -43,6 +43,7 @@ class VM {
                 const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
                 return await response.json();
             },
+            //resume, shutdown
             start: async (data = {}) => {
                 const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
                 return await response.json();
@@ -51,6 +52,7 @@ class VM {
                 const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
                 return await response.json();
             },
+            //suspend
         }
     }
 }
