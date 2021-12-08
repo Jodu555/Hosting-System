@@ -77,6 +77,13 @@ class VM {
                 });
                 return await response.json();
             },
+            stop: async (data = {}) => {
+                const response = await post(`${this.url}/${this.ID}/status/stop`, data, {
+                    cookie: `PVEAuthCookie=${this.auth.getTicket()};`,
+                    CSRFPreventionToken: this.auth.getToken(),
+                });
+                return await response.json();
+            },
         }
     }
 }
