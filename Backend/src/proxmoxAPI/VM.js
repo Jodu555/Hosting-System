@@ -31,40 +31,6 @@ class VM {
 
     get status() {
         return new VMStatus(this);
-        // return {
-        //     current: async () => {
-        //         const response = await get(`${this.url}/${this.ID}/status/current`, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     reboot: async (timeout = 0) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     reset: async (skiplock) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     resume: async (data = {}) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/resume`, data, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     shutdown: async (data = {}) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/shutdown`, data, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     start: async (data = {}) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     stop: async (data = {}) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        //     suspend: async (data = {}) => {
-        //         const response = await post(`${this.url}/${this.ID}/status/suspend`, data, this.auth.getHeaders());
-        //         return await response.json();
-        //     },
-        // }
     }
 }
 
@@ -74,13 +40,38 @@ class VMStatus {
         this.auth = this.VM.auth;
         this.url = `${this.VM.url}/${this.VM.ID}/status/`;
     }
-
-    async stop(data = {}) {
-        const response = await post(`${this.url}stop`, data, this.auth.getHeaders());
-        console.log(response);
+    async current() {
+        const response = await get(`${this.url}/${this.ID}/status/current`, this.auth.getHeaders());
         return await response.json();
     }
-
+    async reboot(timeout = 0) {
+        const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, this.auth.getHeaders());
+        return await response.json();
+    }
+    async reset(skiplock) {
+        const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
+        return await response.json();
+    }
+    async resume(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/resume`, data, this.auth.getHeaders());
+        return await response.json();
+    }
+    async shutdown(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/shutdown`, data, this.auth.getHeaders());
+        return await response.json();
+    }
+    async start(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
+        return await response.json();
+    }
+    async stop(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
+        return await response.json();
+    }
+    async suspend(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/suspend`, data, this.auth.getHeaders());
+        return await response.json();
+    }
 }
 
 
