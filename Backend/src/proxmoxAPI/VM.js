@@ -72,11 +72,12 @@ class VMStatus {
     constructor(VM) {
         this.VM = VM;
         this.auth = this.VM.auth;
-        this.url = `${this.VM.url}/status/`;
+        this.url = `${this.VM.url}/${this.VM.ID}/status/`;
     }
 
     async stop(data = {}) {
-        const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
+        const response = await post(`${this.url}stop`, data, this.auth.getHeaders());
+        console.log(response);
         return await response.json();
     }
 
