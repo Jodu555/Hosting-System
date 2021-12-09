@@ -30,41 +30,56 @@ class VM {
     }
 
     get status() {
-        return {
-            current: async () => {
-                const response = await get(`${this.url}/${this.ID}/status/current`, this.auth.getHeaders());
-                return await response.json();
-            },
-            reboot: async (timeout = 0) => {
-                const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, this.auth.getHeaders());
-                return await response.json();
-            },
-            reset: async (skiplock) => {
-                const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
-                return await response.json();
-            },
-            resume: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/resume`, data, this.auth.getHeaders());
-                return await response.json();
-            },
-            shutdown: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/shutdown`, data, this.auth.getHeaders());
-                return await response.json();
-            },
-            start: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
-                return await response.json();
-            },
-            stop: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
-                return await response.json();
-            },
-            suspend: async (data = {}) => {
-                const response = await post(`${this.url}/${this.ID}/status/suspend`, data, this.auth.getHeaders());
-                return await response.json();
-            },
-        }
+        return new VMStatus(this);
+        // return {
+        //     current: async () => {
+        //         const response = await get(`${this.url}/${this.ID}/status/current`, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     reboot: async (timeout = 0) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/reboot`, { timeout }, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     reset: async (skiplock) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/reset`, { skiplock }, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     resume: async (data = {}) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/resume`, data, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     shutdown: async (data = {}) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/shutdown`, data, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     start: async (data = {}) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     stop: async (data = {}) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        //     suspend: async (data = {}) => {
+        //         const response = await post(`${this.url}/${this.ID}/status/suspend`, data, this.auth.getHeaders());
+        //         return await response.json();
+        //     },
+        // }
     }
+}
+
+class VMStatus {
+    constructor(VM) {
+        this.VM = VM;
+        this.auth = this.VM.auth;
+        this.url = `${this.VM.url}/status/`;
+    }
+
+    async stop(data = {}) {
+        const response = await post(`${this.url}/${this.ID}/status/stop`, data, this.auth.getHeaders());
+        return await response.json();
+    }
+
 }
 
 
