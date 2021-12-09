@@ -47,7 +47,10 @@ class VM {
                 const response = await post(`${this.url}/${this.ID}/status/resume`, data, this.auth.getHeaders());
                 return await response.json();
             },
-            //shutdown
+            shutdown: async (data = {}) => {
+                const response = await post(`${this.url}/${this.ID}/status/shutdown`, data, this.auth.getHeaders());
+                return await response.json();
+            },
             start: async (data = {}) => {
                 const response = await post(`${this.url}/${this.ID}/status/start`, data, this.auth.getHeaders());
                 return await response.json();
