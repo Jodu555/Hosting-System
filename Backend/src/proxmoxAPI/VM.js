@@ -46,6 +46,11 @@ class VMSnapshot {
         const response = await get(`${this.url}`, this.auth.getHeaders());
         return await response.json();
     }
+
+    create(name, data) {
+        const response = await post(`${this.url}`, { snapname: name, ...data }, this.auth.getHeaders());
+        return await response.json();
+    }
 }
 class VMStatus {
     constructor(VM) {
