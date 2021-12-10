@@ -80,8 +80,9 @@ class VMSnapshot {
         return await response.json();
     }
 
-    updateConfig() {
-
+    updateConfig(data = {}) {
+        const response = await get(`${this.url}/config`, data, this.auth.getHeaders());
+        return await response.json();
     }
 
     rollback() {
