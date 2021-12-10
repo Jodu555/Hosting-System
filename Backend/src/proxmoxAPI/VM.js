@@ -86,7 +86,8 @@ class VMSnapshot {
     }
 
     rollback() {
-
+        const response = await post(`${this.url}/rollback`, this.auth.getHeaders());
+        return await response.json();
     }
 }
 class VMStatus {
