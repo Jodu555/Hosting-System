@@ -33,6 +33,10 @@ class VM {
         return new VMStatus(this);
     }
 
+    get snapshots() {
+        return new VMSnapshots(this);
+    }
+
 }
 
 class VMSnapshots {
@@ -50,6 +54,10 @@ class VMSnapshots {
     create(name, data) {
         const response = await post(`${this.url}`, { snapname: name, ...data }, this.auth.getHeaders());
         return await response.json();
+    }
+
+    get snapshot(name) {
+        return new VMSnapshot(this, name);
     }
 }
 
