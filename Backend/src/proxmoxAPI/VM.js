@@ -32,8 +32,21 @@ class VM {
     get status() {
         return new VMStatus(this);
     }
+
 }
 
+class VMSnapshot {
+    constructor(VM) {
+        this.VM = VM;
+        this.auth = this.VM.auth;
+        this.url = `${this.VM.url}/${this.VM.ID}/snapshot`;
+    }
+
+    list() {
+        const response = await get(`${this.url}`, this.auth.getHeaders());
+        return await response.json();
+    }
+}
 class VMStatus {
     constructor(VM) {
         this.VM = VM;
