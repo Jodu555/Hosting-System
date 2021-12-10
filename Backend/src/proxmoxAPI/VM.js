@@ -30,8 +30,11 @@ class VM {
     }
 
     get config() {
-        const response = await get(`${this.url}/${this.ID}/config`, this.auth.getHeaders());
-        console.log(await response.json());
+        return new Promise(async (resolve, reject) => {
+            const response = await get(`${this.url}/${this.ID}/config`, this.auth.getHeaders());
+            resolve(response);
+        })
+
     }
 
     get status() {
@@ -51,17 +54,17 @@ class VMSnapshots {
         this.url = `${this.VM.url}/${this.VM.ID}/snapshot`;
     }
 
-    list() {
+    async list() {
         const response = await get(`${this.url}`, this.auth.getHeaders());
         return await response.json();
     }
 
-    create(name, data) {
+    async create(name, data) {
         const response = await post(`${this.url}`, { snapname: name, ...data }, this.auth.getHeaders());
         return await response.json();
     }
 
-    get snapshot(name) {
+    getSnapshot(name) {
         return new VMSnapshot(this, name);
     }
 }
@@ -74,22 +77,22 @@ class VMSnapshot {
         this.url = `${this.VMSnapshots.url}/${name}`;
     }
 
-    del() {
+    async del() {
         const response = await del(`${this.url}/`, this.auth.getHeaders());
         return await response.json();
     }
 
-    get config() {
-        const response = await get(`${this.url}/config`, this.auth.getHeaders());
-        return await response.json();
-    }
+    // async get config() {
+    //     const response = await get(`${this.url}/config`, this.auth.getHeaders());
+    //     return await response.json();
+    // }
 
-    updateConfig(data = {}) {
+    async updateConfig(data = {}) {
         const response = await get(`${this.url}/config`, data, this.auth.getHeaders());
         return await response.json();
     }
 
-    rollback() {
+    async rollback() {
         const response = await post(`${this.url}/rollback`, this.auth.getHeaders());
         return await response.json();
     }
