@@ -74,6 +74,18 @@ class VMSnapshot {
         const response = await del(`${this.url}/`, this.auth.getHeaders());
         return await response.json();
     }
+
+    get config() {
+
+    }
+
+    updateConfig() {
+
+    }
+
+    rollback() {
+
+    }
 }
 class VMStatus {
     constructor(VM) {
