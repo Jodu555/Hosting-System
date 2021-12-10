@@ -29,6 +29,11 @@ class VM {
         console.log(await response.json());
     }
 
+    get config() {
+        const response = await get(`${this.url}/${this.ID}/config`, this.auth.getHeaders());
+        console.log(await response.json());
+    }
+
     get status() {
         return new VMStatus(this);
     }
@@ -60,7 +65,6 @@ class VMSnapshots {
         return new VMSnapshot(this, name);
     }
 }
-
 class VMSnapshot {
     constructor(VMSnapshots, name) {
         this.VMSnapshots = VMSnapshots;
