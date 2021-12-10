@@ -35,7 +35,7 @@ class VM {
 
 }
 
-class VMSnapshot {
+class VMSnapshots {
     constructor(VM) {
         this.VM = VM;
         this.auth = this.VM.auth;
@@ -50,6 +50,16 @@ class VMSnapshot {
     create(name, data) {
         const response = await post(`${this.url}`, { snapname: name, ...data }, this.auth.getHeaders());
         return await response.json();
+    }
+}
+
+class VMSnapshot {
+    constructor(VMSnapshots, name) {
+        this.VMSnapshots = VMSnapshots;
+        this.VM = VMSnapshots.VM;
+        this.auth = this.VM.auth;
+        this.name = name;
+        this.url = `${this.VMSnapshots.url}/${name}`;
     }
 }
 class VMStatus {
