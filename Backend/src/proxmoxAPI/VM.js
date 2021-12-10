@@ -1,5 +1,5 @@
 const ProxmoxAuthorizer = require('./ProxmoxAuthorizer');
-const { get, post, put } = require('./networking');
+const { get, post, put, del } = require('./networking');
 class VM {
     constructor(Node, ID) {
         this.Node = Node;
@@ -68,6 +68,11 @@ class VMSnapshot {
         this.auth = this.VM.auth;
         this.name = name;
         this.url = `${this.VMSnapshots.url}/${name}`;
+    }
+
+    del() {
+        const response = await del(`${this.url}/`, this.auth.getHeaders());
+        return await response.json();
     }
 }
 class VMStatus {

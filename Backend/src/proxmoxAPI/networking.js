@@ -40,7 +40,7 @@ async function put(url, data, headers = {}) {
     return response;
 }
 
-async function del(url, data, headers = {}) {
+async function del(url, headers = {}) {
     const response = await fetch(url, {
         method: 'DELETE',
         headers,
