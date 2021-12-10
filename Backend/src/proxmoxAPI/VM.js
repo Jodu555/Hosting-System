@@ -76,7 +76,8 @@ class VMSnapshot {
     }
 
     get config() {
-
+        const response = await get(`${this.url}/config`, this.auth.getHeaders());
+        return await response.json();
     }
 
     updateConfig() {
