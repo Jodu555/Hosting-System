@@ -32,9 +32,8 @@ class VM {
     get config() {
         return new Promise(async (resolve, reject) => {
             const response = await get(`${this.url}/${this.ID}/config`, this.auth.getHeaders());
-            resolve(response);
-        })
-
+            resolve(response.json());
+        });
     }
 
     get status() {
@@ -82,10 +81,12 @@ class VMSnapshot {
         return await response.json();
     }
 
-    // async get config() {
-    //     const response = await get(`${this.url}/config`, this.auth.getHeaders());
-    //     return await response.json();
-    // }
+    get config() {
+        return new Promise(async (resolve, reject) => {
+            const response = await get(`${this.url}/config`, this.auth.getHeaders());
+            resolve(response.json());
+        });
+    }
 
     async updateConfig(data = {}) {
         const response = await get(`${this.url}/config`, data, this.auth.getHeaders());
