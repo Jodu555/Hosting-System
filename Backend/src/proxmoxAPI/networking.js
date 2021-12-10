@@ -40,8 +40,18 @@ async function put(url, data, headers = {}) {
     return response;
 }
 
+async function del(url, data, headers = {}) {
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers,
+        agent: httpsAgent,
+    });
+    return response;
+}
+
 module.exports = {
     get,
     post,
-    put
+    put,
+    del
 }
