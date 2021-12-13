@@ -34,7 +34,8 @@ async function run() {
     // node.getVM('100').resize({ size: '5G' })
 
     // console.log(await node.getVM(101).status.current());
-    console.log(await node.getVM(100).config);
+    console.log(await node.getVM(100).snapshot.create('ixi'));
+    console.log(await node.getVM(100).snapshot.get('ixi').rollback());
 
 
     // console.log(await node.information());
