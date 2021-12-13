@@ -10,8 +10,7 @@ iface lo inet loopback
 # The primary network interface
 auto ens18
 iface ens18 inet static
-        address 141.95.24.197
+        address <ADDRESS>
         netmask 255.255.255.255
-        gateway 51.195.60.254
-        # dns-* options are implemented by the resolvconf package, if installed
-        dns-nameservers 208.67.222.222 208.67.220.220
+        gateway <GATEWAY>
+        dns-nameservers 8.8.8.8 208.67.222.222 208.67.220.220
