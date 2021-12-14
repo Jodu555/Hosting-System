@@ -18,7 +18,10 @@ class KVM {
     }
 
     create() {
-
+        // Step 1: Clone the template
+        // Step 2: Configure the new vm
+        // Step 3: prepare and upload the new network file
+        // Step 4: TODO: Change password
     }
 
     prepareFile() {
