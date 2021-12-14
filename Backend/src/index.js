@@ -1,11 +1,10 @@
 const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const dotenv = require('dotenv').config();
 const { NodeSSH } = require('node-ssh')
+const KVM = require('./KVM')
 
 
 async function run() {
-    console.log(process.cwd());
-    return;
 
     // const ssh = new NodeSSH()
 
@@ -22,8 +21,14 @@ async function run() {
     //     })
     // });
 
+    const kvm = new KVM(100, '127.0.0.1', 'your-fictional-mac-addr', 'your-gateway', 'your-netmask');
 
-    // return;
+    kvm.prepareFile();
+
+    console.log(kvm);
+
+
+    return;
     const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
         username: 'root@pam',
         password: process.env.PASSWORD
@@ -36,8 +41,8 @@ async function run() {
     // node.getVM('100').resize({ size: '5G' })
 
     // console.log(await node.getVM(101).status.current());
-    console.log(await node.getVM(100).snapshot.create('ixi'));
-    console.log(await node.getVM(100).snapshot.get('ixi').rollback());
+    // console.log(await node.getVM(100).snapshot.create('ixi'));
+    // console.log(await node.getVM(100).snapshot.get('ixi').rollback());
 
 
     // console.log(await node.information());
