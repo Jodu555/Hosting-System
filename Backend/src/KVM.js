@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 class KVM {
     constructor(ip, mac, gateway, netmask) {
         this.ip = ip;

@@ -4,6 +4,8 @@ const { NodeSSH } = require('node-ssh')
 
 
 async function run() {
+    console.log(process.cwd());
+    return;
 
     // const ssh = new NodeSSH()
 
