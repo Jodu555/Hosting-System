@@ -3,6 +3,14 @@ const dotenv = require('dotenv').config();
 
 const KVM = require('./KVM')
 
+const { Database } = require('@jodu555/mysqlapi');
+if (false) {
+    const database = Database.createDatabase('host', 'username', 'password', 'database');
+    database.connect();
+
+    require('./database/tables');
+}
+
 
 async function run() {
 
