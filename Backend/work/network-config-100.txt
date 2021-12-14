@@ -10,7 +10,7 @@ iface lo inet loopback
 # The primary network interface
 auto ens18
 iface ens18 inet static
-        address <ADDRESS>
-        netmask <NETMASK>
-        gateway <GATEWAY>
+        address 127.0.0.1
+        netmask 255.255.255.255
+        gateway your-gateway
         dns-nameservers 8.8.8.8 208.67.222.222 208.67.220.220

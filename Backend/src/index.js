@@ -21,7 +21,7 @@ async function run() {
     //     })
     // });
 
-    const kvm = new KVM(100, '127.0.0.1', 'your-fictional-mac-addr', 'your-gateway', 'your-netmask');
+    const kvm = new KVM(100, '127.0.0.1', 'your-fictional-mac-addr', 'your-gateway', null);
 
     kvm.prepareFile();
 
