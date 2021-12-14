@@ -1,7 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const { NodeSSH } = require('node-ssh')
 
-const defaultNetworkConfig = process.cwd() + '/work/network-template.txt';
+
+const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
 
 class KVM {
 
@@ -12,7 +14,7 @@ class KVM {
             mac: network.mac ?? 'DEFAULT_MAC',
             gateway: network.gateway ?? 'DEFAULT_GATEWAY',
             netmask: network.netmask ?? '255.255.255.255',
-            config: process.cwd() + '/work/network-config-' + this.ID + '.txt'
+            config: path.join(process.cwd(), 'work', `network-config-${this.ID}.txt`)
         };
         this.specs = specs;
     }
