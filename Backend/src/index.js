@@ -8,7 +8,17 @@ async function run() {
 
 
 
-    const kvm = new KVM(100, '127.0.0.1', 'your-fictional-mac-addr', 'your-gateway', null);
+    const kvm = new KVM(100, {
+        ip: '127.0.0.1',
+        mac: 'your-fictional-mac-addr',
+        gateway: null,
+        netmask: null,
+    }, {
+        disk: 5,
+        cores: 3,
+        sockets: 3,
+        memory: 5012,
+    });
 
     kvm.prepareFile();
 
