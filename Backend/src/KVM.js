@@ -5,4 +5,8 @@ class KVM {
         this.gateway = gateway;
         this.netmask = netmask;
     }
+
+    prepareFile() {
+        //Step 1: Copy The File
+    }
 }
