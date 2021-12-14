@@ -1,4 +1,7 @@
 const fs = require('fs');
+const { NodeSSH } = require('node-ssh')
+
+const defaultNetworkConfig = process.cwd() + '/work/network-template.txt';
 
 class KVM {
     constructor(ID, ip, mac, gateway, netmask) {
@@ -7,22 +10,34 @@ class KVM {
         this.mac = mac;
         this.gateway = gateway;
         this.netmask = netmask || '255.255.255.255';
+        this.networkConfig = process.cwd() + '/work/network-config-' + this.ID + '.txt';
     }
 
     prepareFile() {
-        let data = fs.readFileSync(process.cwd() + '/work/network-template.txt', 'utf-8');
-        // fs.copyFileSync(, process.cwd() + '/work/network-config-' + this.ID + '.txt');
-
-        // <ADDRESS> <GATEWAY>
-
+        //Step 1: Rewirte the file and pass in the params
+        let data = fs.readFileSync(defaultNetworkConfig, 'utf-8');
         data = data.replaceAll('<ADDRESS>', this.ip);
         data = data.replaceAll('<GATEWAY>', this.gateway);
         data = data.replaceAll('<NETMASK>', this.netmask);
-        fs.writeFileSync(process.cwd() + '/work/network-config-' + this.ID + '.txt', data, 'utf8');
+        fs.writeFileSync(this.networkConfig, data, 'utf8');
 
-        //Step 1: Copy The File
-        //Step 2: rewrite the file content to update network
-        //Step 3: Upload the file via SSH
+        return;
+        //Step 2: Upload the file via SSH
+        const ssh = new NodeSSH()
+        ssh.connect({
+            host: this.ip,
+            username: 'root',
+            password: process.env.DEFAULT_ROOT_PASSWORD
+        }).then(() => {
+            ssh.putFile(this.networkConfig, '/etc/network/interfaces.d').then(() => {
+                console.log("The File thing is done")
+            }, function (error) {
+                console.log("Something's wrong")
+                console.log(error)
+            })
+        });
+
+
     }
 }
 

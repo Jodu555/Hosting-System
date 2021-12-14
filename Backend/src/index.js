@@ -1,25 +1,12 @@
 const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const dotenv = require('dotenv').config();
-const { NodeSSH } = require('node-ssh')
+
 const KVM = require('./KVM')
 
 
 async function run() {
 
-    // const ssh = new NodeSSH()
 
-    // ssh.connect({
-    //     host: '103.158.223.126',
-    //     username: 'root',
-    //     password: process.env.DEFAULT_ROOT_PASSWORD
-    // }).then(() => {
-    //     ssh.putFile('test.txt', '/etc/network/test.txt').then(() => {
-    //         console.log("The File thing is done")
-    //     }, function (error) {
-    //         console.log("Something's wrong")
-    //         console.log(error)
-    //     })
-    // });
 
     const kvm = new KVM(100, '127.0.0.1', 'your-fictional-mac-addr', 'your-gateway', null);
 
