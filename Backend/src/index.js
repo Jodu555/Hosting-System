@@ -5,7 +5,10 @@ const KVM = require('./KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
 if (false) {
-    const database = Database.createDatabase('host', 'username', 'password', 'database');
+    const database = Database.createDatabase(process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASSWORD,
+        process.env.DB_DATABASE);
     database.connect();
 
     require('./database/tables');
@@ -16,21 +19,21 @@ async function run() {
 
 
 
-    const kvm = new KVM(100, {
-        ip: '127.0.0.1',
-        mac: 'your-fictional-mac-addr',
-        gateway: null,
-        netmask: null,
-    }, {
-        disk: 5,
-        cores: 3,
-        sockets: 3,
-        memory: 5012,
-    });
+    // const kvm = new KVM(100, {
+    //     ip: '127.0.0.1',
+    //     mac: 'your-fictional-mac-addr',
+    //     gateway: null,
+    //     netmask: null,
+    // }, {
+    //     disk: 5,
+    //     cores: 3,
+    //     sockets: 3,
+    //     memory: 5012,
+    // });
 
-    kvm.prepareFile();
+    // kvm.prepareFile();
 
-    console.log(kvm);
+    // console.log(kvm);
 
 
     return;
@@ -74,17 +77,17 @@ async function run() {
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 
-    // const newVM = node.getVM(100);
-    // await newVM.create({
-    //     name: 'D10-Temp',
-    //     vmid: 100,
-    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
-    //     cores: 2,
-    //     sockets: 2,
-    //     memory: 4048,
-    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-    //     scsi0: 'local:3,format=qcow2'
-    // });
+    const newVM = node.getVM(100);
+    await newVM.create({
+        name: 'Template',
+        vmid: 100,
+        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
+        cores: 2,
+        sockets: 2,
+        memory: 4048,
+        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+        scsi0: 'local:3,format=qcow2'
+    });
 
 
     const kvmPackages = [
@@ -92,7 +95,7 @@ async function run() {
             ID: '01233448',
             name: '',
             cores: 1,
-            memory: 3,
+            memory: 1,
             disk: 10
         }
     ]
