@@ -24,7 +24,7 @@ function createTables() {
             null: false,
         },
         'password': {
-            type: 'varchar(64)',
+            type: 'TEXT',
             null: false,
         },
         'balance': {
@@ -72,13 +72,17 @@ const createUUID = () => {
 
 generateID = (len) => {
     const poss = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-    const id = '';
+    let id = '';
     for (let i = 0; i < len; i++) {
         id += poss[Math.floor(Math.random() * poss.length)];
     }
+    return id;
 }
 
 function createSchemas() {
+    const len = {
+        min: 5,
+    }
     const registerSchema = {
         options: {
         },
@@ -87,22 +91,37 @@ function createSchemas() {
         },
         username: {
             anum: false,
-            min: 5,
-            max: 25,
+            max: 15,
+            ...len
         },
         email: {
-            email: true
+            email: true,
+            ...len,
+            max: 20,
         },
         password: {
-            min: 3
+            ...len,
+            max: 100,
         },
         balance: {
-
+            value: 2.0,
         },
         refCode: {
             value: generateID(6),
         },
     };
+
+    const loginSchema = {
+        username: {
+            anum: false,
+            max: 15,
+            ...len
+        },
+        password: {
+            ...len,
+            max: 100,
+        },
+    }
 }
 
 module.exports = create;
