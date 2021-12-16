@@ -14,10 +14,21 @@ if (false) {
     require('./database/tables');
 }
 
+function createUUID() {
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+}
+
 
 async function run() {
 
-
+    console.log('KVM-GS#' + createUUID());
+    console.log('KVM-PS#' + createUUID());
 
     // const kvm = new KVM(100, {
     //     ip: '127.0.0.1',
