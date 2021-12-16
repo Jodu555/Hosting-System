@@ -27,8 +27,8 @@ function createUUID() {
 
 async function run() {
 
-    console.log('KVM-GS#' + createUUID());
-    console.log('KVM-PS#' + createUUID());
+    console.log('KVM-GS#' + createUUID()); // Generated Services
+    console.log('KVM-PS#' + createUUID()); // Package Services
 
     // const kvm = new KVM(100, {
     //     ip: '127.0.0.1',

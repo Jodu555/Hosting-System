@@ -3,6 +3,36 @@ const database = Database.getDatabase();
 
 function create() {
 
+    database.createTable('accounts', {
+        options: {
+            PK: 'UUID',
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'username': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'email': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'password': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'balance': {
+            type: 'float',
+            null: false,
+        },
+        'refCode': {
+            type: 'varchar(64)',
+            null: false,
+        },
+    });
+
     database.createTable('kvm_packages', {
         options: {
             PK: 'UUID',
