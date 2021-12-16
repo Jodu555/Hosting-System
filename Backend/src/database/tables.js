@@ -2,7 +2,11 @@ const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
 
 function create() {
+    createTables();
+    createSchemas();
+}
 
+function createTables() {
     database.createTable('accounts', {
         options: {
             PK: 'UUID',
@@ -54,6 +58,9 @@ function create() {
             null: false,
         },
     });
+}
+
+function createSchemas() {
 
 }
 
