@@ -87,7 +87,7 @@ function createSchemas() {
         options: {
         },
         UUID: {
-            default: createUUID,
+            value: createUUID,
         },
         username: {
             anum: false,
