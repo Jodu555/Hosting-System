@@ -8,14 +8,16 @@ const helmet = require('helmet');
 const KVM = require('./KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
-if (false) {
-    const database = Database.createDatabase(process.env.DB_HOST,
-        process.env.DB_USER,
-        process.env.DB_PASSWORD,
-        process.env.DB_DATABASE);
+if (true) {
+    const database = Database.createDatabase(
+        process.env.DB_HOST || 'localhost',
+        process.env.DB_USER || 'root',
+        process.env.DB_PASSWORD || '',
+        process.env.DB_DATABASE || 'hostingsystem'
+    );
     database.connect();
 
-    require('./database/tables');
+    require('./database/tables')();
 }
 
 function createUUID() {
