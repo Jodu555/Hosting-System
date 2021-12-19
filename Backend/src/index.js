@@ -1,5 +1,9 @@
 const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const dotenv = require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
 
 const KVM = require('./KVM')
 
@@ -25,8 +29,23 @@ function createUUID() {
 }
 
 
-async function run() {
 
+const app = express();
+app.use(cors());
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(express.json());
+
+const { errorHandling, notFound } = require('./utils/middleware');
+app.use('*', notFound);
+app.use(errorHandling);
+
+
+const PORT = process.env.PORT || 3100;
+app.listen(PORT, async () => {
+    console.log(`Express App is listening on ${PORT}`);
+
+    return;
     console.log('KVM-GS#' + createUUID()); // Generated Services
     console.log('KVM-PS#' + createUUID()); // Package Services
 
@@ -110,9 +129,4 @@ async function run() {
             disk: 10
         }
     ]
-
-}
-
-// curl -k -d  https://51.195.60.60:8006/api2/json/access/ticket
-
-run();
+});
