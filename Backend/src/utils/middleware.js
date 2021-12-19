@@ -13,10 +13,10 @@ function errorHandling(err, req, res, next) {
         stack: err.stack,
     };
     let status = 500;
-    if (error instanceof AuthenticationError)
+    if (err instanceof AuthenticationError)
         status = 401;
 
-    if (error instanceof database.ParsingError)
+    if (err instanceof database.ParsingError)
         status = 422;
 
     if (process.env.NODE_ENV !== 'production') {
