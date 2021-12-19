@@ -1,24 +1,6 @@
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
-
-const generateUUID = () => {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
-}
-
-const generateID = (len) => {
-    const poss = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-    let id = '';
-    for (let i = 0; i < len; i++) {
-        id += poss[Math.floor(Math.random() * poss.length)];
-    }
-    return id;
-}
+const { generateUUID, generateID } = require('../utils/crypt');
 
 function create() {
     createTables();
@@ -81,7 +63,7 @@ function createTables() {
 
 function createSchemas() {
     const len = {
-        min: 5,
+        min: 7,
     }
     const registerSchema = {
         UUID: {

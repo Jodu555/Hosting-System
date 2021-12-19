@@ -1,6 +1,7 @@
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
 const authManager = require('../../utils/authManager');
+const { generateUUID } = require('../../utils/crypt');
 const bcrypt = require('bcryptjs');
 
 const register = async (req, res, next) => {
@@ -33,7 +34,7 @@ const login = async (req, res, next) => {
         const result = await database.get('accounts').get({ username: user.username, unique: true });
         if (result.length > 0) {
             if (await bcrypt.compare(user.password, result[0].password)) {
-                const token = v4();
+                const token = generateUUID();
                 delete result[0].password;
                 authManager.addToken(token, result[0]);
                 res.json({ token });

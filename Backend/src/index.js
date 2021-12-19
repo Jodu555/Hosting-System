@@ -20,16 +20,6 @@ if (true) {
     require('./database/tables')();
 }
 
-function createUUID() {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
-}
-
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));
@@ -37,7 +27,7 @@ app.use(helmet());
 app.use(express.json());
 
 
-const { router: auth } = require('./routes/auth/index.js');
+const { router: auth } = require('./routes/auth/index');
 
 app.use('/auth', auth);
 
@@ -45,6 +35,8 @@ app.use('/auth', auth);
 const { errorHandling, notFound } = require('./utils/middleware');
 app.use('*', notFound);
 app.use(errorHandling);
+
+const { generateUUID } = require('./utils/crypt');
 
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
