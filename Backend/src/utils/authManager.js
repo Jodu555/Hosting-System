@@ -27,10 +27,18 @@ function authentication(req, res, next) {
             };
             next();
         } else {
-            next(new Error('Invalid auth-token'))
+            next(new AuthenticationError('Invalid auth-token'))
         }
     } else {
-        next(new Error('Missing auth-token in headers'));
+        next(new AuthenticationError('Missing auth-token in headers'));
+    }
+}
+
+class AuthenticationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+        Error.captureStackTrace(this, this.constructor);
     }
 }
 
@@ -39,4 +47,5 @@ module.exports = {
     removeToken,
     getUser,
     authentication,
+    AuthenticationError,
 };
