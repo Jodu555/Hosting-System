@@ -30,18 +30,21 @@ function createUUID() {
     return uuid;
 }
 
-
-
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.json());
 
+
+const { router: auth } = require('./routes/auth/index.js');
+
+app.use('/auth', auth);
+
+
 const { errorHandling, notFound } = require('./utils/middleware');
 app.use('*', notFound);
 app.use(errorHandling);
-
 
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {

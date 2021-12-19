@@ -1,4 +1,3 @@
-const { v4 } = require('uuid');
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
 const authManager = require('../../utils/authManager');
@@ -6,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const register = async (req, res, next) => {
     try {
-        const validation = database.getSchema('registerSchema').validate(user, true);
+        const validation = database.getSchema('registerSchema').validate(req.body, true);
         const user = validation.object
 
         const search = { ...user }; //Spreading to disable the reference
@@ -29,7 +28,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        const validation = database.getSchema('loginSchema').validate(user, true);
+        const validation = database.getSchema('loginSchema').validate(req.body, true);
         const user = validation.object;
         const result = await database.get('accounts').get({ username: user.username, unique: true });
         if (result.length > 0) {

@@ -1,5 +1,8 @@
 const { AuthenticationError } = require('./authManager');
 
+const { Database } = require('@jodu555/mysqlapi');
+const database = Database.getDatabase();
+
 function notFound(req, res) {
     throw new Error('notFound')
 }
