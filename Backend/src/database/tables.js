@@ -79,8 +79,6 @@ function createTables() {
     });
 }
 
-
-
 function createSchemas() {
     const len = {
         min: 5,
