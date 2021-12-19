@@ -12,6 +12,10 @@ function errorHandling(err, req, res, next) {
     let status = 500;
     if (error instanceof AuthenticationError)
         status = 401;
+
+    if (error instanceof database.ParsingError)
+        status = 422;
+
     if (process.env.NODE_ENV !== 'production') {
         if (error.message.includes('notFound')) {
             res.status(404).send({
