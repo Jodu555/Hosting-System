@@ -84,8 +84,6 @@ function createSchemas() {
         min: 5,
     }
     const registerSchema = {
-        options: {
-        },
         UUID: {
             value: generateUUID,
         },
@@ -122,6 +120,9 @@ function createSchemas() {
             max: 100,
         },
     }
+
+    database.registerSchema('registerSchema', registerSchema, 'accounts');
+    database.registerSchema('loginSchema', loginSchema, 'accounts');
 }
 
 module.exports = create;

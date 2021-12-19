@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const register = async (req, res, next) => {
     try {
-        const validation = database.getSchema('loginSchema').validate(user, true);
+        const validation = database.getSchema('registerSchema').validate(user, true);
         const user = validation.object
 
         const search = { ...user }; //Spreading to disable the reference
@@ -28,20 +28,16 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-    const validation = userLoginSchema.validate(req.body);
-    if (validation.error) {
-        next(new Error(validation.error.details[0].message));
-    } else {
-        const user = validation.value;
+    try {
+        const validation = database.getSchema('loginSchema').validate(user, true);
+        const user = validation.object;
         const result = await database.get('accounts').get({ username: user.username, unique: true });
         if (result.length > 0) {
             if (await bcrypt.compare(user.password, result[0].password)) {
-                const obj = {};
                 const token = v4();
-                obj.token = token;
                 delete result[0].password;
                 authManager.addToken(token, result[0]);
-                res.json(obj);
+                res.json({ token });
             } else {
                 next(new Error('Invalid password!'));
             }
@@ -49,7 +45,10 @@ const login = async (req, res, next) => {
             const value = user.username ? 'username' : 'email';
             next(new Error('Invalid ' + value + '!'));
         }
+    } catch (error) {
+        next(error);
     }
+
 };
 
 const logout = async (req, res, next) => {
