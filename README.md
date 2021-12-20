@@ -18,6 +18,9 @@ Maybe bring this ProxMox API to public cause the public ones are not that great
     maybe with a static iteration time
 * Clarify the UUID's with there syntax like KVM-GS# where KVM stands for the type GS for generated services and the # is for the generation
 
+## Route Ideas
+* /packages : Shows all the available Packages
+
 
 ## VM Creation Steps
 * [ ] Clone VM to x ID

@@ -36,6 +36,8 @@ const { errorHandling, notFound } = require('./utils/middleware');
 app.use('*', notFound);
 app.use(errorHandling);
 
+
+
 const { generateUUID } = require('./utils/crypt');
 
 const PORT = process.env.PORT || 3100;
@@ -43,8 +45,8 @@ app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
     return;
-    console.log('KVM-GS#' + createUUID()); // Generated Services
-    console.log('KVM-PS#' + createUUID()); // Package Services
+    console.log('KVM-GS#' + generateUUID()); // Generated Services
+    console.log('KVM-PS#' + generateUUID()); // Package Services
 
     // const kvm = new KVM(100, {
     //     ip: '127.0.0.1',
