@@ -16,10 +16,19 @@ Maybe bring this ProxMox API to public cause the public ones are not that great
 ## Ideas
 * Make a thing like task Queue where new orders gets placed so the server dont gets flud by too many orders 
     maybe with a static iteration time
-* Clarify the UUID's with there syntax like KVM-GS# where KVM stands for the type GS for generated services and the # is for the generation
+* Clarify the UUID's with there syntax like KVM-GS# where KVM stands for the type GS for GENerated services and the # is for the generation
+* Types of servers:
+    * PACKage Server : Pre defined servers
+    * GENerated Server : User defined servers 
 
 ## Route Ideas
 * /packages : Shows all the available Packages
+* /account : Shows account info (Balance, Name, E-Mail)
+* /transactions : Shows all taken Transactions
+    * /:ID : Shows a particular transaction
+* /products : Shows all Products
+    * /:ID : Shows a particular Product
+    * /service/:ID : Shows a particular Service (Backend decides from ID if GEN or PACK)
 
 
 ## VM Creation Steps
