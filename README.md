@@ -2,9 +2,10 @@
 A Hosting-System
 
 ## Thoughts
-Maybe bring this ProxMox API to public cause the public ones are not that great 
+Maybe bring this ProxMox API to public cause the public ones are not THAT great 
 
 ## Todo
+* [ ] Think about the role system to prevent bs package creation
 * [ ] ProxmoxAPI
     * [ ] Move it to another git repo
     * [ ] Upload it to npm

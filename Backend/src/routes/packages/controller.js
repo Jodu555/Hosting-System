@@ -2,7 +2,7 @@ const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
 const { generateUUID } = require('../../utils/crypt');
 
-const list = async (req, res, next) => { //List Packages
+const list = async (req, res, next) => {
     try {
         const response = await database.get('kvm_packages').get();
         res.json(response);
@@ -15,7 +15,6 @@ const create = async (req, res, next) => {
     try {
         const validation = database.getSchema('createPackageSchema').validate(req.body, true);
         const package = validation.object;
-
         if (!await (database.get('kvm_packages').getOne({ name: package.name }))) {
             const response = database.get('kvm_packages').create(package);
             res.json(response);
