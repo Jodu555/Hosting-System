@@ -1,9 +1,14 @@
 const express = require('express');
-const controller = require('./controller');
-const authManager = require('../../utils/authManager');
 const router = express.Router();
 
-router.get('/', controller.list);
+router.get('/', async (req, res, next) => { //List Packages
+    try {
+        const response = database.get('kvm_packages').get({});
+        res.json(response);
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = {
     router,
