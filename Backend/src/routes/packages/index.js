@@ -1,16 +1,10 @@
 const express = require('express');
+const controller = require('./controller');
+const authManager = require('../../utils/authManager');
 const router = express.Router();
-const { Database } = require('@jodu555/mysqlapi');
-const database = Database.getDatabase();
 
-router.get('/', async (req, res, next) => { //List Packages
-    try {
-        const response = await database.get('kvm_packages').get();
-        res.json(response);
-    } catch (error) {
-        next(error);
-    }
-});
+router.get('/', controller.list);
+router.post('/', controller.create);
 
 module.exports = {
     router,
