@@ -64,12 +64,46 @@ function createTables() {
         },
     });
 
+    database.createTable('products', {
+        options: {
+            PK: 'UUID',
+            FK: {
+                'account_UUID': 'accounts/UUID'
+            },
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'account_UUID': {
+            type: 'varchar(64)',
+            null: true,
+        },
+        'cost': {
+            type: 'float',
+            null: false,
+        },
+        'nextPayment': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'service_UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'name': {
+            type: 'varchar(64)',
+            null: false,
+        },
+
+    });
+
     return;
     database.createTable('transactions', {
         options: {
             PK: 'UUID',
             FK: {
-                'product_UUID': 'product/UUID'
+                'product_UUID': 'products/UUID'
             },
         },
         'UUID': {
