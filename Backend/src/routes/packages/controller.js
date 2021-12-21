@@ -12,8 +12,13 @@ const list = async (req, res, next) => { //List Packages
 };
 
 const create = async (req, res, next) => {
-
-
+    try {
+        const validation = database.getSchema('createPackageSchema').validate(req.body, true);
+        const package = validation.object;
+        res.json(package);
+    } catch (error) {
+        next(error);
+    }
 };
 
 

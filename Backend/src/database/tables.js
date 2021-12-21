@@ -115,8 +115,8 @@ function createSchemas() {
         },
         name: {
             anum: false,
+            min: 3,
             max: 20,
-            ...len
         },
         cores: {
             min: 1,
@@ -134,6 +134,8 @@ function createSchemas() {
 
     database.registerSchema('registerSchema', registerSchema, 'accounts');
     database.registerSchema('loginSchema', loginSchema, 'accounts');
+
+    database.registerSchema('createPackageSchema', createPackageSchema, 'kvm_packages');
 }
 
 module.exports = create;
