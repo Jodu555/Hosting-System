@@ -126,7 +126,7 @@ function createSchemas() {
             min: 1,
             max: 32,
         },
-        cores: {
+        storage: {
             min: 5,
             max: 500,
         },
