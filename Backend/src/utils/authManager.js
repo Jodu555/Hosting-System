@@ -17,29 +17,32 @@ function getUser(token) {
     return tokens.get(token);
 }
 
-function authentication(req, res, next) {
-    authenticationFull(req, res, next);
+function authentication() {
+    return authenticationFull(() => true);
 }
 
-function authenticationFull(req, res, next, cb) {
-    const token = req.headers['auth-token'];
-    if (token) {
-        if (getUser(token)) {
-            const user = getUser(token);
-            if (cb(user)) {
-                req.credentials = {
-                    token,
-                    user,
-                };
-                next();
+function authenticationFull(cb) {
+    return (req, res, next) => {
+        const token = req.headers['auth-token'];
+        if (token) {
+            if (getUser(token)) {
+                const user = getUser(token);
+                if (!cb || cb(user)) {
+                    req.credentials = {
+                        token,
+                        user,
+                    };
+                    next();
+                    return;
+                } else {
+                    next(new AuthenticationError('Insufficent Permission'))
+                }
             } else {
-                next(new AuthenticationError('Insufficent Permission'))
+                next(new AuthenticationError('Invalid auth-token'))
             }
         } else {
-            next(new AuthenticationError('Invalid auth-token'))
+            next(new AuthenticationError('Missing auth-token in headers'));
         }
-    } else {
-        next(new AuthenticationError('Missing auth-token in headers'));
     }
 }
 
