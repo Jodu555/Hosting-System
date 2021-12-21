@@ -63,6 +63,32 @@ function createTables() {
             null: false,
         },
     });
+
+    return;
+    database.createTable('transactions', {
+        options: {
+            PK: 'UUID',
+            FK: {
+                'product_UUID': 'product/UUID'
+            },
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'status': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'amount': {
+            type: 'float',
+            null: false,
+        },
+        'product_UUID': {
+            type: 'varchar(64)',
+            null: true,
+        }
+    });
 }
 
 function createSchemas() {
