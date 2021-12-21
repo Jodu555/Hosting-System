@@ -192,10 +192,26 @@ function createSchemas() {
         },
     };
 
+    const transactionSchema = {
+        UUID: {
+            value: generateUUID,
+        },
+        status: {
+            enum: ['pending', 'completed'],
+        },
+        amount: {
+            min: 0,
+            max: 99.99,
+        }
+    }
+
     database.registerSchema('registerSchema', registerSchema, 'accounts');
     database.registerSchema('loginSchema', loginSchema, 'accounts');
 
     database.registerSchema('createPackageSchema', createPackageSchema, 'kvm_packages');
+
+    return;
+    database.registerSchema('transactionSchema', transactionSchema, 'transactions');
 }
 
 module.exports = create;
