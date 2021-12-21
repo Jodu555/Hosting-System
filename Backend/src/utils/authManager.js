@@ -18,14 +18,23 @@ function getUser(token) {
 }
 
 function authentication(req, res, next) {
+    authenticationFull(req, res, next);
+}
+
+function authenticationFull(req, res, next, cb) {
     const token = req.headers['auth-token'];
     if (token) {
         if (getUser(token)) {
-            req.credentials = {
-                token,
-                user: getUser(token),
-            };
-            next();
+            const user = getUser(token);
+            if (cb(req, user)) {
+                req.credentials = {
+                    token,
+                    user,
+                };
+                next();
+            } else {
+                next(new AuthenticationError('Insufficent Permission'))
+            }
         } else {
             next(new AuthenticationError('Invalid auth-token'))
         }
@@ -47,5 +56,6 @@ module.exports = {
     removeToken,
     getUser,
     authentication,
+    authenticationFull,
     AuthenticationError,
 };
