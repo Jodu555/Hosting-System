@@ -69,6 +69,7 @@ function createSchemas() {
     const len = {
         min: 7,
     }
+
     const registerSchema = {
         UUID: {
             value: generateUUID,
@@ -106,6 +107,30 @@ function createSchemas() {
             max: 100,
         },
     }
+
+
+    const createPackageSchema = {
+        UUID: {
+            value: generateUUID,
+        },
+        name: {
+            anum: false,
+            max: 20,
+            ...len
+        },
+        cores: {
+            min: 1,
+            max: 15,
+        },
+        memory: {
+            min: 1,
+            max: 32,
+        },
+        cores: {
+            min: 5,
+            max: 500,
+        },
+    };
 
     database.registerSchema('registerSchema', registerSchema, 'accounts');
     database.registerSchema('loginSchema', loginSchema, 'accounts');
