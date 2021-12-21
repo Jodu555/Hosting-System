@@ -46,6 +46,10 @@ function createTables() {
             type: 'varchar(64)',
             null: false,
         },
+        'name': {
+            type: 'varchar(64)',
+            null: false,
+        },
         'cores': {
             type: 'int',
             null: false,
