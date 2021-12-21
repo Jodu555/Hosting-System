@@ -1,11 +1,8 @@
 # Hosting-System
 A Hosting-System
 
-## Thoughts
-Maybe bring this ProxMox API to public cause the public ones are not THAT great 
-
 ## Todo
-* [ ] Think about the role system to prevent bs package creation
+* [x] Think about the role system to prevent bs package creation
 * [ ] ProxmoxAPI
     * [ ] Move it to another git repo
     * [ ] Upload it to npm
@@ -22,15 +19,17 @@ Maybe bring this ProxMox API to public cause the public ones are not THAT great
     * PACKage Server : Pre defined servers
     * GENerated Server : User defined servers 
 
-## API Route Ideas
-* All Routes are Prefixed with HOST/api/
-* /packages : Shows all the available Packages
-* /account : Shows account info (Balance, Name, E-Mail)
-* /transactions : Shows all taken Transactions
-    * /:ID : Shows a particular transaction
-* /products : Shows all Products
-    * /:ID : Shows a particular Product
-    * /service/:ID : Shows a particular Service (Backend decides from ID if GEN or PACK)
+## API Route Todos
+* [ ] All Routes are Prefixed with HOST/api/
+* [ ] /packages
+    * [ ] GET : Shows all packages
+    * [ ] POST : Creates a new package
+* [ ] /account : Shows account info (Balance, Name, E-Mail)
+* [ ] /transactions : Shows all taken Transactions
+    * [ ] /:ID : Shows a particular transaction
+* [ ] /products : Shows all Products
+    * [ ] /:ID : Shows a particular Product
+    * [ ] /service/:ID : Shows a particular Service (Backend decides from ID if GEN or PACK)
 
 
 ## VM Creation Steps
