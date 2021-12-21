@@ -8,17 +8,25 @@ const helmet = require('helmet');
 const KVM = require('./KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
-if (true) {
-    const database = Database.createDatabase(
-        process.env.DB_HOST || 'localhost',
-        process.env.DB_USER || 'root',
-        process.env.DB_PASSWORD || '',
-        process.env.DB_DATABASE || 'hostingsystem'
-    );
-    database.connect();
+const database = Database.createDatabase(
+    process.env.DB_HOST || 'localhost',
+    process.env.DB_USER || 'root',
+    process.env.DB_PASSWORD || '',
+    process.env.DB_DATABASE || 'hostingsystem'
+);
+database.connect();
 
-    require('./database/tables')();
-}
+require('./database/tables')();
+
+
+const authManager = require('./utils/authManager');
+(async () => {
+    authManager.addToken('SECRET-DEV-TOKEN', (await database.get('accounts').getOne({ UUID: 'a6e7ba88-53eb-4233-8789-691741583b3a' })))
+})();
+
+
+
+
 
 const app = express();
 app.use(cors());

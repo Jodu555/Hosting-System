@@ -26,7 +26,7 @@ function authenticationFull(req, res, next, cb) {
     if (token) {
         if (getUser(token)) {
             const user = getUser(token);
-            if (cb(req, user)) {
+            if (cb(user)) {
                 req.credentials = {
                     token,
                     user,
