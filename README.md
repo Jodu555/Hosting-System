@@ -19,7 +19,7 @@ A Hosting-System
     * PACKage Server : Pre defined servers
     * GENerated Server : User defined servers 
 
-## MVP
+## MVP - Minimum Viable Product
 * [ ] Authentication
 * [ ] Balance Increase
 * [ ] Product Ordering
