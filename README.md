@@ -19,6 +19,11 @@ A Hosting-System
     * PACKage Server : Pre defined servers
     * GENerated Server : User defined servers 
 
+## MVP
+* [ ] Authentication
+* [ ] Balance Increase
+* [ ] Product Ordering
+
 ## API Route Todos
 * [ ] All Routes are Prefixed with HOST/api/
 * [ ] /packages
