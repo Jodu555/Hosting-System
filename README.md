@@ -24,6 +24,11 @@ A Hosting-System
 * [ ] Balance Increase
 * [ ] Product Ordering
 
+## Tech Stack
+* Front-end: Vue.js + Vuex + VueRouter + Vue Composition API
+* Middle: MySql + Stripe
+* Back-end: Node.js + Express + Socket.io
+
 ## API Route Todos
 * [ ] All Routes are Prefixed with HOST/api/
 * [ ] /packages
