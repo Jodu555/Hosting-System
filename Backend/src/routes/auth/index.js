@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 router.post('/register', controller.register);
 router.post('/login', controller.login);
 router.get('/logout', authManager.authentication, controller.logout);
+router.get('/info', authManager.authentication, (req, res, next) => { res.json(req.credentials.user) });
 
 module.exports = {
     router,
