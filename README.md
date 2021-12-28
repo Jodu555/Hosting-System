@@ -25,9 +25,9 @@ A Hosting-System
 * [ ] Product Ordering
 
 ## Tech Stack
-* Front-end: Vue.js + Vuex + VueRouter + Vue Composition API
-* Middle: MySql + Stripe
-* Back-end: Node.js + Express + Socket.io
+* Front-end: Vue.js + Vuex + Vue-Router + Bootstrap
+* Other: MySql + Stripe + Socket.io
+* Back-end: Node.js + Express + ProxmoxApi
 
 ## API Route Todos
 * [ ] All Routes are Prefixed with HOST/api/
