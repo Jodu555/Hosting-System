@@ -57,9 +57,18 @@ const logout = async (req, res, next) => {
     res.json({ message: 'Successfully logged out!' });
 };
 
+const info = (req, res, next) => {
+    try {
+        res.json(req.credentials.user)
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    info
 }
