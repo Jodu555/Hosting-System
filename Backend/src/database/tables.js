@@ -199,7 +199,6 @@ function createSchemas() {
         },
     }
 
-
     const createPackageSchema = {
         UUID: {
             value: generateUUID,
@@ -223,7 +222,7 @@ function createSchemas() {
         },
     };
 
-    const transactionSchema = {
+    const createTransactionSchema = {
         UUID: {
             value: generateUUID,
         },
@@ -236,13 +235,34 @@ function createSchemas() {
         }
     }
 
+    const createCouponSchema = {
+        UUID: {
+            value: generateUUID,
+        },
+        type: {
+            enum: ['percent', 'fix'],
+        },
+        amount: {
+            min: 0,
+            max: 99.99
+        },
+        limit: {
+            min: 5,
+            max: 100000
+        },
+        redeemed: {
+            default: 0,
+        }
+    }
+
     database.registerSchema('registerSchema', registerSchema, 'accounts');
     database.registerSchema('loginSchema', loginSchema, 'accounts');
 
     database.registerSchema('createPackageSchema', createPackageSchema, 'kvm_packages');
 
-    return;
-    database.registerSchema('transactionSchema', transactionSchema, 'transactions');
+    database.registerSchema('createTransactionSchema', createTransactionSchema, 'transactions');
+
+    database.registerSchema('createCouponSchema', createCouponSchema, 'coupons');
 }
 
 module.exports = create;
