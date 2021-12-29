@@ -98,12 +98,38 @@ function createTables() {
 
     });
 
-    return;
+    database.createTable('coupons', {
+        options: {
+            PK: 'UUID',
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'type': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'amount': {
+            type: 'float',
+            null: false,
+        },
+        'stock': {
+            type: 'int',
+            null: true,
+        },
+        'redeemed': {
+            type: 'int',
+            null: true,
+        }
+    });
+
     database.createTable('transactions', {
         options: {
             PK: 'UUID',
             FK: {
-                'product_UUID': 'products/UUID'
+                'product_UUID': 'products/UUID',
+                'coupon_UUID': 'coupons/UUID'
             },
         },
         'UUID': {
@@ -121,8 +147,13 @@ function createTables() {
         'product_UUID': {
             type: 'varchar(64)',
             null: true,
+        },
+        'coupon_UUID': {
+            type: 'varchar(64)',
+            null: true,
         }
     });
+
 }
 
 function createSchemas() {
