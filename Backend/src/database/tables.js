@@ -232,7 +232,13 @@ function createSchemas() {
         amount: {
             min: 0,
             max: 99.99,
-        }
+        },
+        product_UUID: {
+            required: false,
+        },
+        coupon_UUID: {
+            required: false,
+        },
     }
 
     const createCouponSchema = {
