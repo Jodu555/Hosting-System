@@ -37,9 +37,11 @@ app.use(express.json());
 
 const { router: auth } = require('./routes/auth/index');
 const { router: packages } = require('./routes/packages/index');
+const { router: transactions } = require('./routes/transactions/index');
 
 app.use('/auth', auth);
 app.use('/packages', packages);
+app.use('/transactions', authManager.authentication(), transactions);
 
 
 const { errorHandling, notFound } = require('./utils/middleware');
