@@ -26,26 +26,27 @@ async function post(url, data, headers = {}) {
     //     body: JSON.stringify(data),
     //     agent: httpsAgent,
     // });
-    const response = await axios.get(url, data, {
+    const response = await axios.post(url, data, {
         httpsAgent,
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        }
+        headers,
     })
     return response;
 }
 
 async function put(url, data, headers = {}) {
-    const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-        agent: httpsAgent,
-    });
+    // const response = await fetch(url, {
+    //     method: 'PUT',
+    //     headers: {
+    //         ...headers,
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data),
+    //     agent: httpsAgent,
+    // });
+    const response = await axios.put(url, data, {
+        httpsAgent,
+        headers
+    })
     return response;
 }
 
