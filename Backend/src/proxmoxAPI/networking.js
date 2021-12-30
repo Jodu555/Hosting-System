@@ -51,10 +51,14 @@ async function put(url, data, headers = {}) {
 }
 
 async function del(url, headers = {}) {
-    const response = await fetch(url, {
-        method: 'DELETE',
-        headers,
-        agent: httpsAgent,
+    // const response = await fetch(url, {
+    //     method: 'DELETE',
+    //     headers,
+    //     agent: httpsAgent,
+    // });
+    const response = await axios.delete(url, {
+        httpsAgent,
+        headers
     });
     return response;
 }
