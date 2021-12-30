@@ -31,12 +31,12 @@ A Hosting-System
 
 ## API Route Todos
 * [ ] All Routes are Prefixed with HOST/api/
-* [ ] /packages
-    * [ ] GET : Shows all packages
-    * [ ] POST : Creates a new package
+* [x] /packages
+    * [x] GET : Shows all packages
+    * [x] POST : Creates a new package
 * [ ] /account : Shows account info (Balance, Name, E-Mail)
-* [ ] /transactions : Shows all taken Transactions
-    * [ ] /:ID : Shows a particular transaction
+* [x] /transactions : Shows all taken Transactions
+    * [x] /:ID : Shows a particular transaction
 * [ ] /products : Shows all Products
     * [ ] /:ID : Shows a particular Product
     * [ ] /service/:ID : Shows a particular Service (Backend decides from ID if GEN or PACK)
