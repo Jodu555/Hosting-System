@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const axios = require('axios');
 const https = require('https');
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
@@ -6,24 +7,32 @@ const httpsAgent = new https.Agent({
 
 
 async function get(url, headers) {
-    const response = await fetch(url, {
-        method: 'GET',
-        headers,
-        agent: httpsAgent,
-    });
+    // const response = await fetch(url, {
+    //     method: 'GET',
+    //     headers,
+    //     agent: httpsAgent,
+    // });
+    const response = await axios.get(url, { httpsAgent, headers })
     return response;
 }
 
 async function post(url, data, headers = {}) {
-    const response = await fetch(url, {
-        method: 'POST',
+    // const response = await fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         ...headers,
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data),
+    //     agent: httpsAgent,
+    // });
+    const response = await axios.get(url, data, {
+        httpsAgent,
         headers: {
             ...headers,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-        agent: httpsAgent,
-    });
+        }
+    })
     return response;
 }
 
