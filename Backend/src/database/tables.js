@@ -128,11 +128,16 @@ function createTables() {
         options: {
             PK: 'UUID',
             FK: {
+                'account_UUID': 'accounts/UUID',
                 'product_UUID': 'products/UUID',
                 'coupon_UUID': 'coupons/UUID'
             },
         },
         'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'account_UUID': {
             type: 'varchar(64)',
             null: false,
         },
