@@ -34,7 +34,7 @@ A Hosting-System
 * [x] /packages
     * [x] GET : Shows all packages
     * [x] POST : Creates a new package
-* [ ] /account : Shows account info (Balance, Name, E-Mail)
+* [x] /auth/info : Shows account info (Balance, Name, E-Mail)
 * [x] /transactions : Shows all taken Transactions
     * [x] /:ID : Shows a particular transaction
 * [ ] /products : Shows all Products
