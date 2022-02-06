@@ -19,39 +19,37 @@ class KVM {
         this.specs = specs;
     }
 
-    create() {
+    async create() {
         // Step 1: Clone the template
         // Step 2: Configure the new vm
-        // Step 3: prepare and upload the new network file
+        this.prepareFile();
+        const status = await this.uploadFile();
         // Step 4: TODO: Change password
     }
 
-    prepareFile() {
+    async uploadFile() {
+        const ssh = new NodeSSH()
+        await ssh.connect({
+            host: this.network.ip,
+            username: 'root',
+            password: process.env.DEFAULT_ROOT_PASSWORD
+        });
+        let failed = false;
+        await this.ssh.putFile(this.network.config, '/etc/network/interfaces').then(() => {
+            failed = false;
+        }, (error) => {
+            failed = true;
+        });
+        return failed;
+    }
 
-        //Step 1: Rewirte the file and pass in the params
+    //Rewirtes the file and passes in the params
+    prepareFile() {
         let data = fs.readFileSync(defaultNetworkConfig, 'utf-8');
         data = data.replaceAll('<ADDRESS>', this.network.ip);
         data = data.replaceAll('<GATEWAY>', this.network.gateway);
         data = data.replaceAll('<NETMASK>', this.network.netmask);
         fs.writeFileSync(this.network.config, data, 'utf8');
-
-        return;
-        //Step 2: Upload the file via SSH
-        const ssh = new NodeSSH()
-        ssh.connect({
-            host: this.network.ip,
-            username: 'root',
-            password: process.env.DEFAULT_ROOT_PASSWORD
-        }).then(() => {
-            ssh.putFile(this.network.config, '/etc/network/interfaces').then(() => {
-                console.log("The File thing is done")
-            }, function (error) {
-                console.log("Something's wrong")
-                console.log(error)
-            })
-        });
-
-
     }
 }
 
