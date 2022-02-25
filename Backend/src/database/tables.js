@@ -50,6 +50,10 @@ function createTables() {
             type: 'varchar(64)',
             null: false,
         },
+        'cost': { //The price will be in cents
+            type: 'int',
+            null: false,
+        },
         'cores': {
             type: 'int',
             null: false,
@@ -212,6 +216,10 @@ function createSchemas() {
             anum: false,
             min: 3,
             max: 20,
+        },
+        cost: {
+            default: 100,
+            min: 100,
         },
         cores: {
             min: 1,
