@@ -35,6 +35,10 @@ A Hosting-System
 - Other: MySql + Stripe + Socket.io
 - Back-end: Node.js + Express + ProxmoxApi
 
+## Notes
+
+- All the Balance/Money Realted stuff gets stored as cents so \* 100 to get the corresponding € Value | It just makes the math so much easier
+
 ## API Route Todos
 
 - [ ] All Routes are Prefixed with HOST/api/
