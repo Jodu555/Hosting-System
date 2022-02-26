@@ -54,9 +54,21 @@ A Hosting-System
 
 ## VM Creation Steps
 
-- [ ] Clone VM to x ID
-- [ ] Edit x VM to the new mac mem cpu disk
-- [ ] Configurate the internal file
+- **There Under me is so much bs it turns out it was so much harder then it is there**
+- [x] Clone VM to x ID
+- [x] Edit x VM to the new mac mem cpu disk
+- [x] Configurate the internal file
+- **But for me i let it stand their and write after this the real steps**
+- [x] Clone Vm to x ID
+- [x] Edit x VM to the specs
+- [x] Start The VM
+- [x] Wait for the vm to start
+- [x] Prepare the local network file
+- [x] Upload the local network file
+- [x] Configure the new Mac Address
+- [x] Start the VM up again
+- [x] Delete the local network file
+- [ ] Change the password
 
 ## Stretch
 
