@@ -129,15 +129,4 @@ app.listen(PORT, async () => {
         net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
         scsi0: 'local:3,format=qcow2'
     });
-
-
-    const kvmPackages = [
-        {
-            ID: '01233448',
-            name: '',
-            cores: 1,
-            memory: 1,
-            disk: 10
-        }
-    ]
 });
