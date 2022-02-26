@@ -34,7 +34,7 @@ class KVM {
     async uploadFile() {
         const ssh = new NodeSSH()
         await ssh.connect({
-            host: this.network.ip,
+            host: process.env.DEFAULT_IP_ADDRESS,
             username: 'root',
             password: process.env.DEFAULT_ROOT_PASSWORD
         });
