@@ -60,17 +60,17 @@ app.listen(PORT, async () => {
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
-    // const kvm = new KVM(100, {
-    //     ip: 'IP',
-    //     mac: 'MAC',
-    //     gateway: 'GATE',
-    //     netmask: '255.255.255.255',
-    // }, {
-    //     disk: 5,
-    //     cores: 3,
-    //     sockets: 3,
-    //     memory: 5012,
-    // });
+    const kvm = new KVM(100, {
+        ip: 'IP',
+        mac: 'MAC',
+        gateway: 'GATE',
+        netmask: '255.255.255.255',
+    }, {
+        disk: 5,
+        cores: 3,
+        sockets: 3,
+        memory: 5012,
+    });
 
     // kvm.prepareFile();
 
@@ -78,14 +78,7 @@ app.listen(PORT, async () => {
 
 
     // return;
-    const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
-        username: 'root@pam',
-        password: process.env.PASSWORD
-    })
 
-    await proxmoxAPI.authenticate();
-
-    const node = proxmoxAPI.getNode('ns3177623');
 
     // node.getVM('100').resize({ size: '5G' })
 
@@ -95,26 +88,6 @@ app.listen(PORT, async () => {
 
 
     // console.log(await node.information());
-
-    const template = node.getVM(100);
-    await template.clone({
-        newid: 101,
-        full: true // So the storage is independent
-    });
-
-    const newVM = node.getVM(101);
-    await newVM.configurate({
-        name: 'Test-API',
-        // ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
-        cores: 4,
-        sockets: 4,
-        memory: 6024,
-        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-        // scsi0: 'local:32,format=qcow2'
-    })
-    await newVM.configurate({
-        scsi0: 'local:32,format=qcow2'
-    })
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 

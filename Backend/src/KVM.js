@@ -1,15 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 const { NodeSSH } = require('node-ssh')
-
+const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
+
+const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
+    username: 'root@pam',
+    password: process.env.PASSWORD
+})
+
+await proxmoxAPI.authenticate();
+
+const node = proxmoxAPI.getNode('ns3177623');
 
 class KVM {
     /**
      * @param  {Number} ID
      * @param  {Object} network
+     * @param  {String} network.ip
+     * @param  {String} network.mac
+     * @param  {String} network.gateway
+     * @param  {String} network.netmask
      * @param  {Object} specs
+     * @param  {Number} specs.cores
+     * @param  {Number} specs.sockets
+     * @param  {Number} specs.memory
+     * @param  {Number} specs.disk
      */
     constructor(ID, network, specs) {
         this.ID = ID;
@@ -25,7 +42,22 @@ class KVM {
 
     async create() {
         // Step 1: Clone the template
+        const template = node.getVM(100);
+        await template.clone({
+            newid: 101,
+            full: true // So the storage is independent
+        });
         // Step 2: Configure the new vm
+        const newVM = node.getVM(101);
+        await newVM.configurate({
+            name: 'Test-API',
+            cores: 4,
+            sockets: 4,
+            memory: 6024,
+            net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+            // scsi0: 'local:32,format=qcow2'
+        })
+        // Step 3: Prepare File
         this.prepareFile();
         const status = await this.uploadFile();
         // Step 4: TODO: Change password
