@@ -33,6 +33,7 @@ class KVM {
 
     async create() {
         console.log(this);
+
         // Step 1: Clone the template
         const template = this.node.getVM(100);
         console.log(3);
@@ -40,6 +41,7 @@ class KVM {
             newid: Number(this.ID),
             full: true // So the storage is independent
         });
+
         // Step 2: Configure the new vm
         const newVM = this.node.getVM(Number(this.ID));
         console.log(4);
@@ -51,12 +53,21 @@ class KVM {
             net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
             scsi0: `local:${this.specs.disk},format=qcow2`
         })
-        // Step 3: Prepare File
+
+        // Step 3: Start the VM
+        newVM.status.start();
+
+
+        // Step 4: Prepare File
         this.prepareFile();
         console.log(5);
         const status = await this.uploadFile();
         console.log(status);
-        // Step 4: TODO: Change password
+
+        // Step 5: Reboot VM cause network config change
+        newVM.status.reboot();
+
+        // Step 6: TODO: Change password
     }
 
     async uploadFile() {

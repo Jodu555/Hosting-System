@@ -69,7 +69,6 @@ app.listen(PORT, async () => {
     const node = proxmoxAPI.getNode('ns3177623');
 
     const kvm = new KVM(101, {
-
     }, {
         disk: 10,
         cores: 4,
