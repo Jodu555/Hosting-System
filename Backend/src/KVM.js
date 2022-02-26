@@ -4,6 +4,8 @@ const { NodeSSH } = require('node-ssh')
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
 
+const wait = ms => new Promise((resolve, reject) => setTimeout(() => { resolve() }, ms));
+
 class KVM {
     /**
      * @param  {Number} ID
@@ -35,36 +37,43 @@ class KVM {
         console.log(this);
 
         // Step 1: Clone the template
+        console.log(1);
         const template = this.node.getVM(100);
-        console.log(3);
         await template.clone({
             newid: Number(this.ID),
             full: true // So the storage is independent
         });
 
         // Step 2: Configure the new vm
+        console.log(2);
         const newVM = this.node.getVM(Number(this.ID));
-        console.log(4);
         await newVM.configurate({
             name: `API-${this.ID}`,
             cores: this.specs.cores,
             sockets: this.specs.sockets,
             memory: this.specs.memory,
-            net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
-            scsi0: `local:${this.specs.disk},format=qcow2`
+            net0: `virtio=${process.env.DEFAULT_MAC_ADDRESS},bridge=vmbr0,firewall=1`,
         })
 
         // Step 3: Start the VM
+        console.log(3);
         newVM.status.start();
-
+        await wait(20000);
 
         // Step 4: Prepare File
+        console.log(4);
         this.prepareFile();
-        console.log(5);
         const status = await this.uploadFile();
         console.log(status);
 
-        // Step 5: Reboot VM cause network config change
+        // Step 5: Configure the mac address
+        console.log(5);
+        await newVM.configurate({
+            net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
+        })
+
+        // Step 6: Reboot VM cause network config change
+        console.log(6);
         newVM.status.reboot();
 
         // Step 6: TODO: Change password
@@ -72,17 +81,21 @@ class KVM {
 
     async uploadFile() {
         const ssh = new NodeSSH()
-        await ssh.connect({
+        const connectionDetails = {
             host: process.env.DEFAULT_IP_ADDRESS,
             username: 'root',
             password: process.env.DEFAULT_ROOT_PASSWORD
-        });
+        }
+        console.log(connectionDetails);
+        await ssh.connect(connectionDetails);
         let failed = false;
-        await this.ssh.putFile(this.network.config, '/etc/network/interfaces').then(() => {
+
+        await this.ssh.putFiles([{ local: this.network.config, remote: '/etc/network/interfaces' }]).then(() => {
             failed = false;
         }, (error) => {
             failed = true;
         });
+        ssh.dispose();
         return failed;
     }
 

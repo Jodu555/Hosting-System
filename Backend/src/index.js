@@ -77,6 +77,9 @@ app.listen(PORT, async () => {
     }, node);
 
     await kvm.create();
+    // await kvm.prepareFile();
+    // console.log(`kvm`, kvm);
+    // await kvm.uploadFile();
 
     // kvm.prepareFile();
 
