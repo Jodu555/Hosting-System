@@ -16,7 +16,7 @@ const database = Database.createDatabase(
 );
 database.connect();
 
-require('./database/tables')();
+// require('./database/tables')();
 
 
 const authManager = require('./utils/authManager');
@@ -56,15 +56,16 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-    return;
+
+    // return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
     // const kvm = new KVM(100, {
-    //     ip: '127.0.0.1',
-    //     mac: 'your-fictional-mac-addr',
-    //     gateway: null,
-    //     netmask: null,
+    //     ip: 'IP',
+    //     mac: 'MAC',
+    //     gateway: 'GATE',
+    //     netmask: '255.255.255.255',
     // }, {
     //     disk: 5,
     //     cores: 3,
@@ -77,7 +78,7 @@ app.listen(PORT, async () => {
     // console.log(kvm);
 
 
-    return;
+    // return;
     const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
         username: 'root@pam',
         password: process.env.PASSWORD
@@ -96,37 +97,37 @@ app.listen(PORT, async () => {
 
     // console.log(await node.information());
 
-    // const template = node.getVM(100);
-    // await template.clone({
-    //     newid: 101,
-    //     full: true // So the storage is independent
-    // });
+    const template = node.getVM(100);
+    await template.clone({
+        newid: 101,
+        full: true // So the storage is independent
+    });
 
-    // const newVM = node.getVM(101);
-    // await newVM.configurate({
-    //     name: 'Test-API',
-    //     // ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
-    //     cores: 4,
-    //     sockets: 4,
-    //     memory: 6024,
-    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-    //     // scsi0: 'local:32,format=qcow2'
-    // })
-    // await newVM.configurate({
-    //     scsi0: 'local:32,format=qcow2'
-    // })
+    const newVM = node.getVM(101);
+    await newVM.configurate({
+        name: 'Test-API',
+        // ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso',
+        cores: 4,
+        sockets: 4,
+        memory: 6024,
+        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+        // scsi0: 'local:32,format=qcow2'
+    })
+    await newVM.configurate({
+        scsi0: 'local:32,format=qcow2'
+    })
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
 
-    const newVM = node.getVM(100);
-    await newVM.create({
-        name: 'Template',
-        vmid: 100,
-        ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
-        cores: 2,
-        sockets: 2,
-        memory: 4048,
-        net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-        scsi0: 'local:3,format=qcow2'
-    });
+    // const newVM = node.getVM(100);
+    // await newVM.create({
+    //     name: 'Template',
+    //     vmid: 100,
+    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
+    //     cores: 2,
+    //     sockets: 2,
+    //     memory: 4048,
+    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
+    //     scsi0: 'local:3,format=qcow2'
+    // });
 });

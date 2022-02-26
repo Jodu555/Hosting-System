@@ -6,7 +6,11 @@ const { NodeSSH } = require('node-ssh')
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
 
 class KVM {
-
+    /**
+     * @param  {Number} ID
+     * @param  {Object} network
+     * @param  {Object} specs
+     */
     constructor(ID, network, specs) {
         this.ID = ID;
         this.network = {

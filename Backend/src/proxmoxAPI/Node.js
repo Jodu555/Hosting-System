@@ -13,7 +13,7 @@ class Node {
         const response = await get(`${this.url}/${this.ID}/status`, {
             cookie: `PVEAuthCookie=${this.auth.getTicket()};`
         });
-        return await response.json();
+        return response.data;
     }
 
     getVM(ID) {

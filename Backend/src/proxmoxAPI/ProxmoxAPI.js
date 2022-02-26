@@ -8,7 +8,7 @@ class ProxmoxApi {
 
     async authenticate() {
         const response = await post(this.URL + '/access/ticket', this.credentials)
-        this.auth = await response.json();
+        this.auth = response.data;
     }
 
     getNode(ID) {
