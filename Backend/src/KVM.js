@@ -1,18 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { NodeSSH } = require('node-ssh')
-const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
-
-const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
-    username: 'root@pam',
-    password: process.env.PASSWORD
-})
-
-await proxmoxAPI.authenticate();
-
-const node = proxmoxAPI.getNode('ns3177623');
 
 class KVM {
     /**
@@ -28,7 +18,7 @@ class KVM {
      * @param  {Number} specs.memory
      * @param  {Number} specs.disk
      */
-    constructor(ID, network, specs) {
+    constructor(ID, network, specs, node) {
         this.ID = ID;
         this.network = {
             ip: network.ip ?? '127.0.0.1',
@@ -38,28 +28,34 @@ class KVM {
             config: path.join(process.cwd(), 'work', `network-config-${this.ID}.txt`)
         };
         this.specs = specs;
+        this.node = node;
     }
 
     async create() {
+        console.log(this);
         // Step 1: Clone the template
-        const template = node.getVM(100);
+        const template = this.node.getVM(100);
+        console.log(3);
         await template.clone({
-            newid: 101,
+            newid: Number(this.ID),
             full: true // So the storage is independent
         });
         // Step 2: Configure the new vm
-        const newVM = node.getVM(101);
+        const newVM = this.node.getVM(Number(this.ID));
+        console.log(4);
         await newVM.configurate({
-            name: 'Test-API',
-            cores: 4,
-            sockets: 4,
-            memory: 6024,
-            net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-            // scsi0: 'local:32,format=qcow2'
+            name: `API-${this.ID}`,
+            cores: this.specs.cores,
+            sockets: this.specs.sockets,
+            memory: this.specs.memory,
+            net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
+            scsi0: `local:${this.specs.disk},format=qcow2`
         })
         // Step 3: Prepare File
         this.prepareFile();
+        console.log(5);
         const status = await this.uploadFile();
+        console.log(status);
         // Step 4: TODO: Change password
     }
 
