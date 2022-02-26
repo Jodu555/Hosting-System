@@ -77,13 +77,6 @@ app.listen(PORT, async () => {
     }, node);
 
     await kvm.create();
-    // await kvm.prepareFile();
-    // console.log(`kvm`, kvm);
-    // await kvm.uploadFile();
-
-    // kvm.prepareFile();
-
-    // console.log(kvm);
 
 
     // return;
@@ -99,16 +92,4 @@ app.listen(PORT, async () => {
     // console.log(await node.information());
 
     // console.log(await proxmoxAPI.getNodeInformation('ns3177623'));
-
-    // const newVM = node.getVM(100);
-    // await newVM.create({
-    //     name: 'Template',
-    //     vmid: 100,
-    //     ide2: 'local:iso/debian-10.11.0-amd64-netinst.iso,media=cdrom',
-    //     cores: 2,
-    //     sockets: 2,
-    //     memory: 4048,
-    //     net0: 'virtio=02:00:00:01:c6:6b,bridge=vmbr0,firewall=1',
-    //     scsi0: 'local:3,format=qcow2'
-    // });
 });

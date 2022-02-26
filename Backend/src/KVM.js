@@ -35,17 +35,28 @@ class KVM {
 
     async create() {
         console.log(this);
+        this._clone(); // Step 1: Clone the template
+        const newVM = this._configure(); // Step 2: Configure the new vm
+        newVM.status.start(); // Step 3: Start the VM
+        await wait(10000); // Step 4: Wait for the Vm to spin up
+        this.prepareFile();  // Step 5: Prepare File
+        await this.uploadFile(); // Step 6: Upload File
+        this._configureMac(newVM)  // Step 7: Configure the mac address
+        await newVM.status.start(); // Step 8: Start the VM
+        deleteFile(); // Step 9: Delete the network file
 
-        // Step 1: Clone the template
-        console.log(1);
+        // Step 10: TODO: Change password
+    }
+
+    //Vm Handling Stuff
+    _clone() {
         const template = this.node.getVM(100);
         await template.clone({
             newid: Number(this.ID),
             full: true // So the storage is independent
         });
-
-        // Step 2: Configure the new vm
-        console.log(2);
+    }
+    _configure() {
         const newVM = this.node.getVM(Number(this.ID));
         await newVM.configurate({
             name: `API-${this.ID}`,
@@ -54,31 +65,15 @@ class KVM {
             memory: this.specs.memory,
             net0: `virtio=${process.env.DEFAULT_MAC_ADDRESS},bridge=vmbr0,firewall=1`,
         })
-
-        // Step 3: Start the VM
-        console.log(3);
-        newVM.status.start();
-        await wait(20000);
-
-        // Step 4: Prepare File
-        console.log(4);
-        this.prepareFile();
-        const status = await this.uploadFile();
-        console.log(status);
-
-        // Step 5: Configure the mac address
-        console.log(5);
+        return newVM;
+    }
+    _configureMac(newVM) {
         await newVM.configurate({
             net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
         })
-
-        // Step 6: Reboot VM cause network config change
-        console.log(6);
-        newVM.status.reboot();
-
-        // Step 6: TODO: Change password
     }
 
+    //File Hanling Stuff
     async uploadFile() {
         const ssh = new NodeSSH()
         const connectionDetails = {
@@ -86,26 +81,27 @@ class KVM {
             username: 'root',
             password: process.env.DEFAULT_ROOT_PASSWORD
         }
-        console.log(connectionDetails);
         await ssh.connect(connectionDetails);
-        let failed = false;
 
-        await this.ssh.putFiles([{ local: this.network.config, remote: '/etc/network/interfaces' }]).then(() => {
+        let failed = false;
+        await ssh.putFiles([{ local: this.network.config, remote: '/etc/network/interfaces' }]).then(() => {
             failed = false;
         }, (error) => {
+            console.log('VM Network file upload failed:', error);
             failed = true;
         });
         ssh.dispose();
         return failed;
     }
-
-    //Rewirtes the file and passes in the params
     prepareFile() {
         let data = fs.readFileSync(defaultNetworkConfig, 'utf-8');
         data = data.replaceAll('<ADDRESS>', this.network.ip);
         data = data.replaceAll('<GATEWAY>', this.network.gateway);
         data = data.replaceAll('<NETMASK>', this.network.netmask);
         fs.writeFileSync(this.network.config, data, 'utf8');
+    }
+    deleteFile() {
+        fs.rmSync(this.network.config);
     }
 }
 
