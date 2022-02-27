@@ -35,13 +35,13 @@ class KVM {
 
     async create() {
         console.log(this);
-        this._clone(); // Step 1: Clone the template
-        const newVM = this._configure(); // Step 2: Configure the new vm
+        await this._clone(); // Step 1: Clone the template
+        const newVM = await this._configure(); // Step 2: Configure the new vm
         newVM.status.start(); // Step 3: Start the VM
         await wait(10000); // Step 4: Wait for the Vm to spin up
         this.prepareFile();  // Step 5: Prepare File
         await this.uploadFile(); // Step 6: Upload File
-        this._configureMac(newVM)  // Step 7: Configure the mac address
+        await this._configureMac(newVM)  // Step 7: Configure the mac address
         await newVM.status.start(); // Step 8: Start the VM
         deleteFile(); // Step 9: Delete the network file
 
@@ -49,14 +49,14 @@ class KVM {
     }
 
     //Vm Handling Stuff
-    _clone() {
+    async _clone() {
         const template = this.node.getVM(100);
         await template.clone({
             newid: Number(this.ID),
             full: true // So the storage is independent
         });
     }
-    _configure() {
+    async _configure() {
         const newVM = this.node.getVM(Number(this.ID));
         await newVM.configurate({
             name: `API-${this.ID}`,
@@ -67,7 +67,7 @@ class KVM {
         })
         return newVM;
     }
-    _configureMac(newVM) {
+    async _configureMac(newVM) {
         await newVM.configurate({
             net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
         })
