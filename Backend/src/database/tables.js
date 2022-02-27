@@ -163,6 +163,28 @@ function createTables() {
         }
     });
 
+    database.createTable('transactions', {
+        options: {
+            PK: 'UUID',
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'IP': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'VMAC': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'GATEWAY': {
+            type: 'varchar(64)',
+            null: false,
+        },
+    });
+
 }
 
 function createSchemas() {
