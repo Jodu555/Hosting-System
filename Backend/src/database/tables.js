@@ -183,6 +183,10 @@ function createTables() {
             type: 'varchar(64)',
             null: false,
         },
+        'USED': {
+            type: 'INT',
+            null: false,
+        },
     });
 
 }
