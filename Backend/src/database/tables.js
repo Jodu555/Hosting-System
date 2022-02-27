@@ -163,7 +163,7 @@ function createTables() {
         }
     });
 
-    database.createTable('transactions', {
+    database.createTable('ips', {
         options: {
             PK: 'UUID',
         },

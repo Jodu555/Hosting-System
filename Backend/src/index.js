@@ -16,7 +16,7 @@ const database = Database.createDatabase(
 );
 database.connect();
 
-// require('./database/tables')();
+require('./database/tables')();
 
 
 const authManager = require('./utils/authManager');
