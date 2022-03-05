@@ -2,7 +2,6 @@ const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
 const ProxmoxApi = require('../../proxmoxAPI/ProxmoxAPI');
 const database = Database.getDatabase();
-const { generateUUID } = require('../../utils/crypt');
 
 const purchaseKVM = async (req, res, next) => {
     try {
@@ -24,8 +23,6 @@ const purchaseKVM = async (req, res, next) => {
         const userEndBalance = req.credentials.user.balance - package.cost;
         await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
 
-
-        console.log(randomNetwork);
 
         //Set Random Network USED
         // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });

@@ -59,7 +59,7 @@ app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
 
-    return;
+    // return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
@@ -71,6 +71,10 @@ app.listen(PORT, async () => {
     const node = proxmoxAPI.getNode('ns3177623');
 
     const kvm = new KVM(101, {
+        ip: '141.95.120.229',
+        mac: '02:00:00:9f:f0:98',
+        gateway: '51.195.60.254',
+        netmask: '255.255.255.255',
     }, {
         disk: 10,
         cores: 4,
@@ -78,7 +82,7 @@ app.listen(PORT, async () => {
         memory: 5012,
     }, node);
 
-    // await kvm.create();
+    await kvm.create();
 
 
     // return;

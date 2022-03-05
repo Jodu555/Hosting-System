@@ -35,15 +35,25 @@ class KVM {
 
     async create() {
         console.log('KVM Creation: ', this);
+        console.log(1);
         await this._clone(); // Step 1: Clone the template
+        console.log(2);
         const newVM = await this._configure(); // Step 2: Configure the new vm
+        console.log(3);
         newVM.status.start(); // Step 3: Start the VM
+        console.log(4);
         await wait(10000); // Step 4: Wait for the Vm to spin up
+        console.log(5);
         this.prepareFile();  // Step 5: Prepare File
+        console.log(6);
         await this.uploadFile(); // Step 6: Upload File
+        console.log(7);
         await this._configureMac(newVM)  // Step 7: Configure the mac address
+        console.log(8);
         await newVM.status.start(); // Step 8: Start the VM
-        deleteFile(); // Step 9: Delete the network file
+        console.log(9);
+        this.deleteFile(); // Step 9: Delete the network file
+        console.log(10);
 
         // Step 10: TODO: Change password
     }
