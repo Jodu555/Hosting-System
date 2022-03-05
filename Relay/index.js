@@ -13,9 +13,16 @@ class RelayEntity {
         this.extPort = extPort;
         this.server = null;
     }
+
+    /**
+     * Stop the relay
+     */
     stop() {
         this.server.close(() => console.log('Relay Closed'));
     }
+    /**
+     * Start the relay
+     */
     start() {
         this.server = net.createServer((input) => {
             console.log('Relay got connection');
@@ -51,6 +58,9 @@ class RelayEntity {
 
 class Relay {
     constructor() {
+        /**
+         * @type {[RelayEntity]}
+         */
         this.relays = [];
     }
     insert(relay) {
