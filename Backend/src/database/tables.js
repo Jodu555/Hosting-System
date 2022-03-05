@@ -300,6 +300,16 @@ function createSchemas() {
         }
     }
 
+    const purchaseKVM = {
+        UUID: {
+            value: generateUUID,
+        },
+        packageUUID: {
+            type: 'TEXT',
+            required: true,
+        }
+    }
+
     database.registerSchema('registerSchema', registerSchema, 'accounts');
     database.registerSchema('loginSchema', loginSchema, 'accounts');
 
@@ -308,6 +318,9 @@ function createSchemas() {
     database.registerSchema('createTransactionSchema', createTransactionSchema, 'transactions');
 
     database.registerSchema('createCouponSchema', createCouponSchema, 'coupons');
+
+
+    database.registerSchema('purchaseKVM', purchaseKVM);
 }
 
 module.exports = create;
