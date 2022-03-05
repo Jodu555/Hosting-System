@@ -1,4 +1,5 @@
 const net = require('net');
+const { randomUUID } = require('crypto');
 
 
 class RelayEntity {
@@ -8,6 +9,9 @@ class RelayEntity {
         this.toIP = toIP;
         this.toPort = toPort;
         this.server = null;
+    }
+    stop() {
+        this.server.close(() => console.log('Relay Closed'));
     }
     start() {
         this.server = net.createServer((input) => {
@@ -42,10 +46,36 @@ class RelayEntity {
     }
 }
 
-// const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
-// re.start();
+class Relay {
+    constructor() {
+        this.relays = [];
+    }
+    insert(relay) {
+        this.relays.push(relay);
+    }
+    delete(extPort) {
+        const relay = this.relays.find(e => e.extPort == extPort);
+        const relayIdx = this.relays.findIndex(e => e.extPort == extPort);
 
-const re = new RelayEntity('45.88.109.32', 22, '127.0.0.1', 777);
-re.start();
+        relay.stop();
+
+        this.relays.splice(relayIdx, 1)
+
+    }
+
+}
+
+// new RelayEntity('THE IP the server has', the port the server has, 'the ip the relay has', the port the relay has);
+
+const relay = new Relay();
+
+const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
+
+relay.insert(re);
+
+relay.delete(25518)
+
+
+// re.start();
 
 // 25518
