@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 
 const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
-const KVM = require('./KVM')
+const KVM = require('./classes/KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.createDatabase(
