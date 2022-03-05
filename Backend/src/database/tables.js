@@ -58,6 +58,10 @@ function createTables() {
             type: 'int',
             null: false,
         },
+        'sockets': {
+            type: 'int',
+            null: false,
+        },
         'memory': {
             type: 'int',
             null: false,
@@ -248,6 +252,10 @@ function createSchemas() {
             min: 100,
         },
         cores: {
+            min: 1,
+            max: 15,
+        },
+        sockets: {
             min: 1,
             max: 15,
         },
