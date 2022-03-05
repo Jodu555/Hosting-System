@@ -1,6 +1,7 @@
 const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
 const ProxmoxApi = require('../../proxmoxAPI/ProxmoxAPI');
+const { getQueue } = require('../../utils/utils');
 const database = Database.getDatabase();
 
 const purchaseKVM = async (req, res, next) => {
@@ -46,7 +47,9 @@ const purchaseKVM = async (req, res, next) => {
             memory: package.memory,
         }, node);
 
-        kvm.create();
+        // kvm.create();
+
+        getQueue().push({ action: 'CREATE-KVM', kvm });
 
 
         const kvmCP = { ...kvm };
