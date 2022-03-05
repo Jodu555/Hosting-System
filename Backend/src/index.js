@@ -58,12 +58,6 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-
-    setInterval(() => {
-        const { getQueue } = require('./utils/utils');
-        console.log(getQueue());
-    }, 1000);
-
     return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services

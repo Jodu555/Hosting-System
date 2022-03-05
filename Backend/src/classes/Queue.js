@@ -8,6 +8,9 @@ class Queue {
     push(item) {
         this.queue.push(item);
     }
+    isEmpty() {
+        return this.queue.length == 0;
+    }
 }
 
 module.exports = Queue;
