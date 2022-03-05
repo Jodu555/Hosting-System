@@ -14,9 +14,9 @@ A Hosting-System
 
 ![This is the basic DB model.](https://images.jodu555.de/0daf05971699fd394b1c9c632d7b8b2b.png 'This is the db model till now.')
 
-## Stack Model
+## Architecture Model
 
-![This is the basic Stack model.](https://images.jodu555.de/f57c0e39aee9c6197b9f6041f563a87f.png 'This is the stack model till now.')
+![This is the basic Architecture model.](https://images.jodu555.de/f57c0e39aee9c6197b9f6041f563a87f.png 'This is the Architecture model till now.')
 
 ## Ideas
 
