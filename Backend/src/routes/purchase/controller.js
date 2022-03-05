@@ -14,9 +14,9 @@ const purchaseKVM = async (req, res, next) => {
         if (package.cost > req.credentials.user.balance)
             throw new Error('You dont have enough Money');
 
-        //Balance Removing
-        // const userEndBalance = req.credentials.user.balance - package.cost;
-        // await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
+        // Balance Removing
+        const userEndBalance = req.credentials.user.balance - package.cost;
+        await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
 
         //Get Random Network
         const networks = await database.get('ips').get({ USED: 0 });
@@ -44,10 +44,10 @@ const purchaseKVM = async (req, res, next) => {
             memory: package.memory,
         }, node);
 
-        // await kvm.create();
+        kvm.create();
 
 
-        res.json({ 'WORKS': true })
+        res.json({ kvm });
 
 
     } catch (error) {

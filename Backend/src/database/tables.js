@@ -29,7 +29,7 @@ function createTables() {
             null: false,
         },
         'balance': {
-            type: 'float',
+            type: 'BIGINT',
             null: false,
         },
         'refCode': {

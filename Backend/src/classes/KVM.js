@@ -34,7 +34,7 @@ class KVM {
     }
 
     async create() {
-        console.log(this);
+        console.log('KVM Creation: ', this);
         await this._clone(); // Step 1: Clone the template
         const newVM = await this._configure(); // Step 2: Configure the new vm
         newVM.status.start(); // Step 3: Start the VM
