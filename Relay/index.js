@@ -1,13 +1,16 @@
 const net = require('net');
-const { randomUUID } = require('crypto');
-
-
 class RelayEntity {
-    constructor(extIP, extPort, toIP, toPort) {
+    /**
+     * @param  {String} intIP The Internal IP of the server
+     * @param  {Number} intPort The Internal Port of the server
+     * @param  {String} extIP The Excternal IP the relay has
+     * @param  {Number} extPort The External Port the relay has
+     */
+    constructor(intIP, intPort, extIP, extPort) {
+        this.intIP = intIP;
+        this.intPort = intPort;
         this.extIP = extIP;
         this.extPort = extPort;
-        this.toIP = toIP;
-        this.toPort = toPort;
         this.server = null;
     }
     stop() {
@@ -18,7 +21,7 @@ class RelayEntity {
             console.log('Relay got connection');
 
             const output = new net.Socket();
-            output.connect(this.extPort, this.extIP, () => {
+            output.connect(this.intPort, this.intIP, () => {
                 console.log('Relay Established Handshake');
             });
 
@@ -40,9 +43,9 @@ class RelayEntity {
             });
         });
 
-        this.server.listen(this.toPort, this.toIP);
+        this.server.listen(this.extPort, this.extIP);
         console.log('Relay Listening:');
-        console.log(`  ${this.extIP}:${this.extPort} => ${this.toIP}:${this.toPort}`);
+        console.log(`  ${this.intIP}:${this.intPort} => ${this.extIP}:${this.extPort}`);
     }
 }
 
@@ -53,9 +56,9 @@ class Relay {
     insert(relay) {
         this.relays.push(relay);
     }
-    delete(extPort) {
-        const relay = this.relays.find(e => e.extPort == extPort);
-        const relayIdx = this.relays.findIndex(e => e.extPort == extPort);
+    delete(intPort) {
+        const relay = this.relays.find(e => e.intPort == intPort);
+        const relayIdx = this.relays.findIndex(e => e.intPort == intPort);
 
         relay.stop();
 
@@ -63,6 +66,7 @@ class Relay {
     }
 
 }
+
 
 // new RelayEntity('THE internal IP the server has', the internal port the server has, 'the external ip the relay has', the external port the relay has);
 
