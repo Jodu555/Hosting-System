@@ -60,12 +60,11 @@ class Relay {
         relay.stop();
 
         this.relays.splice(relayIdx, 1)
-
     }
 
 }
 
-// new RelayEntity('THE IP the server has', the port the server has, 'the ip the relay has', the port the relay has);
+// new RelayEntity('THE internal IP the server has', the internal port the server has, 'the external ip the relay has', the external port the relay has);
 
 const relay = new Relay();
 
