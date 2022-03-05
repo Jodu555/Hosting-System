@@ -320,7 +320,7 @@ function createSchemas() {
     database.registerSchema('createCouponSchema', createCouponSchema, 'coupons');
 
 
-    database.registerSchema('purchaseKVM', purchaseKVM);
+    database.registerSchema('purchaseKVM', purchaseKVM, 'products');
 }
 
 module.exports = create;

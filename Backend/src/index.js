@@ -38,10 +38,12 @@ app.use(express.json());
 const { router: auth } = require('./routes/auth/index');
 const { router: packages } = require('./routes/packages/index');
 const { router: transactions } = require('./routes/transactions/index');
+const { router: purchase } = require('./routes/purchase/index');
 
 app.use('/auth', auth);
 app.use('/packages', packages);
 app.use('/transactions', authManager.authentication(), transactions);
+app.use('/purchase', authManager.authentication(), purchase);
 
 
 const { errorHandling, notFound } = require('./utils/middleware');
@@ -57,7 +59,7 @@ app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
 
-    // return;
+    return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
