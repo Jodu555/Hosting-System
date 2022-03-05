@@ -4,12 +4,13 @@ let queue = new Queue();
 
 setInterval(async () => {
     if (queue.isEmpty()) return;
+    console.log('TICK', queue.queue.length);
     const obj = queue.get();
     if (obj.action == 'CREATE-KVM') {
         const kvm = obj.kvm;
-        kvm.create();
+        await kvm.create();
     }
-}, 1000);
+}, 2000);
 
 
 

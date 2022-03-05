@@ -47,16 +47,11 @@ const purchaseKVM = async (req, res, next) => {
             memory: package.memory,
         }, node);
 
-        // kvm.create();
-
         getQueue().push({ action: 'CREATE-KVM', kvm });
-
 
         const kvmCP = { ...kvm };
         delete kvmCP.node;
         res.json({ kvmCP });
-
-
     } catch (error) {
         next(error);
     }
