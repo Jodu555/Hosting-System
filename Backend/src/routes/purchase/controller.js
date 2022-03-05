@@ -15,9 +15,15 @@ const purchaseKVM = async (req, res, next) => {
             throw new Error('You dont have enough Money');
 
         //Balance Removing
-        const userEndBalance = req.credentials.user.balance - package.cost;
-        await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
+        // const userEndBalance = req.credentials.user.balance - package.cost;
+        // await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
 
+        //Get Random Network
+        const networks = await database.get('ips').get({ USED: 0 });
+        const randomNetwork = networks[Math.floor(Math.random() * networks.length)];
+
+        //Set Random Network USED
+        await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
 
         const proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
             username: 'root@pam',
@@ -27,6 +33,10 @@ const purchaseKVM = async (req, res, next) => {
         const node = proxmoxAPI.getNode('ns3177623');
 
         const kvm = new KVM(101, {
+            ip: randomNetwork.IP,
+            mac: randomNetwork.VMAC,
+            gateway: randomNetwork.GATEWAY,
+            netmask: '255.255.255.255',
         }, {
             disk: package.storage,
             cores: package.cores,
