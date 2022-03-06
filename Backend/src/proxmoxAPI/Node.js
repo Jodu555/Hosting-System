@@ -16,6 +16,11 @@ class Node {
         return response.data;
     }
 
+    async getVMStats() {
+        const response = await get(`${this.url}/${this.ID}/qemu`, this.auth.getHeaders());
+        return response.data.data;
+    }
+
     getVM(ID) {
         return new VM(this, ID);
     }

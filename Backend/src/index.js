@@ -58,7 +58,7 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-    return;
+    // return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
@@ -69,6 +69,10 @@ app.listen(PORT, async () => {
     await proxmoxAPI.authenticate();
     const node = proxmoxAPI.getNode('ns3177623');
 
+    const vmdata = await node.getVMStats();
+    console.log(vmdata);
+
+    return;
     const kvm = new KVM(101, {
         ip: '141.95.120.229',
         mac: '02:00:00:9f:f0:98',
