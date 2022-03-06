@@ -77,6 +77,12 @@ class Relay {
 
 }
 
+function toHexString(byteArray) {
+    return Array.from(byteArray, function (byte) {
+        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+    }).join('')
+}
+
 
 // new RelayEntity('THE internal IP the server has', the internal port the server has, 'the external ip the relay has', the external port the relay has);
 
