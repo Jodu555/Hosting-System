@@ -56,6 +56,7 @@ class KVM {
         console.log(10);
 
         // Step 10: TODO: Change password
+        // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
     }
 
     //Vm Handling Stuff
