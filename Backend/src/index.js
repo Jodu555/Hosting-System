@@ -69,9 +69,6 @@ app.listen(PORT, async () => {
     await proxmoxAPI.authenticate();
     const node = proxmoxAPI.getNode('ns3177623');
 
-    const vmdata = await node.getVMStats();
-    console.log(vmdata);
-
     return;
     const kvm = new KVM(101, {
         ip: '141.95.120.229',

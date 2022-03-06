@@ -62,6 +62,9 @@ const purchaseMC = (req, res, next) => {
 
 };
 
+const getNextFreeVMID = async (node) => (await node.getVMStats()).map(e => Number(e.vmid)).sort().pop() + 1;
+
+
 module.exports = {
     purchaseKVM,
     purchaseMC
