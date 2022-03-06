@@ -1,3 +1,4 @@
+const KVM = require("../classes/KVM");
 const Queue = require("../classes/Queue");
 const ProxmoxApi = require("../proxmoxAPI/ProxmoxAPI");
 
@@ -13,7 +14,11 @@ setInterval(async () => {
     console.log('TICK', queue.queue.length);
     const obj = queue.get();
     if (obj.action == 'CREATE-KVM') {
+        /**
+         * @type {KVM}
+         */
         const kvm = obj.kvm;
+        kvm.node = (await getProxmoxApi()).getNode('ns3177623');
         await kvm.create();
     }
 }, 2000);
