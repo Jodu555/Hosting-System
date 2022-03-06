@@ -1,5 +1,6 @@
 const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
+const { getRandomFromArray } = require('../../utils/crypt');
 const { getQueue, getProxmoxApi } = require('../../utils/utils');
 const database = Database.getDatabase();
 
@@ -14,8 +15,7 @@ const purchaseKVM = async (req, res, next) => {
             throw new Error('You dont have enough Money');
 
         //Get Random Network
-        const networks = await database.get('ips').get({ USED: 0 });
-        const randomNetwork = networks[Math.floor(Math.random() * networks.length)];
+        const randomNetwork = getRandomFromArray(await database.get('ips').get({ USED: 0 }))
         if (!randomNetwork)
             throw new Error(`No more free IP's`);
 

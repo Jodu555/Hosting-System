@@ -17,7 +17,14 @@ const generateID = (len) => {
     return id;
 }
 
+const getRandomFromArray = (array) => {
+    if (!Array.isArray(array))
+        throw new Error('Expected Array')
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 module.exports = {
     generateUUID,
-    generateID
+    generateID,
+    getRandomFromArray
 }
