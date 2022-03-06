@@ -1,6 +1,12 @@
 const Queue = require("../classes/Queue");
+const ProxmoxApi = require("../proxmoxAPI/ProxmoxAPI");
 
 let queue = new Queue();
+let proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
+    username: 'root@pam',
+    password: process.env.PASSWORD
+})
+
 
 setInterval(async () => {
     if (queue.isEmpty()) return;
@@ -15,7 +21,13 @@ setInterval(async () => {
 
 
 const getQueue = () => queue;
+const getProxmoxApi = async () => {
+    if (!proxmoxAPI.auth)
+        await proxmoxAPI.authenticate();
+    return proxmoxAPI;
+};
 
 module.exports = {
-    getQueue
+    getQueue,
+    getProxmoxApi
 }

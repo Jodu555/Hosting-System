@@ -4,7 +4,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
-const ProxmoxAPI = require('./proxmoxAPI/ProxmoxAPI')
 const KVM = require('./classes/KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
@@ -53,6 +52,7 @@ app.use(errorHandling);
 
 
 const { generateUUID } = require('./utils/crypt');
+const { getProxmoxApi } = require('./utils/utils');
 
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
@@ -62,12 +62,7 @@ app.listen(PORT, async () => {
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
-    const proxmoxAPI = new ProxmoxAPI(process.env.URL + '/api2/json', {
-        username: 'root@pam',
-        password: process.env.PASSWORD
-    })
-    await proxmoxAPI.authenticate();
-    const node = proxmoxAPI.getNode('ns3177623');
+    const node = (await getProxmoxApi()).getNode('ns3177623');
 
     return;
     const kvm = new KVM(101, {

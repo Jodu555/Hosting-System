@@ -1,7 +1,6 @@
 const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
-const ProxmoxApi = require('../../proxmoxAPI/ProxmoxAPI');
-const { getQueue } = require('../../utils/utils');
+const { getQueue, getProxmoxApi } = require('../../utils/utils');
 const database = Database.getDatabase();
 
 const purchaseKVM = async (req, res, next) => {
@@ -27,15 +26,9 @@ const purchaseKVM = async (req, res, next) => {
 
         //Set Random Network USED
         // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
+        const node = (await getProxmoxApi()).getNode('ns3177623');
 
-        const proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
-            username: 'root@pam',
-            password: process.env.PASSWORD
-        })
-        await proxmoxAPI.authenticate();
-        const node = proxmoxAPI.getNode('ns3177623');
-
-        const kvm = new KVM(101, {
+        const kvm = new KVM(getNextFreeVMID(), {
             ip: randomNetwork.IP,
             mac: randomNetwork.VMAC,
             gateway: randomNetwork.GATEWAY,
