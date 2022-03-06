@@ -63,7 +63,11 @@ class Relay {
          */
         this.relays = [];
     }
+    /**
+     * @param  {RelayEntity} relay
+     */
     insert(relay) {
+        relay.start();
         this.relays.push(relay);
     }
     delete(intPort) {
@@ -92,7 +96,7 @@ const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
 
 relay.insert(re);
 
-relay.delete(25518)
+// relay.delete(25518)
 
 
 // re.start();
