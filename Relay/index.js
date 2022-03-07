@@ -24,30 +24,41 @@ class RelayEntity {
      * Start the relay
      */
     start() {
+        this.errorCatch = (error) => {
+            console.log('Catched');
+        }
         this.server = net.createServer((input) => {
-            console.log('Relay got connection');
+            try {
+                console.log('Relay got connection');
 
-            const output = new net.Socket();
-            output.connect(this.intPort, this.intIP, () => {
-                console.log('Relay Established Handshake');
-            });
+                const output = new net.Socket();
+                output.connect(this.intPort, this.intIP, () => {
+                    console.log('Relay Established Handshake');
+                });
 
-            output.on('data', (svdata) => {
-                input.write(svdata);
-            });
+                output.on('data', (svdata) => {
+                    input.write(svdata);
+                });
 
-            input.on('data', (cldata) => {
-                output.write(cldata);
-            });
+                input.on('data', (cldata) => {
+                    output.write(cldata);
+                });
 
-            input.on('close', () => {
-                console.log('Relay got Input closed');
-                output.end();
-            });
-            output.on('close', () => {
-                console.log('Relay got Output closed');
-                input.end();
-            });
+                input.on('close', () => {
+                    console.log('Relay got Input closed');
+                    output.end();
+                });
+                output.on('close', () => {
+                    console.log('Relay got Output closed');
+                    input.end();
+                });
+                input.on('error', this.errorCatch);
+                output.on('error', this.errorCatch);
+
+
+            } catch (error) {
+                console.log('Catched');
+            }
         });
 
         this.server.listen(this.extPort, this.extIP);
