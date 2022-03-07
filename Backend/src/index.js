@@ -51,19 +51,14 @@ app.use(errorHandling);
 
 
 
-const { generateUUID } = require('./utils/crypt');
+const { generateUUID, generatePassword } = require('./utils/crypt');
 const { getProxmoxApi } = require('./utils/utils');
 
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-    const generatePassword = async () => {
-        const bcrypt = require('bcryptjs');
-        const hpw = Array(15).fill(0).map(e => generateUUID().replaceAll('-', '')).join('');
-        const pw = bcrypt.hash(hpw, 9);
-        return pw;
-    };
+
 
     console.log(await generatePassword());
 
