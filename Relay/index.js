@@ -106,15 +106,31 @@ function toHexString(byteArray) {
 
 class ServerStatusDes {
     constructor(data) {
+        this.newJson = {
+            description: 'A Relay Server',
+            players: { max: 20, online: 1, sample: [] },
+            version: { name: 'Spigot 1.8.8', protocol: 47 }
+        }
+        this.ogData = data;
         this.data = data;
+        console.log(this);
+        this.strip();
+        this.out = this.build();
         console.log(this);
     }
     strip() {
         //Strip the json data out
+        this.data = this.data.substring(5);
+        try {
+            this.json = JSON.parse(this.data);
+            this.ogJson = this.json;
+        } catch (error) {
+        }
     }
 
     build() {
-        //Build the json data back to play
+        //Build the out packet
+        return this.ogData.replace(JSON.stringify(this.ogJson), this.newJson);
     }
 }
 
