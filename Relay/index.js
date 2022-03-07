@@ -14,6 +14,7 @@ class RelayEntity {
         this.extIP = extIP;
         this.extPort = extPort;
         this.server = null;
+        this.debug = false;
     }
 
     /**
@@ -27,7 +28,7 @@ class RelayEntity {
      */
     start() {
         this.errorCatch = (error) => {
-            console.log('Catched');
+            this.debug && console.log('Catched');
         }
         // const mc = require('minecraft-protocol');
         // const states = mc.states;
@@ -39,7 +40,7 @@ class RelayEntity {
         const zlib = require('zlib');
         this.server = net.createServer((input) => {
             try {
-                console.log('Relay got connection');
+                this.debug && console.log('Relay got connection');
 
                 const output = new net.Socket();
                 output.connect(this.intPort, this.intIP, () => {
@@ -51,6 +52,7 @@ class RelayEntity {
                 var offset = 0;
 
                 output.on('data', (svdata) => {
+                    let json = null;
                     if (response.byteLength == 0) {
                         let packet = new Packet(svdata);
                         streamLength = packet.readVarIntL(); //read prepended varint for streamlength
@@ -65,7 +67,7 @@ class RelayEntity {
                         response = response.slice(offset);
 
                         try {
-                            var json = JSON.parse(response.toString('utf-8'));
+                            json = JSON.parse(response.toString('utf-8'));
                         } catch (err) {
                             console.log('JSON parse error: Server sent unexpected data.');
                         }
@@ -93,21 +95,27 @@ class RelayEntity {
                     // // return;
                     // console.log(123);
                     // }
-                    input.write(svdata);
+                    const out = new Packet()
+                    out.writeVarInt(0x00);
+                    out.writeString(JSON.stringify({ ...json, description: 'A Relay Server' }))
+                    // out.sign();
+                    input.write(out.get());
+                    // input.write(svdata);
                 });
 
                 input.on('data', (cldata) => {
+                    console.log('INFO: ' + cldata.toString());
                     //Packets from Client
                     // console.log('Packet from Client', cldata.toString());
                     output.write(cldata);
                 });
 
                 input.on('close', () => {
-                    console.log('Relay got Input closed');
+                    this.debug && console.log('Relay got Input closed');
                     output.end();
                 });
                 output.on('close', () => {
-                    console.log('Relay got Output closed');
+                    this.debug && console.log('Relay got Output closed');
                     input.end();
                 });
                 input.on('error', this.errorCatch);
