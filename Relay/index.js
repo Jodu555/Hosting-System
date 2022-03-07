@@ -38,14 +38,15 @@ class RelayEntity {
 
                 output.on('data', (svdata) => {
                     //Packets vom Server
-                    console.log('Packet from Server', svdata.toString());
-                    console.log(new Packet(svdata));
+                    // console.log('Packet from Server', svdata.toString());
+                    if (svdata.toString().includes('{"description"'))
+                        new ServerStatusDes(svdata.toString());
                     input.write(svdata);
                 });
 
                 input.on('data', (cldata) => {
                     //Packets vom Client
-                    console.log('Packet from Client', cldata.toString());
+                    // console.log('Packet from Client', cldata.toString());
                     output.write(cldata);
                 });
 
@@ -106,6 +107,14 @@ function toHexString(byteArray) {
 class ServerStatusDes {
     constructor(data) {
         this.data = data;
+        console.log(this);
+    }
+    strip() {
+        //Strip the json data out
+    }
+
+    build() {
+        //Build the json data back to play
     }
 }
 
