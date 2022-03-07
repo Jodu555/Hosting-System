@@ -58,7 +58,16 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-    // return;
+    const generatePassword = async () => {
+        const bcrypt = require('bcryptjs');
+        const hpw = Array(15).fill(0).map(e => generateUUID().replaceAll('-', '')).join('');
+        const pw = bcrypt.hash(hpw, 9);
+        return pw;
+    };
+
+    console.log(await generatePassword());
+
+    return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
