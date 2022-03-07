@@ -56,6 +56,7 @@ class KVM {
         console.log(10);
 
         // Step 10: TODO: Change password
+        this.changePassword(password);
         // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
     }
 
@@ -84,16 +85,31 @@ class KVM {
         })
     }
 
+    async changePassword(password) {
+        const ssh = await this.connectToServer();
+        let result = await ssh.execCommand(`echo 'root:${password}' | sudo chpasswd`);
+        console.log(result);
+        await wait(1200);
+        result = await ssh.execCommand(`reboot`);
+        console.log(result);
+        console.log('Password Changed');
+
+    }
+
+    async connectToServer(opts) {
+        const ssh = new NodeSSH()
+        const connectionDetails = opts;
+        await ssh.connect(connectionDetails);
+        return ssh;
+    }
+
     //File Hanling Stuff
     async uploadFile() {
-        const ssh = new NodeSSH()
-        const connectionDetails = {
+        const ssh = await this.connectToServer({
             host: process.env.DEFAULT_IP_ADDRESS,
             username: 'root',
             password: process.env.DEFAULT_ROOT_PASSWORD
-        }
-        await ssh.connect(connectionDetails);
-
+        });
         let failed = false;
         await ssh.putFiles([{ local: this.network.config, remote: '/etc/network/interfaces' }]).then(() => {
             failed = false;
