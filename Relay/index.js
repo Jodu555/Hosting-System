@@ -27,6 +27,12 @@ class RelayEntity {
         this.errorCatch = (error) => {
             console.log('Catched');
         }
+        const mc = require('minecraft-protocol');
+        const states = mc.states;
+        const mcData = require('minecraft-data')('1.8.8');
+        const version = mcData.version;
+
+        const des = mc.createDeserializer({ state: states.PLAY, isServer: true, version: '1.8.8' });
         this.server = net.createServer((input) => {
             try {
                 console.log('Relay got connection');
@@ -37,15 +43,26 @@ class RelayEntity {
                 });
 
                 output.on('data', (svdata) => {
-                    //Packets vom Server
+                    //Packets from Server
                     // console.log('Packet from Server', svdata.toString());
-                    if (svdata.toString().includes('{"description"'))
-                        new ServerStatusDes(svdata.toString());
+                    console.log(des.parsePacketBuffer(svdata));
+                    if (svdata.toString().includes('{"description"')) {
+
+                        // const des = new ServerStatusDes(svdata);
+
+                        // console.log({ 1: svdata.toString(), 2: des.build(), 3: Buffer.from(des.build(), 'hex'), 4: svdata });
+                        // input.write(Buffer.from(des.build(), 'utf8'));
+                        // return;
+
+                        // // input.write(Buffer.from(des.build(), 'utf-8'));
+                        // // return;
+                        // console.log(123);
+                    }
                     input.write(svdata);
                 });
 
                 input.on('data', (cldata) => {
-                    //Packets vom Client
+                    //Packets from Client
                     // console.log('Packet from Client', cldata.toString());
                     output.write(cldata);
                 });
@@ -105,7 +122,9 @@ function toHexString(byteArray) {
 }
 
 class ServerStatusDes {
-    constructor(data) {
+    constructor(buffer) {
+        const data = buffer.toString();
+        console.log(Buffer.compare(buffer, Buffer.from(data, 'binary')), buffer, Buffer.from(data, 'binary'));
         this.newJson = {
             description: 'A Relay Server',
             players: { max: 20, online: 1, sample: [] },
@@ -113,10 +132,7 @@ class ServerStatusDes {
         }
         this.ogData = data;
         this.data = data;
-        console.log(this);
-        this.strip();
-        this.out = this.build();
-        console.log(this);
+        // this.strip();
     }
     strip() {
         //Strip the json data out
@@ -130,7 +146,8 @@ class ServerStatusDes {
 
     build() {
         //Build the out packet
-        return this.ogData.replace(JSON.stringify(this.ogJson), this.newJson);
+        console.log(this.ogData, this.ogData.replace(JSON.stringify(this.ogJson), JSON.stringify(this.newJson)));
+        return this.ogData.replace(JSON.stringify(this.ogJson), JSON.stringify(this.newJson));
     }
 }
 
@@ -138,14 +155,8 @@ class ServerStatusDes {
 // new RelayEntity('THE internal IP the server has', the internal port the server has, 'the external ip the relay has', the external port the relay has);
 
 const relay = new Relay();
-
 const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
-
 relay.insert(re);
 
-// relay.delete(25518)
-
-
-// re.start();
-
-// 25518
+// const str = 'Hallo123 ich bin cool';
+// console.log(Buffer.from(str), Buffer.from(str));
