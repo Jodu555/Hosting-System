@@ -36,8 +36,6 @@ class RelayEntity {
         // const version = mcData.version;
 
         // const des = mc.createDeserializer({ state: states.HANDSHAKING, isServer: true, version: '1.8.8' });
-
-        const zlib = require('zlib');
         this.server = net.createServer((input) => {
             try {
                 this.debug && console.log('Relay got connection');
@@ -47,66 +45,19 @@ class RelayEntity {
                     console.log('Relay Established Handshake');
                 });
 
-                var response = Buffer.alloc(0);
-                var streamLength = [];
-                var offset = 0;
-
                 output.on('data', (svdata) => {
-                    let json = null;
-                    if (response.byteLength == 0) {
-                        let packet = new Packet(svdata);
-                        streamLength = packet.readVarIntL(); //read prepended varint for streamlength
-                        let jsonLength = packet.readVarIntLAt(streamLength[1] + 1); //json string bytelength
-                        offset = streamLength[1] + jsonLength[1] + 1; //1 byte packet id, data length, data string bytelength
-                        console.log(streamLength, jsonLength, offset);
-                    }
-
-                    response = Buffer.concat([response, svdata]);
-
-                    if (response.byteLength == (streamLength[0] + streamLength[1])) {
-                        response = response.slice(offset);
-
-                        try {
-                            json = JSON.parse(response.toString('utf-8'));
-                        } catch (err) {
-                            console.log('JSON parse error: Server sent unexpected data.');
-                        }
-
-                        if (json?.version?.name == 'TCPShield.com') {
-                            console.log('Server is running behind TCPShield.');
-                        }
-                        console.log(this.extIP, json);
-                    }
                     //Packets from Server
-                    // console.log('Packet from Server', svdata.toString());
-                    // if (svdata.toString().includes('{"description"')) {
+                    // console.log('INFO SR: ' + svdata.toString());
 
-                    //     const packet = new Packet(svdata);
-
-                    // console.log(des.parsePacketBuffer(svdata));
-
-                    // const des = new ServerStatusDes(svdata);
-
-                    // console.log({ 1: svdata.toString(), 2: des.build(), 3: Buffer.from(des.build(), 'hex'), 4: svdata });
-                    // input.write(Buffer.from(des.build(), 'hex'));
-                    // return;
-
-                    // // input.write(Buffer.from(des.build(), 'utf-8'));
-                    // // return;
-                    // console.log(123);
-                    // }
-                    const out = new Packet()
-                    out.writeVarInt(0x00);
-                    out.writeString(JSON.stringify({ ...json, description: 'A Relay Server' }))
-                    // out.sign();
-                    input.write(out.get());
-                    // input.write(svdata);
+                    const json = deserializeStatusAndCheck(svdata);
+                    json && console.log(json);
+                    input.write(svdata);
                 });
 
                 input.on('data', (cldata) => {
-                    console.log('INFO: ' + cldata.toString());
                     //Packets from Client
-                    // console.log('Packet from Client', cldata.toString());
+                    // console.log('INFO CL: ' + cldata.toString());
+
                     output.write(cldata);
                 });
 
@@ -159,41 +110,35 @@ class Relay {
 
 }
 
-function toHexString(byteArray) {
-    return Array.from(byteArray, function (byte) {
-        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-    }).join('')
-}
-
-class ServerStatusDes {
-    constructor(buffer) {
-        const data = Buffer.from(buffer.toString('hex'), 'hex').toString('utf-8');
-
-        // console.log(Buffer.compare(buffer, Buffer.from(data, 'binary')), buffer, Buffer.from(data, 'binary'));
-        this.newJson = {
-            description: 'A Relay Server',
-            players: { max: 20, online: 1, sample: [] },
-            version: { name: 'Spigot 1.8.8', protocol: 47 }
-        }
-        this.ogData = data;
-        this.data = data;
-        // this.strip();
+const deserializeStatusAndCheck = (svdata) => {
+    if (!svdata.toString().includes('{"description"')) return;
+    let response = Buffer.alloc(0);
+    let streamLength = [];
+    let offset = 0;
+    let json = null;
+    if (response.byteLength == 0) {
+        let packet = new Packet(svdata);
+        streamLength = packet.readVarIntL(); //read prepended varint for streamlength
+        let jsonLength = packet.readVarIntLAt(streamLength[1] + 1); //json string bytelength
+        offset = streamLength[1] + jsonLength[1] + 1; //1 byte packet id, data length, data string bytelength
     }
-    strip() {
-        //Strip the json data out
-        this.data = this.data.substring(5);
+
+    response = Buffer.concat([response, svdata]);
+
+    if (response.byteLength == (streamLength[0] + streamLength[1])) {
+        response = response.slice(offset);
+
         try {
-            this.json = JSON.parse(this.data);
-            this.ogJson = this.json;
-        } catch (error) {
+            json = JSON.parse(response.toString('utf-8'));
+        } catch (err) {
+            console.log('JSON parse error: Server sent unexpected data.');
+        }
+
+        if (json?.version?.name == 'TCPShield.com') {
+            console.log('Server is running behind TCPShield.');
         }
     }
-
-    build() {
-        //Build the out packet
-        console.log(this.ogData, this.ogData.replace(JSON.stringify(this.ogJson), JSON.stringify(this.newJson)));
-        return this.ogData.replace(JSON.stringify(this.ogJson), JSON.stringify(this.newJson));
-    }
+    return json;
 }
 
 
