@@ -37,31 +37,28 @@ class KVM {
 
     async create() {
         console.log('KVM Creation: ', this);
-        this.debug && console.log(1);
-        await this._clone(); // Step 1: Clone the template
-        this.debug && console.log(2);
-        const newVM = await this._configure(); // Step 2: Configure the new vm
-        this.debug && console.log(3);
-        newVM.status.start(); // Step 3: Start the VM
-        await wait(10000); // Step 4: Wait for the Vm to spin up
-        this.debug && console.log(5);
-        this.prepareFile();  // Step 5: Prepare File
-        this.debug && console.log(6);
-        await this.uploadFile(); // Step 6: Upload File
-        this.debug && console.log(7);
-        await this._configureMac(newVM)  // Step 7: Configure the mac address
+        this.debug && console.log('Step 1: Clone the template');
+        await this._clone();
+        this.debug && console.log('Step 2: Configure the new vm');
+        const newVM = await this._configure();
+        this.debug && console.log('Step 3: Start the VM');
+        newVM.status.start();
+        await wait(10000); // Wait for the Vm to spin up
+        this.debug && console.log('Step 4: Prepare File');
+        this.prepareFile();
+        this.debug && console.log('Step 5: Upload File');
+        await this.uploadFile();
+        this.debug && console.log('Step 6: Configure the mac address');
+        await this._configureMac(newVM);
         await wait(3000);
-        this.debug && console.log(8);
-        await newVM.status.shutdown(); // Step 8: Stop the VM
+        this.debug && console.log('Step 7: Stop the VM');
+        await newVM.status.shutdown();
         await wait(9000);
-        this.debug && console.log(9);
-        await newVM.status.start(); // Step 9: Start the VM
+        this.debug && console.log('Step 8: Start the VM');
+        await newVM.status.start();
         await wait(7000);
-
-        console.log(10);
-        // Step 10: TODO: Change password
         const password = await generatePassword();
-        this.debug && console.log(`password`, password);
+        console.log('Step 9: Change password to: ' + password);
         this.changePassword(password);
         // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
 
