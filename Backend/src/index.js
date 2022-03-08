@@ -60,7 +60,7 @@ app.listen(PORT, async () => {
 
 
 
-    console.log(await generatePassword());
+    // console.log(await generatePassword());
 
     return;
     console.log('KVM-GS#' + generateUUID()); // Generated Services

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { NodeSSH } = require('node-ssh')
+const { NodeSSH } = require('node-ssh');
+const { generatePassword } = require('../utils/crypt');
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
 
@@ -56,6 +57,8 @@ class KVM {
         console.log(10);
 
         // Step 10: TODO: Change password
+        const password = await generatePassword();
+        console.log(`password`, password);
         this.changePassword(password);
         // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
     }
@@ -88,7 +91,7 @@ class KVM {
     async changePassword(password) {
         const ssh = await this.connectToServer({
             host: this.network.ip,
-            password: process.env.DEFAULT_ROOT_PASSWORD;
+            password: process.env.DEFAULT_ROOT_PASSWORD,
         });
         let result = await ssh.execCommand(`echo 'root:${password}' | sudo chpasswd`);
         console.log(result);

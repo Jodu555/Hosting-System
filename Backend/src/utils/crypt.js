@@ -23,17 +23,18 @@ const getRandomFromArray = (array) => {
     return array[Math.floor(Math.random() * array.length)];
 }
 
+const bcrypt = require('bcryptjs');
 const generatePassword = async () => {
     // const fs = require('fs');
-    const poss = Array(94).fill(0).map((_, i) => String.fromCharCode(i + 33));
-    let pw = '';
-    for (let i = 0; i < 70; i++) {
-        pw += getRandomFromArray(poss);
-    }
+    // const poss = Array(94).fill(0).map((_, i) => String.fromCharCode(i + 33));
+    // let pw = '';
+    // for (let i = 0; i < 70; i++) {
+    //     pw += getRandomFromArray(poss);
+    // }
     // fs.writeFileSync('chars.json', JSON.stringify(poss, null, 3));
-    // const bcrypt = require('bcryptjs');
-    // const hpw = Array(15).fill(0).map(e => generateUUID().replaceAll('-', '')).join('');
-    // const pw = bcrypt.hash(hpw, 9);
+    // 
+    const hpw = Array(10).fill(0).map(e => generateUUID().replaceAll('-', '')).join('');
+    const pw = bcrypt.hash(hpw, 9);
     return pw;
 };
 
