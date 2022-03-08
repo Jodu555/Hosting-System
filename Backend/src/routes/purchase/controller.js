@@ -29,9 +29,11 @@ const purchaseKVM = async (req, res, next) => {
 
         console.log(randomNetwork, package);
 
-        const node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
+        const VM_ID = await getNextFreeVMID(
+            (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE)
+        );
 
-        const kvm = new KVM(getNextFreeVMID(node), {
+        const kvm = new KVM(VM_ID, {
             ip: randomNetwork.IP,
             mac: randomNetwork.VMAC,
             gateway: randomNetwork.GATEWAY,
