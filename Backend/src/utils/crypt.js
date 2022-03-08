@@ -34,7 +34,7 @@ const generatePassword = async () => {
     // fs.writeFileSync('chars.json', JSON.stringify(poss, null, 3));
     // 
     const hpw = Array(10).fill(0).map(e => generateUUID().replaceAll('-', '')).join('');
-    const pw = bcrypt.hash(hpw, 9);
+    const pw = (await bcrypt.hash(hpw, 9)).substring(0, 15);
     return pw;
 };
 
