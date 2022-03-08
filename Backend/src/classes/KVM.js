@@ -104,7 +104,8 @@ class KVM {
 
     async connectToServer(opts) {
         const ssh = new NodeSSH()
-        const connectionDetails = { ...{ username: 'root ' }, ...opts };
+        const connectionDetails = { ...{ username: 'root' }, ...opts };
+        console.log('Connection Details: ', connectionDetails);
         await ssh.connect(connectionDetails);
         return ssh;
     }

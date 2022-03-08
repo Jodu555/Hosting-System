@@ -58,7 +58,21 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
+    return;
 
+    const node = (await getProxmoxApi()).getNode('ns3177623');
+
+    const testKVM = new KVM(101, {
+    }, {
+        disk: 10,
+        cores: 4,
+        sockets: 4,
+        memory: 5012,
+    });
+
+    testKVM.node = node;
+
+    testKVM.changePassword('asdf');
 
     // console.log(await generatePassword());
 
@@ -66,7 +80,7 @@ app.listen(PORT, async () => {
     console.log('KVM-GS#' + generateUUID()); // Generated Services
     console.log('KVM-PS#' + generateUUID()); // Package Services
 
-    const node = (await getProxmoxApi()).getNode('ns3177623');
+
 
     return;
     const kvm = new KVM(101, {
