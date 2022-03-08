@@ -74,6 +74,19 @@ A Hosting-System
 - [x] Delete the local network file
 - [ ] Change the password
 
+## Stugg ive found to intercept and manipulate minecraft packets
+
+- https://wiki.vg/Protocol
+- https://wiki.vg/Server_List_Ping#Examples_2
+- https://wiki.vg/Server_List_Ping#Response
+- https://www.spigotmc.org/threads/solved-nodejs-reading-and-responding-to-minecraft-packets.345741/
+- https://www.spigotmc.org/threads/nodejs-responding-to-minecraft-ping-requests.346082/
+- https://stackoverflow.com/questions/66357253/nodejs-parse-raw-minecraft-packet
+- https://github.com/PrismarineJS/node-minecraft-protocol
+- https://codebeautify.org/hex-string-converter
+- https://github.com/0tii/Mc-Status/blob/master/mc-server-status.js
+- https://www.reddit.com/r/admincraft/comments/cvaghq/decoding_and_encoding_minecraft_packets_c/ey6a3ez/
+
 ## Stretch
 
 - [ ] Live Chat
