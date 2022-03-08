@@ -68,13 +68,20 @@ class KVM {
         const password = await generatePassword();
         console.log('Step 9: Changed password to: ' + password);
         this.changePassword(password);
-        // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
+        // HINT: To Change the password is used "echo 'root:PASSWORT' | chpasswd"
 
 
         this.deleteFile(); // Delete the generated network file
     }
 
     //Vm Handling Stuff
+
+    async connectToServer(opts) {
+        const ssh = new NodeSSH()
+        const connectionDetails = { ...{ username: 'root' }, ...opts };
+        await ssh.connect(connectionDetails);
+        return ssh;
+    }
     async _clone() {
         const template = this.node.getVM(100);
         await template.clone({
@@ -98,7 +105,6 @@ class KVM {
             net0: `virtio=${this.network.mac},bridge=vmbr0,firewall=1`,
         })
     }
-
     async changePassword(password) {
         const ssh = await this.connectToServer({
             host: this.network.ip,
@@ -107,17 +113,9 @@ class KVM {
         let result = await ssh.execCommand(`echo 'root:${password}' | chpasswd`);
         console.log(result);
         await wait(1200);
-        console.log('Password Changed');
 
     }
 
-    async connectToServer(opts) {
-        const ssh = new NodeSSH()
-        const connectionDetails = { ...{ username: 'root' }, ...opts };
-        console.log('Connection Details: ', connectionDetails);
-        await ssh.connect(connectionDetails);
-        return ssh;
-    }
 
     //File Hanling Stuff
     async uploadFile() {
