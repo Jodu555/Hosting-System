@@ -50,12 +50,13 @@ class KVM {
         await this.uploadFile(); // Step 6: Upload File
         this.debug && console.log(7);
         await this._configureMac(newVM)  // Step 7: Configure the mac address
-        await wait(5000);
+        await wait(3000);
         this.debug && console.log(8);
         await newVM.status.shutdown(); // Step 8: Stop the VM
         await wait(9000);
         this.debug && console.log(9);
         await newVM.status.start(); // Step 9: Start the VM
+        await wait(7000);
 
         console.log(10);
         // Step 10: TODO: Change password
