@@ -1,7 +1,7 @@
 const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
 const { getRandomFromArray } = require('../../utils/crypt');
-const { getQueue } = require('../../utils/utils');
+const { getQueue, getProxmoxApi } = require('../../utils/utils');
 const database = Database.getDatabase();
 
 const purchaseKVM = async (req, res, next) => {
@@ -27,7 +27,11 @@ const purchaseKVM = async (req, res, next) => {
         //Set Random Network USED
         // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
 
-        const kvm = new KVM(getNextFreeVMID(), {
+        console.log(randomNetwork, package);
+
+        const node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
+
+        const kvm = new KVM(getNextFreeVMID(node), {
             ip: randomNetwork.IP,
             mac: randomNetwork.VMAC,
             gateway: randomNetwork.GATEWAY,
@@ -44,7 +48,7 @@ const purchaseKVM = async (req, res, next) => {
         // Unused, cause the node gets added in the queue
         // const kvmCP = { ...kvm };
         // delete kvmCP.node;
-        res.json({ kvmCP });
+        res.json({ kvm });
     } catch (error) {
         next(error);
     }

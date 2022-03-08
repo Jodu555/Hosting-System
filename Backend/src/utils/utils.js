@@ -18,7 +18,7 @@ setInterval(async () => {
          * @type {KVM}
          */
         const kvm = obj.kvm;
-        kvm.node = (await getProxmoxApi()).getNode('ns3177623');
+        kvm.node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
         await kvm.create();
     }
 }, 2000);
