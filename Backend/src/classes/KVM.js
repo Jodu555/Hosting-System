@@ -39,26 +39,34 @@ class KVM {
         console.log('KVM Creation: ', this);
         this.debug && console.log('Step 1: Clone the template');
         await this._clone();
+
         this.debug && console.log('Step 2: Configure the new vm');
         const newVM = await this._configure();
+
         this.debug && console.log('Step 3: Start the VM');
         newVM.status.start();
         await wait(10000); // Wait for the Vm to spin up
+
         this.debug && console.log('Step 4: Prepare File');
         this.prepareFile();
+
         this.debug && console.log('Step 5: Upload File');
         await this.uploadFile();
+
         this.debug && console.log('Step 6: Configure the mac address');
         await this._configureMac(newVM);
         await wait(3000);
+
         this.debug && console.log('Step 7: Stop the VM');
         await newVM.status.shutdown();
         await wait(9000);
+
         this.debug && console.log('Step 8: Start the VM');
         await newVM.status.start();
         await wait(7000);
+
         const password = await generatePassword();
-        console.log('Step 9: Change password to: ' + password);
+        console.log('Step 9: Changed password to: ' + password);
         this.changePassword(password);
         // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
 
