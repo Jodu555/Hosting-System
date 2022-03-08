@@ -86,7 +86,10 @@ class KVM {
     }
 
     async changePassword(password) {
-        const ssh = await this.connectToServer();
+        const ssh = await this.connectToServer({
+            host: this.network.ip,
+            password: process.env.DEFAULT_ROOT_PASSWORD;
+        });
         let result = await ssh.execCommand(`echo 'root:${password}' | sudo chpasswd`);
         console.log(result);
         await wait(1200);
@@ -98,7 +101,7 @@ class KVM {
 
     async connectToServer(opts) {
         const ssh = new NodeSSH()
-        const connectionDetails = opts;
+        const connectionDetails = { ...{ username: 'root ' }, ...opts };
         await ssh.connect(connectionDetails);
         return ssh;
     }
@@ -107,7 +110,6 @@ class KVM {
     async uploadFile() {
         const ssh = await this.connectToServer({
             host: process.env.DEFAULT_IP_ADDRESS,
-            username: 'root',
             password: process.env.DEFAULT_ROOT_PASSWORD
         });
         let failed = false;
