@@ -27,8 +27,6 @@ const purchaseKVM = async (req, res, next) => {
         //Set Random Network USED
         // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
 
-        console.log(randomNetwork, package);
-
         const VM_ID = await getNextFreeVMID(
             (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE)
         );

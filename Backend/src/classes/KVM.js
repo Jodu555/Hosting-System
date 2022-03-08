@@ -32,37 +32,40 @@ class KVM {
         };
         this.specs = specs;
         this.node = node;
+        this.debug = true;
     }
 
     async create() {
         console.log('KVM Creation: ', this);
-        console.log(1);
+        this.debug && console.log(1);
         await this._clone(); // Step 1: Clone the template
-        console.log(2);
+        this.debug && console.log(2);
         const newVM = await this._configure(); // Step 2: Configure the new vm
-        console.log(3);
+        this.debug && console.log(3);
         newVM.status.start(); // Step 3: Start the VM
-        console.log(4);
         await wait(10000); // Step 4: Wait for the Vm to spin up
-        console.log(5);
+        this.debug && console.log(5);
         this.prepareFile();  // Step 5: Prepare File
-        console.log(6);
+        this.debug && console.log(6);
         await this.uploadFile(); // Step 6: Upload File
-        console.log(7);
+        this.debug && console.log(7);
         await this._configureMac(newVM)  // Step 7: Configure the mac address
-        console.log(8);
-        await newVM.status.reboot() // Step 8: Start the VM
-        console.log(9);
-        this.deleteFile(); // Step 9: Delete the network file
-        console.log(10);
-        await wait(10000) // Step 10: Wait for the vm to spin back up
-        console.log(11);
+        await wait(5000);
+        this.debug && console.log(8);
+        await newVM.status.shutdown(); // Step 8: Stop the VM
+        await wait(9000);
+        this.debug && console.log(9);
+        await newVM.status.start(); // Step 9: Start the VM
 
-        // Step 11: TODO: Change password
+        console.log(10);
+        // Step 10: TODO: Change password
         const password = await generatePassword();
-        console.log(`password`, password);
+        this.debug && console.log(`password`, password);
         this.changePassword(password);
         // HINT: To Change the password just run "echo 'root:145' | sudo chpasswd"
+
+
+        this.deleteFile(); // Delete the generated network file
     }
 
     //Vm Handling Stuff
