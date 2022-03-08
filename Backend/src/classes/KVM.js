@@ -51,12 +51,14 @@ class KVM {
         console.log(7);
         await this._configureMac(newVM)  // Step 7: Configure the mac address
         console.log(8);
-        await newVM.status.start(); // Step 8: Start the VM
+        await newVM.status.reboot() // Step 8: Start the VM
         console.log(9);
         this.deleteFile(); // Step 9: Delete the network file
         console.log(10);
+        await wait(10000) // Step 10: Wait for the vm to spin back up
+        console.log(11);
 
-        // Step 10: TODO: Change password
+        // Step 11: TODO: Change password
         const password = await generatePassword();
         console.log(`password`, password);
         this.changePassword(password);
@@ -93,11 +95,9 @@ class KVM {
             host: this.network.ip,
             password: process.env.DEFAULT_ROOT_PASSWORD,
         });
-        let result = await ssh.execCommand(`echo 'root:${password}' | sudo chpasswd`);
+        let result = await ssh.execCommand(`echo 'root:${password}' | chpasswd`);
         console.log(result);
         await wait(1200);
-        result = await ssh.execCommand(`reboot`);
-        console.log(result);
         console.log('Password Changed');
 
     }

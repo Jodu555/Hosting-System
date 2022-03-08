@@ -58,7 +58,7 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
-    return;
+    // return;
 
     const node = (await getProxmoxApi()).getNode('ns3177623');
 
