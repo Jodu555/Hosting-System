@@ -1,6 +1,11 @@
 const ftpd = require('ftpd');
 const fs = require('fs');
 
+/**
+ * @link https://github.com/nodeftpd/nodeftpd
+ * @link https://github.com/nodeftpd/nodeftpd/blob/master/test.js
+ */
+
 class FTPServer {
     constructor(host, port) {
         this.host = host;
