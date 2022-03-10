@@ -1,23 +1,20 @@
 const ftpd = require('ftpd');
+const fs = require('fs');
 
 class FTPServer {
     constructor(host, port) {
         this.host = host;
         this.port = port;
-        this.server = new ftpd.FtpServer({
-            host: this.host,
-            port: this.port
-        }, {
-            getInitialCwd: (connection) => {
-                console.log(1337, connection.auth);
-                return '/'
-            },
-            getRoot: (connection) => {
-                console.log(77477, connection.auth);
-                return connection?.auth?.result?.root || process.cwd();
-            },
+        // this.tls = {
+        //     key: fs.readFileSync('keyFile'),
+        //     cert: fs.readFileSync('certFile'),
+        // }
+        this.server = new ftpd.FtpServer(this.host, {
+            getInitialCwd: (connection) => '',
+            getRoot: (connection) => connection?.auth?.result?.root || process.cwd(),
             pasvPortRangeStart: 1025,
             pasvPortRangeEnd: 1050,
+            // tlsOptions: this.tls,
             allowUnauthorizedTls: true,
             useWriteFile: false,
             useReadFile: false,
@@ -30,9 +27,8 @@ class FTPServer {
             console.log('FTP Server error:', error);
         });
 
-
         this.server.on('client:connected', async (connection) => {
-            console.log('client connected: ');
+            console.log('client connected: ' + connection.socket.remoteAddress);
 
             const { username, success: usr_success, failure: usr_failure } = await new Promise((resolve, reject) => {
                 connection.once('command:user', (username, success, failure) => {
@@ -63,7 +59,7 @@ class FTPServer {
             pw_success(username);
 
         });
-        // server.debugging = 4;
+        this.server.debugging = 1;
         this.server.listen(this.port);
         console.log('Listening on port ' + this.port);
     }
