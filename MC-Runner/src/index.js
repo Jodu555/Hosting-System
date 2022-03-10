@@ -1,11 +1,14 @@
-const FtpSrv = require('ftp-srv');
+
+
+return;
+const { FtpSrv, FileSystem } = require('ftp-srv');
 const ftpServer = new FtpSrv({
     url: 'ftp://localhost:7878',
-    whitelist: ['PWD', 'TYPE', 'PASV', 'USER', 'PASS'],
-    file_format: (...data) => {
-        console.log(1337, ...data);
-        return null;
-    }
+    whitelist: ['PWD', 'TYPE', 'PASV', 'USER', 'PASS', 'FEAT', 'SYST', 'TYPE'],
+    // file_format: (...data) => {
+    //     console.log(1337, ...data);
+    //     return null;
+    // }
 });
 const path = require('path');
 
@@ -19,7 +22,8 @@ ftpServer.on('login', ({ connection: { id }, username, password }, resolve, reje
             // root: '../node_modules',
             cwd: '/',
             whitelist: ['PWD', 'TYPE', 'PASV'],
-            greeting: 'Welcome'
+            greeting: 'Welcome',
+            // fs: new MyFileSystem(connection)
         });
     } else {
         return reject({});
@@ -28,3 +32,22 @@ ftpServer.on('login', ({ connection: { id }, username, password }, resolve, reje
 
 ftpServer.listen()
     .then(() => console.log('Listening'));
+
+
+class MyFileSystem extends FileSystem {
+    constructor() {
+        console.log(...arguments);
+        super(...arguments);
+    }
+    currentDirectory() {
+        console.log(1, this);
+    }
+    get(name) {
+        console.log(2, name, this);
+    }
+    list(path) {
+        console.log(3, path, this);
+    }
+
+}
+
