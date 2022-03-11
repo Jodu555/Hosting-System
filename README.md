@@ -16,7 +16,7 @@ A Hosting-System
 
 ## Architecture Model
 
-![This is the basic Architecture model.](https://images.jodu555.de/30305b897d0628b4935413776b14a57f.png 'This is the Architecture model till now.')
+![This is the basic Architecture model.](https://images.jodu555.de/69974706ff4d13a6e8825c64b9e8e3d8.png 'This is the Architecture model till now.')
 
 ## Ideas
 
