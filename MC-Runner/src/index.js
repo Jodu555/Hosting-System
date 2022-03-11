@@ -3,7 +3,7 @@ const path = require('path')
 
 
 const server = new FTPServer('127.0.0.1', '7878')
-server.onAuthenticate((username, password) => {
+server.onAuthenticate(async (username, password) => {
     if (username == 'test' && password == '123') {
         return {
             success: true,
