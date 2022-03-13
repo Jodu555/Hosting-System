@@ -12,6 +12,6 @@
 	"license": "ISC",
 	"dependencies": {
 		"ftpd": "^0.2.16",
-		"mcmanager": "^0.0.1-security"
+		"mcservermanager": "^1.0.1"
 	}
 }
