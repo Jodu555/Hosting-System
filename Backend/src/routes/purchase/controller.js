@@ -31,12 +31,23 @@ const purchaseKVM = async (req, res, next) => {
             (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE)
         );
 
+        const service_UUID = generateUUID()
+        const product_UUID = generateUUID();
+
         await database.get('kvm_package_services').create({
-            UUID: generateUUID(),
-            product_UUID: null,
+            UUID: service_UUID,
+            product_UUID,
             ip_UUID: randomNetwork.UUID,
             package_UUID: packageUUID,
             pve_ID: VM_ID,
+        })
+
+        await database.get('products').create({
+            UUID: product_UUID,
+            account_UUID: req.credentials.user.UUID,
+            cost: package.cost,
+            service_UUID,
+            name: 'Default-KVM-Package-Name'
         })
 
         const kvm = new KVM(VM_ID, {
