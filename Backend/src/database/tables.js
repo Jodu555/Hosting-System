@@ -193,6 +193,37 @@ function createTables() {
         },
     });
 
+    database.createTable('kvm_package_services', {
+        options: {
+            PK: 'UUID',
+            FK: {
+                'product_UUID': 'products/UUID',
+                'ip_UUID': 'ips/UUID',
+                'package_UUID': 'kvm_packages/UUID',
+            }
+        },
+        'UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'product_UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'ip_UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'package_UUID': {
+            type: 'varchar(64)',
+            null: false,
+        },
+        'pve_ID': {
+            type: 'INT',
+            null: false,
+        }
+    })
+
 }
 
 function createSchemas() {
