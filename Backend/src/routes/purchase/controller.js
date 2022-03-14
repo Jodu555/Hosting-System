@@ -1,6 +1,6 @@
 const { Database } = require('@jodu555/mysqlapi');
 const KVM = require('../../classes/KVM');
-const { getRandomFromArray } = require('../../utils/crypt');
+const { getRandomFromArray, generateUUID } = require('../../utils/crypt');
 const { getQueue, getProxmoxApi } = require('../../utils/utils');
 const database = Database.getDatabase();
 
@@ -30,6 +30,14 @@ const purchaseKVM = async (req, res, next) => {
         const VM_ID = await getNextFreeVMID(
             (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE)
         );
+
+        await database.get('kvm_package_services').create({
+            UUID: generateUUID(),
+            product_UUID: null,
+            ip_UUID: randomNetwork.UUID,
+            package_UUID: packageUUID,
+            pve_ID: VM_ID,
+        })
 
         const kvm = new KVM(VM_ID, {
             ip: randomNetwork.IP,
