@@ -43,7 +43,7 @@ class KVM {
         this.debug && console.log('Step 1: Clone the template');
         await this._clone();
 
-        this.debug && console.log('Step 2: Configure the new vm');
+        this.debug && console.log('Step 2: Configure the new vm (also disk resizment)');
         const newVM = await this._configure();
 
         this.debug && console.log('Step 3: Start the VM');
