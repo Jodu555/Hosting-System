@@ -24,7 +24,7 @@ const purchaseKVM = async (req, res, next) => {
         await database.get('accounts').update({ UUID: req.credentials.user.UUID }, { balance: userEndBalance });
 
 
-        //Set Random Network USED
+        //TODO: IMPORTANT: Set Random Network USED
         // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
 
         const VM_ID = await getNextFreeVMID(
@@ -34,21 +34,24 @@ const purchaseKVM = async (req, res, next) => {
         const service_UUID = generateUUID()
         const product_UUID = generateUUID();
 
+
+        await database.get('products').create({
+            UUID: product_UUID,
+            account_UUID: req.credentials.user.UUID,
+            cost: package.cost,
+            name: 'Default-KVM-Package-Name'
+        });
+
         await database.get('kvm_package_services').create({
             UUID: service_UUID,
             product_UUID,
             ip_UUID: randomNetwork.UUID,
             package_UUID: packageUUID,
             pve_ID: VM_ID,
-        })
+        });
 
-        await database.get('products').create({
-            UUID: product_UUID,
-            account_UUID: req.credentials.user.UUID,
-            cost: package.cost,
-            service_UUID,
-            name: 'Default-KVM-Package-Name'
-        })
+        await database.get('products').update({ UUID: product_UUID }, { service_UUID });
+
 
         const kvm = new KVM(VM_ID, {
             ip: randomNetwork.IP,
