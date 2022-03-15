@@ -10,22 +10,30 @@ class VM {
         this.auth = new ProxmoxAuthorizer(this.ProxmoxApi);
         this.url = `${this.Node.url}/${this.Node.ID}/qemu`;
     }
-
+    /**
+     * @param  {Obect} data
+     */
     async create(data) {
         const response = await post(this.url, data, this.auth.getHeaders());
         debug && console.log(response.data);
     }
-
+    /**
+     * @param  {Obect} data
+     */
     async clone(data) {
         const response = await post(`${this.url}/${this.ID}/clone`, data, this.auth.getHeaders());
         debug && console.log(response.data);
     }
-
+    /**
+     * @param  {Obect} data
+     */
     async configurate(data) {
         const response = await post(`${this.url}/${this.ID}/config`, data, this.auth.getHeaders());
         debug && console.log(response.data);
     }
-
+    /**
+     * @param  {Obect} data
+     */
     async resize(data) {
         const response = await put(`${this.url}/${this.ID}/resize`, data, this.auth.getHeaders());
         debug && console.log(response.data);

@@ -20,7 +20,10 @@ class Node {
         const response = await get(`${this.url}/${this.ID}/qemu`, this.auth.getHeaders());
         return response.data.data;
     }
-
+    /**
+     * @param  {Number} ID
+     * @returns {VM}
+     */
     getVM(ID) {
         return new VM(this, ID);
     }
