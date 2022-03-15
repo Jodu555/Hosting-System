@@ -12,7 +12,7 @@ A Hosting-System
 
 ## ERM (Database Model)
 
-![This is the basic DB model.](https://images.jodu555.de/0daf05971699fd394b1c9c632d7b8b2b.png 'This is the db model till now.')
+![This is the basic DB model.](https://images.jodu555.de/66bdc0f86e16ecb9b672d98871fdf33a.png 'This is the db model till now.')
 
 ## Architecture Model
 
