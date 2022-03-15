@@ -101,7 +101,7 @@ class KVM {
             memory: this.specs.memory,
             net0: `virtio=${process.env.DEFAULT_MAC_ADDRESS},bridge=vmbr0,firewall=1`,
         })
-        await newVM.resize({ size: `${this.specs.disk}G` });
+        await newVM.resize({ disk: 'scsi0', size: `${this.specs.disk}G` });
         return newVM;
     }
     async _configureMac(newVM) {
