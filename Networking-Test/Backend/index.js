@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const { Server } = require("socket.io");
+const { instrument } = require("@socket.io/admin-ui");
 const https = require('https');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -34,6 +35,14 @@ const io = new Server(server, {
         origin: "*",
         methods: ["GET", "POST"]
     }
+});
+
+instrument(io, {
+    auth: {
+        type: "basic",
+        username: "admin",
+        password: "$2b$10$heqvAkYMez.Va6Et2uXInOnkCT6/uQj1brkrbyG3LpopDklcq7ZOS" // "changeit" encrypted with bcrypt
+    },
 });
 
 io.on('connection', (socket) => {
