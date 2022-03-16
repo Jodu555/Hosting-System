@@ -41,8 +41,23 @@ io.on('connection', (socket) => {
 
     socket.on('type', (type) => {
         console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
-    })
+        socket.auth = { type };
+
+        if (type.toLowerCase() == 'relay')
+            socketRelay(socket);
+    });
+
+
+
 })
+
+
+const socketRelay = (socket) => {
+    socket.on('connectionCrash', (data) => {
+        console.log(socket.auth);
+        console.log('GOT Connection-Crash ', data);
+    });
+}
 
 
 
