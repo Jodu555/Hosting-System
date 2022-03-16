@@ -39,12 +39,16 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log('Backend: Connection:', socket.id);
 
-    socket.on('type', (type) => {
-        console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
-        socket.auth = { type };
+    socket.on('auth', ({ type, key }) => {
+        type = type.toLowerCase();
+        if (type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY')
+            return console.log('Got an unsecure authorization!');
 
-        if (type.toLowerCase() == 'relay')
-            socketRelay(socket);
+        console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
+        socket.auth = { type, key };
+
+        if (type == 'relay')
+            socketInitRelay(socket);
     });
 
 
@@ -52,10 +56,12 @@ io.on('connection', (socket) => {
 })
 
 
-const socketRelay = (socket) => {
+const socketInitRelay = (socket) => {
     socket.on('connectionCrash', (data) => {
         console.log(socket.auth);
         console.log('GOT Connection-Crash ', data);
+
+        socket.emit('rl-openConnection', ({ extPort: 1337, intPort: 25567 }));
     });
 }
 
