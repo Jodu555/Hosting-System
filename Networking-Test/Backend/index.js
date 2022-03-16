@@ -37,8 +37,14 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('Backend: Connection: ', socket);
+    console.log('Backend: Connection:', socket.id);
+
+    socket.on('type', (type) => {
+        console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
+    })
 })
+
+
 
 // Your Middleware handlers here
 
