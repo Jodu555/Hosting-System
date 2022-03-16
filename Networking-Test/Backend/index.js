@@ -8,6 +8,16 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 
+
+const test = { a: 1, b: 2, ob: { lol: 3 } };
+// const other = { ...test };
+// const other = JSON.parse(JSON.stringify(test)); // This is the only Possible way to clone an obj without deep reference
+// const other = Object.assign(test, {});
+other.a = 3;
+other.ob.lol = 7;
+
+console.log(test, other);
+
 // const { Database } = require('@jodu555/mysqlapi');
 // const database = Database.createDatabase('localhost', 'root', '', 'rt-chat');
 // database.connect();
