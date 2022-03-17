@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 
     socket.on('auth', ({ type, key }) => {
         type = type.toLowerCase();
-        if ((type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY') || (type == 'MCRUNNER' && key !== 'SUPER-SECURE-MCRUNNER-KEY'))
+        if ((type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY') || (type == 'mcrunner' && key !== 'SUPER-SECURE-MCRUNNER-KEY'))
             return console.log('Got an unsecure authorization! Not the right type or authKey');
 
         console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
@@ -68,12 +68,20 @@ io.on('connection', (socket) => {
 
         if (type == 'relay')
             socketInitRelay(socket);
+
+        if (type == 'mcrunner')
+            socketInitMCRunner(socket);
+
     });
 
 
 
 })
 
+
+const socketInitMCRunner = (socket) => {
+
+};
 
 const socketInitRelay = (socket) => {
     socket.on('connectionCrash', (data) => {
@@ -82,7 +90,7 @@ const socketInitRelay = (socket) => {
 
         socket.emit('rl-openConnection', ({ extPort: 1337, intPort: 25567 }));
     });
-}
+};
 
 
 
