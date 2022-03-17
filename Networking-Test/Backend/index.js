@@ -9,14 +9,14 @@ const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 
 
-const test = { a: 1, b: 2, ob: { lol: 3 } };
-// const other = { ...test };
-// const other = JSON.parse(JSON.stringify(test)); // This is the only Possible way to clone an obj without deep reference
-// const other = Object.assign(test, {});
-other.a = 3;
-other.ob.lol = 7;
+// const test = { a: 1, b: 2, ob: { lol: 3 } };
+// // const other = { ...test };
+// // const other = JSON.parse(JSON.stringify(test)); // This is the only Possible way to clone an obj without deep reference
+// // const other = Object.assign(test, {});
+// other.a = 3;
+// other.ob.lol = 7;
 
-console.log(test, other);
+// console.log(test, other);
 
 // const { Database } = require('@jodu555/mysqlapi');
 // const database = Database.createDatabase('localhost', 'root', '', 'rt-chat');
@@ -60,8 +60,8 @@ io.on('connection', (socket) => {
 
     socket.on('auth', ({ type, key }) => {
         type = type.toLowerCase();
-        if (type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY')
-            return console.log('Got an unsecure authorization!');
+        if ((type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY') || (type == 'MCRUNNER' && key !== 'SUPER-SECURE-MCRUNNER-KEY'))
+            return console.log('Got an unsecure authorization! Not the right type or authKey');
 
         console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
         socket.auth = { type, key };
