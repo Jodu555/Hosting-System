@@ -6,11 +6,11 @@ socket.on('connect', () => {
     socket.emit('auth', { type: 'RELAY', key: 'SUPER-SECURE-RELAY-KEY' });
 
 
-    socket.timeout(1000).emit('connectionCrash', ({ UUID: '123' }));
+    socket.timeout(1000).emit('rl-conn-crash', ({ UUID: '123' }));
 });
 
 
-socket.on('rl-openConnection', (data) => {
+socket.on('rl-conn-open', (data) => {
     console.log('GOT openConnection', data);
 });
 

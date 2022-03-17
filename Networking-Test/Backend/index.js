@@ -84,11 +84,11 @@ const socketInitMCRunner = (socket) => {
 };
 
 const socketInitRelay = (socket) => {
-    socket.on('connectionCrash', (data) => {
+    socket.on('rl-conn-crash', (data) => {
         console.log(socket.auth);
         console.log('GOT Connection-Crash ', data);
 
-        socket.emit('rl-openConnection', ({ extPort: 1337, intPort: 25567 }));
+        socket.emit('rl-conn-open', ({ extPort: 1337, intPort: 25567 }));
     });
 };
 
