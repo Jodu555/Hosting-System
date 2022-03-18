@@ -48,7 +48,7 @@ const io = new Server(server, {
     }
 });
 
-console.log(encrypt(JSON.stringify({ type: 'MCRUNNER', ip: '127.0.0.1' })));
+// console.log(encrypt(JSON.stringify({ type: 'MCRUNNER', ip: '127.0.0.1' })));
 
 instrument(io, {
     auth: {
@@ -111,7 +111,6 @@ const socketInitMCRunner = (socket) => {
 
 const socketInitRelay = (socket) => {
     socket.on('rl-conn-crash', (data) => {
-        console.log(socket.auth);
         console.log('GOT Connection-Crash ', data);
 
         socket.emit('rl-conn-open', ({ extPort: 1337, intPort: 25567 }));
