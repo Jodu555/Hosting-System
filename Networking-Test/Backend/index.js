@@ -62,7 +62,8 @@ io.on('connection', (socket) => {
     console.log('Backend: Connection:', socket.id);
 
     const authError = (msg) => {
-        socket.send('auth-error', { message: msg });
+        console.error(msg);
+        socket.emit('auth-error', { message: msg });
     };
 
     socket.on('auth', (authValue) => {
