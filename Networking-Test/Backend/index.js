@@ -7,6 +7,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv').config();
+const { encrypt, decrypt } = require('./crypt.js');
 
 
 // const test = { a: 1, b: 2, ob: { lol: 3 } };
@@ -47,6 +48,8 @@ const io = new Server(server, {
     }
 });
 
+// console.log(encrypt(JSON.stringify({ type: 'RELAY', ip: '127.0.0.1' })));
+
 instrument(io, {
     auth: {
         type: "basic",
@@ -58,13 +61,33 @@ instrument(io, {
 io.on('connection', (socket) => {
     console.log('Backend: Connection:', socket.id);
 
-    socket.on('auth', ({ type, key }) => {
-        type = type.toLowerCase();
-        if ((type == 'relay' && key !== 'SUPER-SECURE-RELAY-KEY') || (type == 'mcrunner' && key !== 'SUPER-SECURE-MCRUNNER-KEY'))
-            return console.log('Got an unsecure authorization! Not the right type or authKey');
+    const authError = (msg) => {
+        socket.send('auth-error', { message: msg });
+    };
 
-        console.log(`Socket with ${socket.id}-ID proposed as ${type}`);
-        socket.auth = { type, key };
+    socket.on('auth', (authValue) => {
+        let type;
+        let ip;
+        try {
+            const { type: lc_type, ip: lc_ip } = JSON.parse(decrypt(authValue));
+            type = lc_type;
+            ip = lc_ip;
+        } catch (error) {
+            authError('Your hash isnt properly generated!')
+            return;
+        }
+        if (!socket.handshake.address.includes(ip)) {
+            authError('The ip you provided in the hash dont matches with yours!')
+            return;
+        }
+        type = type.toLowerCase();
+        if (type !== 'relay' && type !== 'mcrunner') {
+            authError('Your Provided type dont matches with ours!')
+            return;
+        }
+
+        console.log(`Socket with ${socket.id}-ID from: ${ip} proposed as ${type}`);
+        socket.auth = { type, ip };
 
         if (type == 'relay')
             socketInitRelay(socket);
