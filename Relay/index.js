@@ -12,6 +12,15 @@ const authValues = {
 
 const relay = new Relay();
 
+const config = {
+    RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP',
+    BACKEND_IP: 'PUT HERE THE IP OF YOUR BACKEND SERVER',
+    authValues: {
+        iv: 'PUT HERE YOUR IV',
+        content: 'PUT HERE YOUR CONTENT'
+    }
+}
+
 socket.on('connect', () => {
     socket.emit('auth', authValues);
 });
@@ -25,9 +34,9 @@ socket.on('auth-error', ({ message }) => {
 });
 
 
-socket.on('rl-conn-open', (data) => {
-    console.log('GOT openConnection', data);
-    //     const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
+socket.on('rl-conn-open', ({ extPort, intPort }) => {
+    console.log('GOT openConnection', extPort, intPort);
+    // const re = new RelayEntity('164.132.170.199', 25518, '127.0.0.1', 10337);
     // relay.insert(re);
 });
 
