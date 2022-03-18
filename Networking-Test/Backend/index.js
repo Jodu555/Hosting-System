@@ -48,7 +48,7 @@ const io = new Server(server, {
     }
 });
 
-// console.log(encrypt(JSON.stringify({ type: 'RELAY', ip: '127.0.0.1' })));
+console.log(encrypt(JSON.stringify({ type: 'MCRUNNER', ip: '127.0.0.1' })));
 
 instrument(io, {
     auth: {
@@ -89,6 +89,8 @@ io.on('connection', (socket) => {
 
         console.log(`Socket with ${socket.id}-ID from: ${ip} proposed as ${type}`);
         socket.auth = { type, ip };
+
+        socket.emit('auth-success');
 
         if (type == 'relay')
             socketInitRelay(socket);

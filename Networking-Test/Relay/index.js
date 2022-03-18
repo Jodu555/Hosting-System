@@ -7,9 +7,14 @@ const authValues = {
     content: '6c50b3224e05f0123d782c422ed9c855d7b72f2d77f7095b2dc9bcceca0de41bd7'
 };
 
+socket.on('auth-success', () => {
+    console.log('Got Authentication-Success! The System is now ready to work');
+});
+
 socket.on('auth-error', ({ message }) => {
     console.log('Got Authentication-Error:', message);
-})
+});
+
 
 socket.on('rl-conn-open', (data) => {
     console.log('GOT openConnection', data);
