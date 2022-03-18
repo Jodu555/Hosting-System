@@ -35,6 +35,7 @@ const deserializeStatusAndCheck = (svdata) => {
     return json;
 }
 
+// new RelayEntity('THE internal IP the server has', the internal port the server has, 'the external ip the relay has', the external port the relay has);
 class RelayEntity {
     /**
      * @param  {String} intIP The Internal IP of the server
