@@ -36,7 +36,10 @@ const initialize = () => {
                 return;
             }
 
-            console.log(`Socket with ${socket.id}-ID from: ${ip} proposed as ${type}`);
+            console.log(`Socket with`);
+            console.log(`   ID: ${socket.id}`);
+            console.log(`   IP: ${ip}`);
+            console.log(`  proposed as ${type}`);
             socket.auth = { type, ip };
 
             socket.emit('auth-success');
