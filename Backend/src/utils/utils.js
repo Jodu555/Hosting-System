@@ -6,7 +6,8 @@ let queue = new Queue();
 let proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
     username: 'root@pam',
     password: process.env.PASSWORD
-})
+});
+let io;
 
 // QUEUE //
 setInterval(async () => {
@@ -23,7 +24,8 @@ setInterval(async () => {
     }
 }, 2000);
 
-
+const setIo = (_io) => io = _io;
+const getIo = () => io;
 
 const getQueue = () => queue;
 const getProxmoxApi = async () => {
@@ -34,5 +36,7 @@ const getProxmoxApi = async () => {
 
 module.exports = {
     getQueue,
-    getProxmoxApi
+    getProxmoxApi,
+    getIo,
+    setIo,
 }

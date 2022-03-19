@@ -8,6 +8,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
+const { generateUUID, generatePassword } = require('./utils/crypt');
+const { getProxmoxApi, setIo } = require('./utils/utils');
+const { initialize: socket_initialize } = require('./sockets');
+
 const KVM = require('./classes/KVM')
 
 const { Database } = require('@jodu555/mysqlapi');
@@ -53,6 +57,7 @@ const io = new Server(server, {
     }
 });
 
+setIo(io);
 
 const { router: auth } = require('./routes/auth/index');
 const { router: packages } = require('./routes/packages/index');
@@ -69,10 +74,10 @@ const { errorHandling, notFound } = require('./utils/middleware');
 app.use('*', notFound);
 app.use(errorHandling);
 
+socket_initialize();
 
 
-const { generateUUID, generatePassword } = require('./utils/crypt');
-const { getProxmoxApi } = require('./utils/utils');
+
 
 const PORT = process.env.PORT || 3100;
 server.listen(PORT, async () => {
