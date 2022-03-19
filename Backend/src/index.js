@@ -28,14 +28,30 @@ const authManager = require('./utils/authManager');
 })();
 
 
-
-
-
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.json());
+
+
+let server;
+if (process.env.https) {
+    const sslProperties = {
+        key: fs.readFileSync(process.env.KEY_FILE),
+        cert: fs.readFileSync(process.env.CERT_FILE),
+    };
+    server = https.createServer(sslProperties, app)
+} else {
+    server = http.createServer(app);
+}
+
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 
 const { router: auth } = require('./routes/auth/index');
@@ -59,7 +75,7 @@ const { generateUUID, generatePassword } = require('./utils/crypt');
 const { getProxmoxApi } = require('./utils/utils');
 
 const PORT = process.env.PORT || 3100;
-app.listen(PORT, async () => {
+server.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
     return;
