@@ -25,7 +25,6 @@ database.connect();
 
 require('./database/tables')();
 
-
 const authManager = require('./utils/authManager');
 (async () => {
     authManager.addToken('SECRET-DEV-TOKEN', (await database.get('accounts').getOne({ UUID: 'a6e7ba88-53eb-4233-8789-691741583b3a' })))
@@ -59,6 +58,9 @@ const io = new Server(server, {
 
 setIo(io);
 
+socket_initialize();
+
+
 const { router: auth } = require('./routes/auth/index');
 const { router: packages } = require('./routes/packages/index');
 const { router: transactions } = require('./routes/transactions/index');
@@ -73,9 +75,6 @@ app.use('/purchase', authManager.authentication(), purchase);
 const { errorHandling, notFound } = require('./utils/middleware');
 app.use('*', notFound);
 app.use(errorHandling);
-
-socket_initialize();
-
 
 
 
