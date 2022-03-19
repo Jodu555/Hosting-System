@@ -1,18 +1,19 @@
 {
-  "name": "relay",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "minecraft-data": "^2.115.1",
-    "minecraft-protocol": "^1.31.0",
-    "socket.io-client": "^4.4.1",
-    "zlib": "^1.0.5"
-  }
+	"name": "relay",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"minecraft-data": "^2.115.1",
+		"minecraft-protocol": "^1.31.0",
+		"socket.io-client": "^4.4.1",
+		"zlib": "^1.0.5"
+	}
 }

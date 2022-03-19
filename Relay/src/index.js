@@ -1,5 +1,5 @@
-const Relay = require('./src/Relay');
-const RelayEntity = require('./src/RelayEntity');
+const Relay = require('./Relay');
+const RelayEntity = require('./RelayEntity');
 
 const { io } = require("socket.io-client");
 
