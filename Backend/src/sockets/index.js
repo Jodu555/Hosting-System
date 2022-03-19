@@ -1,6 +1,9 @@
 const { decrypt } = require("../utils/crypt");
 const { getIo } = require("../utils/utils");
 
+const { initialize: socketInitRelay } = require('./relay')
+const { initialize: socketInitMCRunner } = require('./mcrunner')
+
 const initialize = () => {
     const io = getIo();
 
@@ -45,10 +48,7 @@ const initialize = () => {
                 socketInitMCRunner(socket);
 
         });
-
-
-
-    })
+    });
 
 }
 
