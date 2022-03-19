@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // The key insistedly needs 32 chars
+const secretKey = process.env.ENCRYPTION_KEY; // The key insistedly needs 32 chars
 const algorithm = 'aes-256-ctr';
 
 const generateUUID = () => {
