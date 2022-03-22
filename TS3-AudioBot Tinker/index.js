@@ -30,5 +30,15 @@ async function call(url = '') {
     }
 }
 
+const RadioBots = {
+    'SpreeRadio': '',
+    'RTL': '',
+    'Energy': '',
+    'KissFM': '',
+    'JamFM': ''
+};
 
-createNewBot('apifinal', 'rooti.jodu555.de');
+Object.entries(RadioBots).forEach(([k, v]) => {
+    console.log(k, v);
+    // createNewBot(k, 'rooti.jodu555.de', v);
+});
