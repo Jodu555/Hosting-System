@@ -2,9 +2,16 @@ require('dotenv').config();
 const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
-async function createNewBot(name, address, autoplay) {
+async function createNewBot(name, address, autoplay = '') {
     await call(`/settings/copy/default/${name}`);
+    //Change the bot settings!
+    await call(`/settings/bot/set/${name}/connect.address/${address}`);
+    await call(`/settings/bot/set/${name}/connect.name/${name}`);
+    await call(`/settings/bot/set/${name}/events.onconnect/${autoplay}`);
     await call(`/settings/bot/set/${name}/connect.identity.key/`);
+
+    //Reloaded the settings & Bot Connection
+
     await call(`/settings/bot/reload/${name}`);
     await call(`/bot/connect/template/${name}`);
     console.log('Finished');
@@ -23,4 +30,5 @@ async function call(url = '') {
     }
 }
 
-createNewBot('apifinn');
+
+createNewBot('apifinal', 'rooti.jodu555.de');
