@@ -2,12 +2,12 @@ require('dotenv').config();
 const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
-async function createNewBot(name, address, autoplay = '') {
+async function createNewBot(name, address, autoplayUrl = '') {
     await call(`/settings/copy/default/${name}`);
     //Change the bot settings!
     await call(`/settings/bot/set/${name}/connect.address/${address}`);
     await call(`/settings/bot/set/${name}/connect.name/${name}`);
-    await call(`/settings/bot/set/${name}/events.onconnect/${autoplay}`);
+    await call(`/settings/bot/set/${name}/events.onconnect/!play ${autoplayUrl}`);
     await call(`/settings/bot/set/${name}/connect.identity.key/`);
 
     //Reloaded the settings & Bot Connection
@@ -31,7 +31,7 @@ async function call(url = '') {
 }
 
 const RadioBots = {
-    'SpreeRadio': '',
+    'SpreeRadio': 'https://stream.spreeradio.de/spree-live/mp3-256/konsole/',
     'RTL': '',
     'Energy': '',
     'KissFM': '',
@@ -40,5 +40,5 @@ const RadioBots = {
 
 Object.entries(RadioBots).forEach(([k, v]) => {
     console.log(k, v);
-    // createNewBot(k, 'rooti.jodu555.de', v);
+    createNewBot(k, 'rooti.jodu555.de', encodeURIComponent(v));
 });
