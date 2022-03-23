@@ -222,7 +222,7 @@ function createTables() {
             type: 'INT',
             null: false,
         },
-        'default_password': {
+        'defaultPassword': {
             type: 'TEXT',
             null: true,
         }
