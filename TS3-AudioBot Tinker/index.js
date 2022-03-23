@@ -2,20 +2,22 @@ require('dotenv').config();
 const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
-async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
-    await call(`/settings/copy/default/${name}`);
-    //Change the bot settings!
-    await call(`/settings/bot/set/${name}/connect.address/${address}`);
-    await call(`/settings/bot/set/${name}/connect.name/${name}`);
-    if (defaultChannel != null)
-        await call(`/settings/bot/set/${name}/connect.channel/${encUri(`/${defaultChannel}`)}`);
+const encUri = u => encodeURIComponent(u);
 
-    await call(`/settings/bot/set/${name}/events.onconnect/!play ${autoplayUrl}`);
-    await call(`/settings/bot/set/${name}/connect.identity.key/`);
+async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
+    // await call(`/settings/copy/default/${name}`);
+    // //Change the bot settings!
+    // await call(`/settings/bot/set/${name}/connect.address/${address}`);
+    // await call(`/settings/bot/set/${name}/connect.name/${name}`);
+    // if (defaultChannel != null)
+    //     await call(`/settings/bot/set/${name}/connect.channel/${encUri(`/${defaultChannel}`)}`);
+
+    // await call(`/settings/bot/set/${name}/events.onconnect/!play ${autoplayUrl}`);
+    // await call(`/settings/bot/set/${name}/connect.identity.key/`);
 
     //Reloaded the settings & Bot Connection
 
-    await call(`/settings/bot/reload/${name}`);
+    // await call(`/settings/bot/reload/${name}`);
     await call(`/bot/connect/template/${name}`);
     console.log('Finished');
 }
@@ -34,16 +36,17 @@ async function call(url = '') {
 }
 
 const RadioBots = {
-    'SpreeRadio': 'https://stream.spreeradio.de/spree-live/mp3-256/konsole/',
-    'RTL': 'http://stream.104.6rtl.com/rtl-live/mp3-192/radio-browser.info/',
-    'Energy': 'http://cdn.nrjaudio.fm/adwz1/de/33019/mp3_128.mp3',
-    'KissFM': '',
-    'JamFM': ''
+    // 'BB-Radio': ['http://irmedia.streamabc.net/irm-bbradiolive-mp3-128-4531502', 38],
+    // 'SpreeRadio': ['https://stream.spreeradio.de/spree-live/mp3-256/konsole/', 39],
+    // 'RTL': ['http://stream.104.6rtl.com/rtl-live/mp3-192/radio-browser.info/', 40],
+    // 'Energy': ['http://cdn.nrjaudio.fm/adwz1/de/33019/mp3_128.mp3', 41],
+    // 'KissFM': ['https://topradio-de-hz-fal-stream03-cluster01.radiohost.de/kissfm_128', 42],
+    // 'JamFM': ['http://stream.jam.fm/jamfm-live/mp3-192/tunein', 43]
 };
 
-Object.entries(RadioBots).forEach(([k, v]) => {
-    console.log(k, v);
-    createNewBot(k, 'rooti.jodu555.de', encUri(v));
+Object.entries(RadioBots).forEach(([name, [stream, channel]]) => {
+    console.log(name, stream, channel);
+    createNewBot(name, '178.254.35.43', encUri(stream), channel);
 });
 
-const encUri = u => encodeURIComponent(u);
+
