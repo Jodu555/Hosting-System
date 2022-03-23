@@ -5,20 +5,25 @@ const API_URL = process.env.API_URL + '/api';
 const encUri = u => encodeURIComponent(u);
 
 async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
-    // await call(`/settings/copy/default/${name}`);
-    // //Change the bot settings!
-    // await call(`/settings/bot/set/${name}/connect.address/${address}`);
-    // await call(`/settings/bot/set/${name}/connect.name/${name}`);
-    // if (defaultChannel != null)
-    //     await call(`/settings/bot/set/${name}/connect.channel/${encUri(`/${defaultChannel}`)}`);
 
-    // await call(`/settings/bot/set/${name}/events.onconnect/!play ${autoplayUrl}`);
-    // await call(`/settings/bot/set/${name}/connect.identity.key/`);
+    const nameValidation = /(?![a-zA-Z0-9_-])./gm;
 
-    //Reloaded the settings & Bot Connection
+    constSafeName = name.replace(nameValidation, '');
 
-    // await call(`/settings/bot/reload/${name}`);
-    await call(`/bot/connect/template/${name}`);
+    await call(`/settings/copy/default/${constSafeName}`);
+    //Change the bot settings!
+    await call(`/settings/bot/set/${constSafeName}/connect.address/${address}`);
+    await call(`/settings/bot/set/${constSafeName}/connect.name/${name}`);
+    if (defaultChannel != null)
+        await call(`/settings/bot/set/${constSafeName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
+
+    await call(`/settings/bot/set/${constSafeName}/events.onconnect/!play ${autoplayUrl}`);
+    await call(`/settings/bot/set/${constSafeName}/connect.identity.key/`);
+
+    // Reloaded the settings & Bot Connection
+
+    await call(`/settings/bot/reload/${constSafeName}`);
+    await call(`/bot/connect/template/${constSafeName}`);
     console.log('Finished');
 }
 
@@ -36,6 +41,7 @@ async function call(url = '') {
 }
 
 const RadioBots = {
+    'Jodu\'s Bot': ['https://m4a-64.jango.com/44/03/98/4403985957274169186.m4a', 9]
     // 'BB-Radio': ['http://irmedia.streamabc.net/irm-bbradiolive-mp3-128-4531502', 38],
     // 'SpreeRadio': ['https://stream.spreeradio.de/spree-live/mp3-256/konsole/', 39],
     // 'RTL': ['http://stream.104.6rtl.com/rtl-live/mp3-192/radio-browser.info/', 40],
