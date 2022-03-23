@@ -8,12 +8,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
-const { generateUUID, generatePassword } = require('./utils/crypt');
-const { getProxmoxApi, setIo } = require('./utils/utils');
-const { initialize: socket_initialize } = require('./sockets');
-
-const KVM = require('./classes/KVM')
-
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.createDatabase(
     process.env.DB_HOST || 'localhost',
@@ -24,6 +18,11 @@ const database = Database.createDatabase(
 database.connect();
 
 require('./database/tables')();
+
+const { generateUUID, generatePassword } = require('./utils/crypt');
+const { getProxmoxApi, setIo } = require('./utils/utils');
+const { initialize: socket_initialize } = require('./sockets');
+
 
 const authManager = require('./utils/authManager');
 (async () => {
@@ -77,12 +76,13 @@ app.use('*', notFound);
 app.use(errorHandling);
 
 
-
 const PORT = process.env.PORT || 3100;
 server.listen(PORT, async () => {
     console.log(`Express App is listening on ${PORT}`);
 
     return;
+
+    const KVM = require('./classes/KVM')
 
     const node = (await getProxmoxApi()).getNode('ns3177623');
 

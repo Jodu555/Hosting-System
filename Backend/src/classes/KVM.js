@@ -42,6 +42,7 @@ class KVM {
     }
 
     async create() {
+
         console.log('KVM Creation: ', this);
         this.debug && console.log('Step 1: Clone the template');
         await this._clone();
@@ -73,7 +74,7 @@ class KVM {
 
         const password = await generatePassword();
         console.log('Step 9: Changed password to: ' + password);
-        this.changePassword(password);
+        await this.changePassword(password);
         // HINT: To Change the password is used "echo 'root:PASSWORT' | chpasswd"
 
 
