@@ -115,7 +115,6 @@ class KVM {
             password: process.env.DEFAULT_ROOT_PASSWORD,
         });
         let result = await ssh.execCommand(`echo 'root:${password}' | chpasswd`);
-        console.log(result);
         await wait(1200);
 
     }
