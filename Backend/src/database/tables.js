@@ -221,6 +221,10 @@ function createTables() {
         'pve_ID': {
             type: 'INT',
             null: false,
+        },
+        'default_password': {
+            type: 'TEXT',
+            null: true,
         }
     })
 

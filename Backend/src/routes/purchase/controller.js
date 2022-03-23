@@ -81,10 +81,15 @@ const purchaseMC = (req, res, next) => {
 
 };
 
+const purchaseTS3Bot = (req, res, next) => {
+
+};
+
 const getNextFreeVMID = async (node) => (await node.getVMStats()).map(e => Number(e.vmid)).sort().pop() + 1;
 
 
 module.exports = {
     purchaseKVM,
-    purchaseMC
+    purchaseMC,
+    purchaseTS3Bot
 }
