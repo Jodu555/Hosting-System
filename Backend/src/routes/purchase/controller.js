@@ -63,7 +63,7 @@ const purchaseKVM = async (req, res, next) => {
             cores: package.cores,
             sockets: package.sockets,
             memory: package.memory,
-        });
+        }, service_UUID);
 
         getQueue().push({ action: 'CREATE-KVM', kvm });
 

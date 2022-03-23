@@ -21,6 +21,7 @@ setInterval(async () => {
         const kvm = obj.kvm;
         kvm.node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
         await kvm.create();
+        console.log('VM Creation was successful!', kvm);
     }
 }, 2000);
 

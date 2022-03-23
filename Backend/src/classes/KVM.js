@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { NodeSSH } = require('node-ssh');
 const { generatePassword } = require('../utils/crypt');
+const { Database } = require('@jodu555/mysqlapi');
+const database = Database.getDatabase();
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
 
@@ -21,7 +23,7 @@ class KVM {
      * @param  {Number} specs.memory
      * @param  {Number} specs.disk
      */
-    constructor(ID, network, specs, node) {
+    constructor(ID, network, specs, service_UUID, node,) {
         this.ID = ID;
         this.network = {
             ip: network.ip ?? '127.0.0.1',
@@ -31,6 +33,7 @@ class KVM {
             config: path.join(process.cwd(), 'work', `network-config-${this.ID}.txt`)
         };
         this.specs = specs;
+        this.service_UUID = service_UUID;
         /**
          * @type {import('../proxmoxAPI/Node.js')}
          */
@@ -117,6 +120,7 @@ class KVM {
         let result = await ssh.execCommand(`echo 'root:${password}' | chpasswd`);
         await wait(1200);
 
+        await database.get('kvm_package_services').update({ UUID: this.service_UUID }, { defaultPassword: password });
     }
 
 
