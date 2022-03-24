@@ -1,0 +1,8 @@
+{
+   "RELAY_IP": "PUT HERE THE EXTERNAL RELAY IP",
+   "BACKEND_IP": "PUT HERE THE IP OF YOUR BACKEND SERVER",
+   "authValues": {
+      "iv": "PUT HERE YOUR IV",
+      "content": "PUT HERE YOUR CONTENT"
+   }
+}
