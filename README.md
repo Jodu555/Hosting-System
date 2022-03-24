@@ -11,6 +11,8 @@ A Hosting-System
   - [ ] maybe write a whole documentation
 - [ ] ConfigAPI
   - [ ] Generalized config api
+- [ ] Logging-API
+  - [ ] Either write an own or search for a good one
 
 ## ERM (Database Model)
 
