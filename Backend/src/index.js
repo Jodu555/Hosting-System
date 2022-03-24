@@ -8,6 +8,12 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
+const { CommandManager } = require('@jodu555/commandmanager');
+//                                              Pass here the standard pipe you want to use
+const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
+const { initialize: initialize_commands } = require('./utils/commands');
+initialize_commands();
+
 const { Database } = require('@jodu555/mysqlapi');
 const database = Database.createDatabase(
     process.env.DB_HOST || 'localhost',
