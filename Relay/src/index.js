@@ -2,7 +2,7 @@ const Relay = require('./Relay');
 const RelayEntity = require('./RelayEntity');
 
 const { io } = require("socket.io-client");
-const Config = require('./Config');
+const Config = require('./utils/Config');
 
 const config = new Config({
     RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP | So the IP of this machine',
