@@ -73,12 +73,14 @@ class KVM {
         await wait(7000);
 
         const password = await generatePassword();
-        console.log('Step 9: Changed password to: ' + password);
+        this.debug && console.log('Step 9: Changed password to: ' + password);
         await this.changePassword(password);
         // HINT: To Change the password is used "echo 'root:PASSWORT' | chpasswd"
 
 
         this.deleteFile(); // Delete the generated network file
+
+        this.debug && console.log('VM Creation was successful!', this);
     }
 
     //Vm Handling Stuff
