@@ -4,10 +4,6 @@ const RelayEntity = require('./RelayEntity');
 const { io } = require("socket.io-client");
 const Config = require('./Config');
 
-const socket = io('http://localhost:3100');
-
-const relay = new Relay();
-
 const config = new Config({
     RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP | So the IP of this machine',
     BACKEND_IP: 'PUT HERE THE IP OF YOUR BACKEND SERVER',
@@ -16,6 +12,10 @@ const config = new Config({
         content: 'PUT HERE YOUR CONTENT'
     }
 });
+
+const socket = io(config.get().BACKEND_IP);
+
+const relay = new Relay();
 
 socket.on('connect', () => {
     socket.emit('auth', config.get().authValues);
