@@ -9,6 +9,8 @@ A Hosting-System
   - [ ] Move it to another git repo
   - [ ] Upload it to npm
   - [ ] maybe write a whole documentation
+- [ ] ConfigAPI
+  - [ ] Generalized config api
 
 ## ERM (Database Model)
 
@@ -72,9 +74,9 @@ A Hosting-System
 - [x] Configure the new Mac Address
 - [x] Start the VM up again
 - [x] Delete the local network file
-- [ ] Change the password
+- [x] Change the password
 
-## Stugg ive found to intercept and manipulate minecraft packets
+## Stuff ive found to intercept and manipulate minecraft packets
 
 - https://wiki.vg/Protocol
 - https://wiki.vg/Server_List_Ping#Examples_2
