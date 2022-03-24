@@ -27,6 +27,10 @@ class Config {
         fs.writeFileSync(this.getPath(), JSON.stringify(this.config, null, 3), 'utf-8');
     }
 
+    get() {
+        return this.config;
+    }
+
 }
 
 module.exports = Config;

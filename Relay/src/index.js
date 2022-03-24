@@ -14,7 +14,7 @@ const authValues = {
 const relay = new Relay();
 
 const config = new Config({
-    RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP',
+    RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP | So the IP of this machine',
     BACKEND_IP: 'PUT HERE THE IP OF YOUR BACKEND SERVER',
     authValues: {
         iv: 'PUT HERE YOUR IV',
