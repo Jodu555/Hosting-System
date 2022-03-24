@@ -1,8 +1,0 @@
-{
-	"RELAY_IP": "PUT HERE THE EXTERNAL RELAY IP",
-	"BACKEND_IP": "PUT HERE THE IP OF YOUR BACKEND SERVER",
-	"authValues": {
-		"iv": "3f5e2acb93a81395983af8ae86e23f5d",
-		"content": "6c50b3224e05f0123d782c422ed9c855d7b72f2d77f7095b2dc9bcceca0de41bd7"
-	}
-}
