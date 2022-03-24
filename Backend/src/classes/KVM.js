@@ -52,7 +52,7 @@ class KVM {
 
         this.debug && console.log('Step 3: Start the VM');
         newVM.status.start();
-        await wait(10000); // Wait for the Vm to spin up
+        await wait(13000); // Wait for the Vm to spin up
 
         this.debug && console.log('Step 4: Prepare File');
         this.prepareFile();
