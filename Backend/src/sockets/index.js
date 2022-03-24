@@ -11,7 +11,7 @@ const initialize = () => {
         console.log('Backend: Connection:', socket.id);
 
         const authError = (msg) => {
-            console.error(msg);
+            console.log('ERROR: ', msg);
             socket.emit('auth-error', { message: msg });
         };
 
