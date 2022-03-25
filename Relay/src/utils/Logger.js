@@ -17,10 +17,9 @@ class Logger {
     }
     levelNumToName(num) {
         return Object.values(this.levels).filter(l => l.value == num)[0].name;
-
     }
     deepLog(level, ...args) {
-        if (this.level < level)
+        if (this.level <= level)
             console.log(`${new Date().toLocaleDateString()} - ${this.levelNumToName(level)} | ${[...args].join(' ')}`);
     }
     fatal(...args) {

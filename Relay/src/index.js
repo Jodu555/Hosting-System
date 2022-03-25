@@ -6,7 +6,13 @@ const Config = require('./utils/Config');
 const Logger = require('./utils/Logger');
 
 const logger = new Logger();
-logger.fatal('123')
+logger.setLevel(-1);
+
+logger.fatal('123: fatal');
+logger.error('123: error');
+logger.warn('123: warn');
+logger.info('123: info');
+logger.debug('123: debug');
 
 // const config = new Config({
 //     RELAY_IP: 'PUT HERE THE EXTERNAL RELAY IP | So the IP of this machine',
