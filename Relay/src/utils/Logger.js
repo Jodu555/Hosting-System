@@ -15,24 +15,28 @@ class Logger {
             this.level = level :
             this.level = this.levels[level].value;
     }
+    levelNumToName(num) {
+        return Object.values(this.levels).filter(l => l.value == num)[0].name;
+
+    }
     deepLog(level, ...args) {
-        if (this.level > level)
-            console.log(`${new Date().toLocaleDateString()} - ${level} | ${[...args].join(' ')}`);
+        if (this.level < level)
+            console.log(`${new Date().toLocaleDateString()} - ${this.levelNumToName(level)} | ${[...args].join(' ')}`);
     }
-    fatal() {
-        this.deepLog(this.levels.fatal.value);
+    fatal(...args) {
+        this.deepLog(this.levels.fatal.value, ...args);
     }
-    error() {
-        this.deepLog(this.levels.error.value);
+    error(...args) {
+        this.deepLog(this.levels.error.value, ...args);
     }
-    warn() {
-        this.deepLog(this.levels.warn.value);
+    warn(...args) {
+        this.deepLog(this.levels.warn.value, ...args);
     }
-    info() {
-        this.deepLog(this.levels.info.value);
+    info(...args) {
+        this.deepLog(this.levels.info.value, ...args);
     }
-    debug() {
-        this.deepLog(this.levels.debug.value);
+    debug(...args) {
+        this.deepLog(this.levels.debug.value, ...args);
     }
 }
 
