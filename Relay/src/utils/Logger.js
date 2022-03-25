@@ -17,22 +17,22 @@ class Logger {
     }
     deepLog(level, ...args) {
         if (this.level > level)
-            console.log(``,);
+            console.log(`${new Date().toLocaleDateString()} - ${level} | ${[...args].join(' ')}`);
     }
     fatal() {
-        deepLog(this.levels.fatal.value);
+        this.deepLog(this.levels.fatal.value);
     }
     error() {
-        deepLog(this.levels.error.value);
+        this.deepLog(this.levels.error.value);
     }
     warn() {
-        deepLog(this.levels.warn.value);
+        this.deepLog(this.levels.warn.value);
     }
     info() {
-        deepLog(this.levels.info.value);
+        this.deepLog(this.levels.info.value);
     }
     debug() {
-        deepLog(this.levels.debug.value);
+        this.deepLog(this.levels.debug.value);
     }
 }
 
