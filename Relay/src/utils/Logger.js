@@ -1,5 +1,7 @@
+const fs = require('fs');
+
 class Logger {
-    constructor(file) {
+    constructor(file = null) {
         this.file = file;
         this.level = -1;
         this.levels = {
@@ -9,6 +11,7 @@ class Logger {
             info: { value: 1, name: 'Info' },
             debug: { value: 0, name: 'Debug' }
         }
+        this.logs = [];
     }
     setLevel(level) {
         Number.isInteger(level) ?
@@ -19,8 +22,14 @@ class Logger {
         return Object.values(this.levels).filter(l => l.value == num)[0].name;
     }
     deepLog(level, ...args) {
+        const line = `${new Date().toLocaleDateString()} - ${this.levelNumToName(level)} | ${[...args].join(' ')}`;
+        this.logs.push(line);
+
+        if (this.file != null)
+            fs.appendFileSync(this.file, line);
+
         if (this.level <= level)
-            console.log(`${new Date().toLocaleDateString()} - ${this.levelNumToName(level)} | ${[...args].join(' ')}`);
+            console.log(line);
     }
     fatal(...args) {
         this.deepLog(this.levels.fatal.value, ...args);
