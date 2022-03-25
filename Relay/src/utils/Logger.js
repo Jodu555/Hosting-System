@@ -26,7 +26,7 @@ class Logger {
         this.logs.push(line);
 
         if (this.file != null)
-            fs.appendFileSync(this.file, line);
+            fs.appendFileSync(this.file, line + '\n');
 
         if (this.level <= level)
             console.log(line);

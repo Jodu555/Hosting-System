@@ -5,7 +5,10 @@ const { io } = require("socket.io-client");
 const Config = require('./utils/Config');
 const Logger = require('./utils/Logger');
 
-const logger = new Logger();
+const path = require('path');
+
+
+const logger = new Logger(path.join(process.cwd(), 'latest.log'));
 logger.setLevel(-1);
 
 logger.fatal('123: fatal');
