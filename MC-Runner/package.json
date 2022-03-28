@@ -11,6 +11,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@jodu555/ezlogger": "^1.5.0",
 		"ftpd": "^0.2.16",
 		"mcservermanager": "^1.0.1"
 	}
