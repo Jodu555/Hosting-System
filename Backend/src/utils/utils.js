@@ -1,5 +1,3 @@
-const Logger = require("@jodu555/ezlogger/src/Logger");
-const KVM = require("../classes/KVM");
 const Queue = require("../classes/Queue");
 const ProxmoxApi = require("../proxmoxAPI/ProxmoxAPI");
 
@@ -10,7 +8,7 @@ let proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
 });
 let io;
 /**
- * @type {Logger}
+ * @type {import("@jodu555/ezlogger/src/Logger")}
  */
 let logger;
 
@@ -21,7 +19,7 @@ setInterval(async () => {
     const obj = queue.get();
     if (obj.action == 'CREATE-KVM') {
         /**
-         * @type {KVM}
+         * @type {import("../classes/KVM")}
          */
         const kvm = obj.kvm;
         kvm.node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
