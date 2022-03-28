@@ -26,9 +26,18 @@ database.connect();
 require('./database/tables')();
 
 const { generateUUID, generatePassword } = require('./utils/crypt');
-const { getProxmoxApi, setIo } = require('./utils/utils');
+const { getProxmoxApi, setIo, setLogger } = require('./utils/utils');
 const { initialize: socket_initialize } = require('./sockets');
 
+const logger = new Logger({
+    autoFileHandling: true,
+    level: -1
+});
+logger.createModule({
+    name: 'KVM-Creation',
+    level: -1,
+})
+setLogger(logger);
 
 const authManager = require('./utils/authManager');
 (async () => {
@@ -78,6 +87,7 @@ app.use('/purchase', authManager.authentication(), purchase);
 
 
 const { errorHandling, notFound } = require('./utils/middleware');
+const Logger = require('@jodu555/ezlogger/src/Logger');
 app.use('*', notFound);
 app.use(errorHandling);
 

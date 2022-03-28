@@ -8,6 +8,7 @@ let proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
     password: process.env.PASSWORD
 });
 let io;
+let logger;
 
 // QUEUE //
 setInterval(async () => {
@@ -27,6 +28,9 @@ setInterval(async () => {
 const setIo = (_io) => io = _io;
 const getIo = () => io;
 
+const setLogger = (_logger) => logger = _logger;
+const getLogger = () => logger;
+
 const getQueue = () => queue;
 const getProxmoxApi = async () => {
     if (!proxmoxAPI.auth)
@@ -39,4 +43,6 @@ module.exports = {
     getProxmoxApi,
     getIo,
     setIo,
+    getLogger,
+    setLogger,
 }
