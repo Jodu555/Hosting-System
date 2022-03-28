@@ -7,6 +7,7 @@ const https = require('https');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const Logger = require('@jodu555/ezlogger/src/Logger');
 
 const { CommandManager } = require('@jodu555/commandmanager');
 //                                              Pass here the standard pipe you want to use
@@ -28,15 +29,12 @@ require('./database/tables')();
 const { generateUUID, generatePassword } = require('./utils/crypt');
 const { getProxmoxApi, setIo, setLogger } = require('./utils/utils');
 const { initialize: socket_initialize } = require('./sockets');
+const { initialize: logger_initialize } = require('./utils/logger');
 
 const logger = new Logger({
     autoFileHandling: true,
     level: -1
 });
-logger.createModule({
-    name: 'KVM-Creation',
-    level: -1,
-})
 setLogger(logger);
 
 const authManager = require('./utils/authManager');
@@ -87,7 +85,6 @@ app.use('/purchase', authManager.authentication(), purchase);
 
 
 const { errorHandling, notFound } = require('./utils/middleware');
-const Logger = require('@jodu555/ezlogger/src/Logger');
 app.use('*', notFound);
 app.use(errorHandling);
 
