@@ -35,7 +35,9 @@ const logger = new Logger({
     autoFileHandling: true,
     level: -1
 });
+
 setLogger(logger);
+logger_initialize();
 
 const authManager = require('./utils/authManager');
 (async () => {
@@ -69,8 +71,8 @@ const io = new Server(server, {
 });
 
 setIo(io);
-
 socket_initialize();
+
 
 
 const { router: auth } = require('./routes/auth/index');

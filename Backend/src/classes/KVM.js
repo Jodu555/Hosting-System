@@ -39,7 +39,6 @@ class KVM {
          * @type {import('../proxmoxAPI/Node.js')}
          */
         this.node = node;
-        this.debug = true;
     }
 
     async create() {

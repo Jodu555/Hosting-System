@@ -25,15 +25,15 @@ const purchaseKVM = async (req, res, next) => {
 
 
         //TODO: IMPORTANT: Set Random Network USED
-        await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
+        // await database.get('ips').update({ UUID: randomNetwork.UUID }, { USED: 1 });
 
 
         const VM_ID = await getNextFreeVMID(
             (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE)
         );
 
-        const service_UUID = generateUUID()
         const product_UUID = generateUUID();
+        const service_UUID = generateUUID();
 
 
         await database.get('products').create({
