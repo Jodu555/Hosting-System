@@ -3,6 +3,7 @@ const path = require('path');
 const { NodeSSH } = require('node-ssh');
 const { generatePassword } = require('../utils/crypt');
 const { Database } = require('@jodu555/mysqlapi');
+const { getLogger } = require('../utils/utils');
 const database = Database.getDatabase();
 
 const defaultNetworkConfig = path.join(process.cwd(), 'work', 'network-template.txt');
@@ -43,44 +44,45 @@ class KVM {
 
     async create() {
 
-        console.log('KVM Creation: ', this);
-        this.debug && console.log('Step 1: Clone the template');
+        getLogger().get('KVM-Creation').info('KVM Creation: ', this);
+
+        getLogger().get('KVM-Creation').info('Step 1: Clone the template');
         await this._clone();
 
-        this.debug && console.log('Step 2: Configure the new vm (also disk resizment)');
+        getLogger().get('KVM-Creation').info('Step 2: Configure the new vm (also disk resizment)');
         const newVM = await this._configure();
 
-        this.debug && console.log('Step 3: Start the VM');
+        getLogger().get('KVM-Creation').info('Step 3: Start the VM');
         newVM.status.start();
         await wait(13000); // Wait for the Vm to spin up
 
-        this.debug && console.log('Step 4: Prepare File');
+        getLogger().get('KVM-Creation').info('Step 4: Prepare File');
         this.prepareFile();
 
-        this.debug && console.log('Step 5: Upload File');
+        getLogger().get('KVM-Creation').info('Step 5: Upload File');
         await this.uploadFile();
 
-        this.debug && console.log('Step 6: Configure the mac address');
+        getLogger().get('KVM-Creation').info('Step 6: Configure the mac address');
         await this._configureMac(newVM);
         await wait(3000);
 
-        this.debug && console.log('Step 7: Stop the VM');
+        getLogger().get('KVM-Creation').info('Step 7: Stop the VM');
         await newVM.status.shutdown();
         await wait(9000);
 
-        this.debug && console.log('Step 8: Start the VM');
+        getLogger().get('KVM-Creation').info('Step 8: Start the VM');
         await newVM.status.start();
         await wait(7000);
 
         const password = await generatePassword();
-        this.debug && console.log('Step 9: Changed password to: ' + password);
+        getLogger().get('KVM-Creation').info('Step 9: Changed password to: ' + password);
         await this.changePassword(password);
         // HINT: To Change the password is used "echo 'root:PASSWORT' | chpasswd"
 
 
         this.deleteFile(); // Delete the generated network file
 
-        this.debug && console.log('VM Creation was successful!', this);
+        getLogger().get('KVM-Creation').info('VM Creation was successful!', this);
     }
 
     //Vm Handling Stuff
@@ -137,7 +139,7 @@ class KVM {
         await ssh.putFiles([{ local: this.network.config, remote: '/etc/network/interfaces' }]).then(() => {
             failed = false;
         }, (error) => {
-            console.log('VM Network file upload failed:', error);
+            getLogger().get('KVM-Creation').info('VM Network file upload failed:', error);
             failed = true;
         });
         ssh.dispose();

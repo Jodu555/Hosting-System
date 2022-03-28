@@ -1,3 +1,4 @@
+const Logger = require("@jodu555/ezlogger/src/Logger");
 const KVM = require("../classes/KVM");
 const Queue = require("../classes/Queue");
 const ProxmoxApi = require("../proxmoxAPI/ProxmoxAPI");
@@ -8,6 +9,9 @@ let proxmoxAPI = new ProxmoxApi(process.env.URL + '/api2/json', {
     password: process.env.PASSWORD
 });
 let io;
+/**
+ * @type {Logger}
+ */
 let logger;
 
 // QUEUE //
