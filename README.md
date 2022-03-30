@@ -30,6 +30,8 @@ A Hosting-System
 - Types of servers:
   - PACKage Server : Pre defined servers
   - GENerated Server : User defined servers
+- Think about a way to store all proxmox dedicated servers to distribute the servers
+- Think about a way to initialize all these servers (Idea: Backups upload api stuff etc.)
 
 ## MVP - Minimum Viable Product
 
