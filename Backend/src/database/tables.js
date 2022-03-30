@@ -153,6 +153,10 @@ function createTables() {
             type: 'varchar(64)',
             null: false,
         },
+        'type': {
+            type: 'varchar(64)',
+            null: false,
+        },
         'amount': {
             type: 'float',
             null: false,
@@ -363,7 +367,7 @@ function createSchemas() {
     database.registerSchema('createCouponSchema', createCouponSchema, 'coupons');
 
 
-    database.registerSchema('purchaseKVM', purchaseKVM, 'products');
+    database.registerSchema('purchaseKVM', purchaseKVM);
 }
 
 module.exports = create;
