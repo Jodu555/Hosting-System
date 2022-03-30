@@ -32,6 +32,7 @@ A Hosting-System
   - GENerated Server : User defined servers
 - Think about a way to store all proxmox dedicated servers to distribute the servers
 - Think about a way to initialize all these servers (Idea: Backups upload api stuff etc.)
+  - The Idea is: You only need to provide an ip, username and password to deploy a new dedi server
 - Think about a Way to deploy a new server as mc runner or ts3 bot runner
 
 ## MVP - Minimum Viable Product
