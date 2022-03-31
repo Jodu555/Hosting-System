@@ -135,6 +135,7 @@ function createTables() {
 
     database.createTable('transactions', {
         options: {
+            timestamps: true,
             PK: 'UUID',
             FK: {
                 'account_UUID': 'accounts/UUID',

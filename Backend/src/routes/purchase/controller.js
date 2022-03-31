@@ -54,6 +54,8 @@ const purchaseKVM = async (req, res, next) => {
         await database.get('products').update({ UUID: product_UUID }, { service_UUID });
 
 
+        //TODO: Create here the transaction
+
         const kvm = new KVM(VM_ID, {
             ip: randomNetwork.IP,
             mac: randomNetwork.VMAC,
