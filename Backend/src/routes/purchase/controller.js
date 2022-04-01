@@ -34,6 +34,7 @@ const purchaseKVM = async (req, res, next) => {
 
         const product_UUID = generateUUID();
         const service_UUID = generateUUID();
+        const transaction_UUID = generateUUID();
 
 
         await database.get('products').create({
@@ -55,6 +56,15 @@ const purchaseKVM = async (req, res, next) => {
 
 
         //TODO: Create here the transaction
+
+        await database.get('transactions').create({
+            UUID: transaction_UUID,
+            account_UUID: req.credentials.user.UUID,
+            status: '',
+            type: '',
+            amount: 0,
+            product_UUID,
+        })
 
         const kvm = new KVM(VM_ID, {
             ip: randomNetwork.IP,
