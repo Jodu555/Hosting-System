@@ -60,9 +60,9 @@ const purchaseKVM = async (req, res, next) => {
         await database.get('transactions').create({
             UUID: transaction_UUID,
             account_UUID: req.credentials.user.UUID,
-            status: '',
-            type: '',
-            amount: 0,
+            status: 'completed',
+            type: 'minus',
+            amount: package.cost,
             product_UUID,
         })
 
