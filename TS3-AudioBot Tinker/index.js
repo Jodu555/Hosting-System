@@ -2,6 +2,8 @@ require('dotenv').config();
 const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
+//TODO: Implement the command manager
+
 const encUri = u => encodeURIComponent(u);
 
 async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
