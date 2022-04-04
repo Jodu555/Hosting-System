@@ -13,22 +13,22 @@ async function createNewBot(name, address, autoplayUrl = '', defaultChannel = nu
 
     const nameValidation = /(?![a-zA-Z0-9_-])./gm;
 
-    constSafeName = name.replace(nameValidation, '');
+    const saveName = name.replace(nameValidation, '');
 
-    await call(`/settings/copy/default/${constSafeName}`);
+    await call(`/settings/copy/default/${saveName}`);
     //Change the bot settings!
-    await call(`/settings/bot/set/${constSafeName}/connect.address/${address}`);
-    await call(`/settings/bot/set/${constSafeName}/connect.name/${name}`);
+    await call(`/settings/bot/set/${saveName}/connect.address/${address}`);
+    await call(`/settings/bot/set/${saveName}/connect.name/${name}`);
     if (defaultChannel != null)
-        await call(`/settings/bot/set/${constSafeName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
+        await call(`/settings/bot/set/${saveName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
 
-    await call(`/settings/bot/set/${constSafeName}/events.onconnect/!play ${autoplayUrl}`);
-    await call(`/settings/bot/set/${constSafeName}/connect.identity.key/`);
+    await call(`/settings/bot/set/${saveName}/events.onconnect/!play ${autoplayUrl}`);
+    await call(`/settings/bot/set/${saveName}/connect.identity.key/`);
 
     // Reloaded the settings & Bot Connection
 
-    await call(`/settings/bot/reload/${constSafeName}`);
-    await call(`/bot/connect/template/${constSafeName}`);
+    await call(`/settings/bot/reload/${saveName}`);
+    await call(`/bot/connect/template/${saveName}`);
     console.log('Finished');
 }
 
