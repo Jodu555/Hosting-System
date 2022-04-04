@@ -5,6 +5,8 @@ const API_URL = process.env.API_URL + '/api';
 //TODO: Implement the command manager
 //TODO: Commands: [reload, create]
 
+//TODO: Create a class instance wrapper
+
 const encUri = u => encodeURIComponent(u);
 
 async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
