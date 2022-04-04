@@ -2,7 +2,18 @@ require('dotenv').config();
 const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
-//TODO: Implement the command manager
+const { CommandManager, Command } = require('@jodu555/commandmanager');
+//                                              Pass here the standard pipe you want to use
+const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
+
+commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'Reloads a bot by his name!', (command, [...args], scope) => {
+    console.log(args.length);
+    if (args.length != 1) {
+        return 'Please provide the bot name you wanna reload!';
+    }
+    const name = args[1];
+    console.log('Reload Bot: ' + name);
+}));
 //TODO: Commands: [reload, create]
 
 //TODO: Create a class instance wrapper
@@ -55,9 +66,9 @@ const RadioBots = {
     // 'JamFM': ['http://stream.jam.fm/jamfm-live/mp3-192/tunein', 43]
 };
 
-Object.entries(RadioBots).forEach(([name, [stream, channel]]) => {
-    console.log(name, stream, channel);
-    createNewBot(name, '178.254.35.43', encUri(stream), channel);
-});
+// Object.entries(RadioBots).forEach(([name, [stream, channel]]) => {
+//     console.log(name, stream, channel);
+//     createNewBot(name, '178.254.35.43', encUri(stream), channel);
+// });
 
 
