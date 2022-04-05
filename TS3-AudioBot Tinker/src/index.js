@@ -28,15 +28,15 @@ async function createNewBot(name, address, autoplayUrl = '', defaultChannel = nu
 
     const saveName = name.replace(nameValidation, '');
 
-    await call(`/settings/copy/default/${saveName}`);
-    //Change the bot settings!
-    await call(`/settings/bot/set/${saveName}/connect.address/${address}`);
-    await call(`/settings/bot/set/${saveName}/connect.name/${name}`);
-    if (defaultChannel != null)
-        await call(`/settings/bot/set/${saveName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
+    // await call(`/settings/copy/default/${saveName}`);
+    // //Change the bot settings!
+    // await call(`/settings/bot/set/${saveName}/connect.address/${address}`);
+    // await call(`/settings/bot/set/${saveName}/connect.name/${name}`);
+    // if (defaultChannel != null)
+    //     await call(`/settings/bot/set/${saveName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
 
-    await call(`/settings/bot/set/${saveName}/events.onconnect/!play ${autoplayUrl}`);
-    await call(`/settings/bot/set/${saveName}/connect.identity.key/`);
+    // await call(`/settings/bot/set/${saveName}/events.onconnect/!play ${autoplayUrl}`);
+    // await call(`/settings/bot/set/${saveName}/connect.identity.key/`);
 
     // Reloaded the settings & Bot Connection
 
@@ -59,7 +59,7 @@ async function call(url = '') {
 }
 
 const RadioBots = {
-    'Jodu\'s Bot': ['https://m4a-64.jango.com/44/03/98/4403985957274169186.m4a', 9]
+    'Jodu\'s Bot': ['https://m4a-64.jango.com/44/03/98/4403985957274169186.m4a', 9],
     // 'BB-Radio': ['http://irmedia.streamabc.net/irm-bbradiolive-mp3-128-4531502', 38],
     // 'SpreeRadio': ['https://stream.spreeradio.de/spree-live/mp3-256/konsole/', 39],
     // 'RTL': ['http://stream.104.6rtl.com/rtl-live/mp3-192/radio-browser.info/', 40],
@@ -68,9 +68,9 @@ const RadioBots = {
     // 'JamFM': ['http://stream.jam.fm/jamfm-live/mp3-192/tunein', 43]
 };
 
-// Object.entries(RadioBots).forEach(([name, [stream, channel]]) => {
-//     console.log(name, stream, channel);
-//     createNewBot(name, '178.254.35.43', encUri(stream), channel);
-// });
+Object.entries(RadioBots).forEach(([name, [stream, channel]]) => {
+    console.log(name, stream, channel);
+    createNewBot(name, '178.254.35.43', encUri(stream), channel);
+});
 
 
