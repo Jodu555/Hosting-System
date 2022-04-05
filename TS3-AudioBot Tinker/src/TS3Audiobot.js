@@ -23,3 +23,5 @@ class TS3Audiobot {
 
     }
 }
+
+module.exports = TS3Audiobot;

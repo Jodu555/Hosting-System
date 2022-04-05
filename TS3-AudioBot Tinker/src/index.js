@@ -3,6 +3,7 @@ const axios = require('axios');
 const API_URL = process.env.API_URL + '/api';
 
 const { CommandManager, Command } = require('@jodu555/commandmanager');
+const TS3Audiobot = require('./TS3Audiobot');
 //                                              Pass here the standard pipe you want to use
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
@@ -17,6 +18,7 @@ commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'R
 //TODO: Commands: [reload, create]
 
 //TODO: Create a class instance wrapper
+
 
 const encUri = u => encodeURIComponent(u);
 
