@@ -31,16 +31,16 @@ async function createNewBot(name, address, autoplayUrl = '', defaultChannel = nu
     const saveName = name.replace(nameValidation, '');
 
     await call(`/settings/copy/default/${saveName}`);
-    await wait(50);
+    await wait(500);
     //Change the bot settings!
-    await call(`/settings/bot/set/${saveName}/connect.address/${address}`);
-    await call(`/settings/bot/set/${saveName}/connect.name/${name}`);
+    await call(`/settings/bot/set/${saveName}/connect.address/${encUri(address)}`);
+    await call(`/settings/bot/set/${saveName}/connect.name/${encUri(name)}`);
     if (defaultChannel != null)
         await call(`/settings/bot/set/${saveName}/connect.channel/${encUri(`/${defaultChannel}`)}`);
 
-    await call(`/settings/bot/set/${saveName}/events.onconnect/!play ${autoplayUrl}`);
+    await call(`/settings/bot/set/${saveName}/events.onconnect/!play ${encUri(autoplayUrl)}`);
     await call(`/settings/bot/set/${saveName}/connect.identity.key/`);
-    await wait(100);
+    await wait(1000);
 
     // Reloaded the settings & Bot Connection
 
@@ -79,6 +79,7 @@ const RadioBots = {
     for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
         await wait(1000);
         console.log(name, stream, channel);
+        await createNewBot(name, 'ts.jodu555.de', stream, channel);
     }
 })();
 
