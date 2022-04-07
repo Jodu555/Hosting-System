@@ -8,6 +8,7 @@ const TS3Audiobot = require('./TS3Audiobot');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
 const authenticationObject = {
+    API_URL: process.env.API_URL + '/api',
     USERNAME: process.env.API_USERNAME,
     TOKEN: process.env.API_TOKEN
 };

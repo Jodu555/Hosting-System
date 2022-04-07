@@ -2,6 +2,7 @@ class TS3Audiobot {
 
     /**
      * @param  {Object} auth
+     * @param  {String} auth.API_URL
      * @param  {String} auth.USERNAME
      * @param  {String} auth.TOKEN
      * @param  {String} name the Bots Name
@@ -27,6 +28,10 @@ class TS3Audiobot {
         await this.call(`/settings/bot/set/${this.name}/${key}/${this.encUri(value)}`);
     }
 
+    async pm(clientID) {
+
+    }
+
     async reload() {
         await call(`/settings/bot/reload/${this.name}`);
     }
@@ -38,9 +43,9 @@ class TS3Audiobot {
      * @param  {String} url='' Calls the bot with the api url
      */
     async call(url = '') {
-        url = API_URL + url;
+        url = this.auth.API_URL + url;
         try {
-            const authStr = btoa(`${process.env.API_USERNAME}:${process.env.API_TOKEN}`);
+            const authStr = btoa(`${this.auth.USERNAME}:${this.auth.TOKEN}`);
             const response = await axios.get(url, {
                 headers: { 'Authorization': `Basic ${authStr}` }
             });
