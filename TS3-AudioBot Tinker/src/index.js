@@ -12,10 +12,7 @@ const authenticationObject = {
     TOKEN: process.env.API_TOKEN
 };
 
-new TS3Audiobot(
-    authenticationObject,
-    'TEST'
-)
+
 
 commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'Reloads a bot by his name!', (command, [...args], scope) => {
     console.log(args.length);
@@ -32,7 +29,7 @@ commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'R
 const wait = (ms) => new Promise((resolve, _) => setTimeout(() => resolve(), ms));
 
 
-const encUri = u => encodeURIComponent(u);
+
 
 async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
 
@@ -85,12 +82,18 @@ const RadioBots = {
 
 
 
-// (async () => {
-//     for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
-//         await wait(1000);
-//         console.log(name, stream, channel);
-//         await createNewBot(name, 'ts.jodu555.de', stream, channel);
-//     }
-// })();
+(async () => {
+
+    const bot = new TS3Audiobot(
+        authenticationObject,
+        'TEST'
+    );
+
+    // for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
+    //     await wait(1000);
+    //     console.log(name, stream, channel);
+    //     await createNewBot(name, 'ts.jodu555.de', stream, channel);
+    // }
+})();
 
 
