@@ -28,8 +28,8 @@ class TS3Audiobot {
         await this.call(`/settings/bot/set/${this.name}/${key}/${this.encUri(value)}`);
     }
 
-    async pm(clientID) {
-
+    async pm(clientID, message) {
+        await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
     }
 
     async reload() {
@@ -39,6 +39,15 @@ class TS3Audiobot {
     async connect() {
         await call(`/bot/connect/template/${this.name}`);
     }
+
+    async callWithUse(url = '') {
+        await this.call(`/bot/use/${this.getID}/(` + url);
+    }
+
+    get getID() {
+        //TODO: Figure out how to get the client id
+    }
+
     /**
      * @param  {String} url='' Calls the bot with the api url
      */
