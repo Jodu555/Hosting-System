@@ -43,6 +43,13 @@ class TS3Audiobot {
     async callWithUse(url = '') {
         await this.call(`/bot/use/${this.getID}/(` + url);
     }
+    /**
+     * @param  {String} scope='channel' Can be 'channel' or 'server' where ever the message should be send to
+     * @param  {String} message
+     */
+    async sendMessage(scope = 'channel', message) {
+        this.callWithUse(`/pm/${scope}/${this.encUri(message)}`);
+    }
 
     get getID() {
         //TODO: Figure out how to get the client id
