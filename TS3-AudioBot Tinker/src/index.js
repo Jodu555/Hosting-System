@@ -7,6 +7,16 @@ const TS3Audiobot = require('./TS3Audiobot');
 //                                              Pass here the standard pipe you want to use
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
+const authenticationObject = {
+    USERNAME: process.env.API_USERNAME,
+    TOKEN: process.env.API_TOKEN
+};
+
+new TS3Audiobot(
+    authenticationObject,
+    'TEST'
+)
+
 commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'Reloads a bot by his name!', (command, [...args], scope) => {
     console.log(args.length);
     if (args.length != 1) {
@@ -75,12 +85,12 @@ const RadioBots = {
 
 
 
-(async () => {
-    for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
-        await wait(1000);
-        console.log(name, stream, channel);
-        await createNewBot(name, 'ts.jodu555.de', stream, channel);
-    }
-})();
+// (async () => {
+//     for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
+//         await wait(1000);
+//         console.log(name, stream, channel);
+//         await createNewBot(name, 'ts.jodu555.de', stream, channel);
+//     }
+// })();
 
 
