@@ -27,14 +27,16 @@ class TS3Audiobot {
         await this.call(`/settings/bot/set/${this.name}/${key}/${this.encUri(value)}`);
     }
 
-    reload() {
-
+    async reload() {
+        await call(`/settings/bot/reload/${this.name}`);
     }
 
     async connect() {
         await call(`/bot/connect/template/${this.name}`);
     }
-
+    /**
+     * @param  {String} url='' Calls the bot with the api url
+     */
     async call(url = '') {
         url = API_URL + url;
         try {
