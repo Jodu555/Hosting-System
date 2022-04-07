@@ -17,7 +17,7 @@ class TS3Audiobot {
      * @param  {String} from='default' from where the initial bot should be copied
      */
     async copy(from = 'default') {
-        await call(`/settings/copy/${from}/${saveName}`);
+        await call(`/settings/copy/${from}/${this.name}`);
     }
     /**
      * @param  {String} key The key you wanna change
@@ -31,8 +31,8 @@ class TS3Audiobot {
 
     }
 
-    connect() {
-
+    async connect() {
+        await call(`/bot/connect/template/${this.name}`);
     }
 
     async call(url = '') {
