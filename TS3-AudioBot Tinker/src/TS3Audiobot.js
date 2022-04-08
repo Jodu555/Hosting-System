@@ -31,6 +31,13 @@ class TS3Audiobot {
     async pm(clientID, message) {
         await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
     }
+    /**
+     * @param  {Number} channelID The Channel ID where the bot should go into
+     * @param  {String} [channelPassword=''] The optional channel password 
+     */
+    async move(channelID, channelPassword = '') {
+        await this.callWithUse(`/bot/move/${channelID}/${this.encUri(channelPassword)}`);
+    }
 
     async reload() {
         await call(`/settings/bot/reload/${this.name}`);
