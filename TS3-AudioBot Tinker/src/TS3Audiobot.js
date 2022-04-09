@@ -1,5 +1,9 @@
 const axios = require('axios');
 
+const botList = {
+    0: 'TEST'
+};
+
 class TS3Audiobot {
 
     /**
@@ -62,6 +66,21 @@ class TS3Audiobot {
 
     get getID() {
         //TODO: Figure out how to get the client id
+    }
+
+    getIDFromBotList() {
+        if (Object.values(botList).length <= 0) {
+
+        }
+        let ret;
+        Object.entries(botList).forEach(([id, name]) => {
+            if (name == this.name) {
+                ret = id;
+                return id;
+            }
+        });
+        console.log(ret);
+        return ret;
     }
 
     /**
