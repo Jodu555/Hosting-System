@@ -90,7 +90,7 @@ const RadioBots = {
         'TEST'
     );
 
-    const out = bot.getIDFromBotList();
+    const out = await bot.getIDFromBotList();
 
     console.log(out);
 

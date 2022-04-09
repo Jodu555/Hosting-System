@@ -53,7 +53,7 @@ class TS3Audiobot {
     }
 
     async callWithUse(url = '') {
-        await this.call(`/bot/use/${this.getID}/(` + url);
+        await this.call(`/bot/use/${await this.getID()}/(` + url);
     }
     /**
      * @param  {String} scope='channel' Can be 'channel' or 'server' where ever the message should be send to
@@ -65,6 +65,7 @@ class TS3Audiobot {
 
     async getID() {
         //TODO: Figure out how to get the client id
+        return await this.getIDFromBotList();
     }
 
     async loadBotList() {
@@ -87,10 +88,8 @@ class TS3Audiobot {
         Object.entries(botList).forEach(([id, { name }]) => {
             if (name == this.name) {
                 ret = id;
-                return id;
             }
         });
-        console.log(ret);
         return ret;
     }
 
