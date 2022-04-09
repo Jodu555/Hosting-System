@@ -90,6 +90,14 @@ const RadioBots = {
         'TEST'
     );
 
+    await bot.copy();
+    await bot.editConfig('connect.address', 'ts.jodu555.de');
+    await bot.editConfig('connect.name', 'API-TST');
+    await bot.editConfig('connect.identity.key', '');
+
+    await bot.reload();
+    await bot.connect();
+
     // for (const [name, [stream, channel]] of Object.entries(RadioBots)) {
     //     await wait(1000);
     //     console.log(name, stream, channel);

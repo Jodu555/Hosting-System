@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 class TS3Audiobot {
 
     /**
@@ -18,7 +20,7 @@ class TS3Audiobot {
      * @param  {String} from='default' from where the initial bot should be copied
      */
     async copy(from = 'default') {
-        await call(`/settings/copy/${from}/${this.name}`);
+        await this.call(`/settings/copy/${from}/${this.name}`);
     }
     /**
      * @param  {String} key The key you wanna change
@@ -40,11 +42,11 @@ class TS3Audiobot {
     }
 
     async reload() {
-        await call(`/settings/bot/reload/${this.name}`);
+        await this.call(`/settings/bot/reload/${this.name}`);
     }
 
     async connect() {
-        await call(`/bot/connect/template/${this.name}`);
+        await this.call(`/bot/connect/template/${this.name}`);
     }
 
     async callWithUse(url = '') {
@@ -76,7 +78,7 @@ class TS3Audiobot {
             return { status: response.status, data: response.data, error: false };
         } catch (error) {
             console.error('Got Call error', url, error);
-            return { status: response.status, data: response.data, error: true, url, error_data: error };
+            return { status: error.response.status || 400, data: error.response.data, error: true, url, error_data: error };
         }
     }
 }
