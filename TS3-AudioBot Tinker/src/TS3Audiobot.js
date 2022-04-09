@@ -1,7 +1,6 @@
 const axios = require('axios');
 
-const botList = {
-    0: 'TEST'
+let botList = {
 };
 
 class TS3Audiobot {
@@ -64,16 +63,28 @@ class TS3Audiobot {
         this.callWithUse(`/pm/${scope}/${this.encUri(message)}`);
     }
 
-    get getID() {
+    async getID() {
         //TODO: Figure out how to get the client id
     }
 
-    getIDFromBotList() {
-        if (Object.values(botList).length <= 0) {
+    async loadBotList() {
+        botList = {};
+        const json = await this.call('/bot/list');
+        json.data.forEach(bot => {
+            botList[bot.Id] = {
+                ID: bot.Id,
+                name: bot.Name,
+                server: bot.Server,
+                status: bot.Status,
+            }
+        });
+    }
 
-        }
+    async getIDFromBotList() {
+        if (Object.values(botList).length <= 0)
+            await this.loadBotList();
         let ret;
-        Object.entries(botList).forEach(([id, name]) => {
+        Object.entries(botList).forEach(([id, { name }]) => {
             if (name == this.name) {
                 ret = id;
                 return id;
