@@ -30,7 +30,7 @@ commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'R
 const wait = (ms) => new Promise((resolve, _) => setTimeout(() => resolve(), ms));
 
 
-
+//TODO: Figure out how to implement and add the rights system
 
 async function createNewBot(name, address, autoplayUrl = '', defaultChannel = null) {
 
