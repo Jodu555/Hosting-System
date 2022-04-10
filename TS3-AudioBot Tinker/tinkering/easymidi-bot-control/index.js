@@ -29,9 +29,24 @@ inputs.forEach(name => {
     input.on('cc', (msg) => {
         // console.log(name, 'cc', msg);
         const value = Math.round(map(msg.value, 0, 127, 0, 100));
-        bot.pm(301, value)
+        changeVolume(value);
     });
 });
+
+const changeVolume = debounce((value) => {
+    bot.changeVolume(value);
+}, 500);
+
+function debounce(cb, delay = 1000) {
+    let timeout
+
+    return (...args) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            cb(...args)
+        }, delay)
+    }
+}
 
 
 
