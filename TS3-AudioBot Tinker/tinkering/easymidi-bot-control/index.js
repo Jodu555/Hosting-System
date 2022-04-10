@@ -35,7 +35,7 @@ inputs.forEach(name => {
 
 const changeVolume = debounce((value) => {
     bot.changeVolume(value);
-}, 500);
+}, 300);
 
 function debounce(cb, delay = 1000) {
     let timeout

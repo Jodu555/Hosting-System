@@ -36,6 +36,11 @@ class TS3Audiobot {
     async pm(clientID, message) {
         await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
     }
+
+    async changeVolume(volume = 10) {
+        await this.callWithUse(`/volume/${volume}`);
+    }
+
     /**
      * @param  {Number} channelID The Channel ID where the bot should go into
      * @param  {String} [channelPassword=''] The optional channel password 
