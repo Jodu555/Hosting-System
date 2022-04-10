@@ -42,7 +42,7 @@ class TS3Audiobot {
     }
 
     async play(url = '') {
-        this.callWithUse(`/play/${this.encUri(url)}`);
+        await this.callWithUse(`/play/${this.encUri(url)}`);
     }
 
     /**

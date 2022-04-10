@@ -28,7 +28,7 @@ const controle = (msg) => {
         }
 
         if (msg.note == 42) {
-            bot.callWithUse('/play');
+            bot.play();
         }
     }
 
