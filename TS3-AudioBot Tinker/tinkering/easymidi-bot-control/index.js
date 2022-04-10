@@ -21,20 +21,29 @@ const bot = new TS3Audiobot(
 
 console.log(bot);
 
+const controle = (msg) => {
+    if ((msg._type == 'cc' || msg._type == 'pitch') && (msg.controller == 23 || msg.controller == 49 || msg.controller == undefined)) {
+        let top = msg.controller == undefined ? 16383 : 127;
+        // if (msg.controller == undefined) {
+        //     console.log(msg);
+        //     const value = Math.round(map(msg.value, 0, 16383, 0, 100));
+        // } else {
+
+        // }
+        const value = Math.round(map(msg.value, 0, top, 0, 100));
+        // console.log(value);
+        changeVolume(value);
+
+    } else {
+        console.log(msg._type, msg);
+    }
+}
+
 inputs.forEach(name => {
     const input = new easymidi.Input(name);
-    input.on('noteon', (msg) => {
-        console.log(name, 'noteon', msg);
-    });
-    input.on('cc', (msg) => {
-
-        if (msg.controller == 23 || msg.controller == 49) {
-            const value = Math.round(map(msg.value, 0, 127, 0, 100));
-            changeVolume(value);
-        } else {
-            console.log(name, 'cc', msg);
-        }
-    });
+    input.on('noteon', controle);
+    input.on('pitch', controle)
+    input.on('cc', controle);
 });
 
 const changeVolume = throttle((value) => {
