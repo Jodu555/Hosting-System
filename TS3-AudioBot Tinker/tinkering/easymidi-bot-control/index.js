@@ -27,15 +27,20 @@ inputs.forEach(name => {
         console.log(name, 'noteon', msg);
     });
     input.on('cc', (msg) => {
-        // console.log(name, 'cc', msg);
-        const value = Math.round(map(msg.value, 0, 127, 0, 100));
-        changeVolume(value);
+
+        if (msg.controller == 23 || msg.controller == 49) {
+            const value = Math.round(map(msg.value, 0, 127, 0, 100));
+            changeVolume(value);
+        } else {
+            console.log(name, 'cc', msg);
+        }
     });
 });
 
-const changeVolume = debounce((value) => {
+const changeVolume = throttle((value) => {
+    console.log('Want to change value!');
     bot.changeVolume(value);
-}, 300);
+}, 50);
 
 function debounce(cb, delay = 1000) {
     let timeout
@@ -45,6 +50,32 @@ function debounce(cb, delay = 1000) {
         timeout = setTimeout(() => {
             cb(...args)
         }, delay)
+    }
+}
+
+function throttle(cb, delay = 1000) {
+    let shouldWait = false
+    let waitingArgs
+    const timeoutFunc = () => {
+        if (waitingArgs == null) {
+            shouldWait = false
+        } else {
+            cb(...waitingArgs)
+            waitingArgs = null
+            setTimeout(timeoutFunc, delay)
+        }
+    }
+
+    return (...args) => {
+        if (shouldWait) {
+            waitingArgs = args
+            return
+        }
+
+        cb(...args)
+        shouldWait = true
+
+        setTimeout(timeoutFunc, delay)
     }
 }
 
