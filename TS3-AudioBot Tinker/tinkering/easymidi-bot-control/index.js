@@ -22,6 +22,16 @@ const bot = new TS3Audiobot(
 console.log(bot);
 
 const controle = (msg) => {
+    if (msg._type == 'noteon' && msg.channel == 9) {
+        if (msg.note == 46) {
+            bot.callWithUse('/pause');
+        }
+
+        if (msg.note == 42) {
+            bot.callWithUse('/play');
+        }
+    }
+
     if ((msg._type == 'cc' || msg._type == 'pitch') && (msg.controller == 23 || msg.controller == 49 || msg.controller == undefined)) {
         let top = msg.controller == undefined ? 16383 : 127;
         // if (msg.controller == undefined) {
