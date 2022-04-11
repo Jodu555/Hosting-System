@@ -49,6 +49,10 @@ class TS3Audiobot {
         await this.callWithUse(`/play/${this.encUri(url)}`);
     }
 
+    async pause() {
+        await this.callWithUse('/pause')
+    }
+
     /**
      * @param  {Number} channelID The Channel ID where the bot should go into
      * @param  {String} [channelPassword=''] The optional channel password 
