@@ -5,6 +5,8 @@ let botList = {
 
 class TS3Audiobot {
 
+    //TODO: Think about maybe outsourcing the player functions to a player class
+
     /**
      * @param  {Object} auth
      * @param  {String} auth.API_URL
