@@ -90,11 +90,13 @@ const RadioBots = {
         'TEST'
     );
 
+    console.log(await bot.getSong());
+
     // const out = await bot.getIDFromBotList();
 
     // console.log(out);
 
-    bot.move(32);
+    // bot.move(32);
 
     // await bot.copy();
     // await bot.editConfig('connect.address', 'ts.jodu555.de');

@@ -127,7 +127,7 @@ class TS3Audiobot {
             const response = await axios.get(url, {
                 headers: { 'Authorization': `Basic ${authStr}` }
             });
-            console.log({ status: response.status, data: response.data });
+            // console.log({ status: response.status, data: response.data });
             return { status: response.status, data: response.data, error: false };
         } catch (error) {
             console.error('Got Call error', url, error);
