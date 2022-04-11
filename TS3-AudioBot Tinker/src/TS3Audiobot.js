@@ -23,23 +23,9 @@ class TS3Audiobot {
 
         this.encUri = u => encodeURIComponent(u);
     }
-    /**
-     * @param  {String} from='default' from where the initial bot should be copied
-     */
-    async copy(from = 'default') {
-        await this.call(`/settings/copy/${from}/${this.name}`);
-    }
-    /**
-     * @param  {String} key The key you wanna change
-     * @param  {String} value The Value you want the key to change to
-     */
-    async editConfig(key, value) {
-        await this.call(`/settings/bot/set/${this.name}/${key}/${this.encUri(value)}`);
-    }
 
-    async pm(clientID, message) {
-        await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
-    }
+
+
 
     async changeVolume(volume = 10) {
         await this.callWithUse(`/volume/${volume}`);
@@ -59,6 +45,24 @@ class TS3Audiobot {
     }
 
     /**
+     * @param  {String} from='default' from where the initial bot should be copied
+     */
+    async copy(from = 'default') {
+        await this.call(`/settings/copy/${from}/${this.name}`);
+    }
+    /**
+     * @param  {String} key The key you wanna change
+     * @param  {String} value The Value you want the key to change to
+     */
+    async editConfig(key, value) {
+        await this.call(`/settings/bot/set/${this.name}/${key}/${this.encUri(value)}`);
+    }
+
+    async reload() {
+        await this.call(`/settings/bot/reload/${this.name}`);
+    }
+
+    /**
      * @param  {Number} channelID The Channel ID where the bot should go into
      * @param  {String} [channelPassword=''] The optional channel password 
      */
@@ -66,16 +70,12 @@ class TS3Audiobot {
         await this.callWithUse(`/bot/move/${channelID}/${this.encUri(channelPassword)}`);
     }
 
-    async reload() {
-        await this.call(`/settings/bot/reload/${this.name}`);
-    }
-
     async connect() {
         await this.call(`/bot/connect/template/${this.name}`);
     }
 
-    async callWithUse(url = '') {
-        return await this.call(`/bot/use/${await this.getID()}/(` + url);
+    async pm(clientID, message) {
+        await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
     }
     /**
      * @param  {String} scope='channel' Can be 'channel' or 'server' where ever the message should be send to
@@ -86,7 +86,6 @@ class TS3Audiobot {
     }
 
     async getID() {
-        //TODO: Figure out how to get the client id
         return await this.getIDFromBotList();
     }
 
@@ -102,7 +101,6 @@ class TS3Audiobot {
             }
         });
     }
-
     async getIDFromBotList() {
         if (Object.values(botList).length <= 0)
             await this.loadBotList();
@@ -113,6 +111,10 @@ class TS3Audiobot {
             }
         });
         return ret;
+    }
+
+    async callWithUse(url = '') {
+        return await this.call(`/bot/use/${await this.getID()}/(` + url);
     }
 
     /**
