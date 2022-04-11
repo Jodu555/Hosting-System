@@ -30,6 +30,13 @@ const controle = (msg) => {
         if (msg.note == 42) {
             bot.play();
         }
+
+        if (msg.note == 41) {
+            bot.callWithUse('/seek/11');
+        }
+        if (msg.note == 49) {
+            bot.callWithUse('/seek/95');
+        }
     }
 
     if ((msg._type == 'cc' || msg._type == 'pitch') && (msg.controller == 23 || msg.controller == 49 || msg.controller == undefined)) {
