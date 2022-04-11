@@ -7,6 +7,8 @@ class TS3Audiobot {
 
     //TODO: Think about maybe outsourcing the player functions to a player class
 
+    //TODO: Implementation: seek / getSongInfo / skip 
+
     /**
      * @param  {Object} auth
      * @param  {String} auth.API_URL
