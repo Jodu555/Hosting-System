@@ -7,7 +7,7 @@ class TS3Audiobot {
 
     //TODO: Think about maybe outsourcing the player functions to a player class
 
-    //TODO: Implementation: seek / getSongInfo / skip 
+    //TODO: Implementation: seek / skip 
 
     /**
      * @param  {Object} auth
@@ -53,6 +53,11 @@ class TS3Audiobot {
         await this.callWithUse('/pause')
     }
 
+    async getSong() {
+        const response = await this.callWithUse('/song');
+        return response.data;
+    }
+
     /**
      * @param  {Number} channelID The Channel ID where the bot should go into
      * @param  {String} [channelPassword=''] The optional channel password 
@@ -70,7 +75,7 @@ class TS3Audiobot {
     }
 
     async callWithUse(url = '') {
-        await this.call(`/bot/use/${await this.getID()}/(` + url);
+        return await this.call(`/bot/use/${await this.getID()}/(` + url);
     }
     /**
      * @param  {String} scope='channel' Can be 'channel' or 'server' where ever the message should be send to
