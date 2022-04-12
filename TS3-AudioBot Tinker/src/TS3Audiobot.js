@@ -39,6 +39,10 @@ class TS3Audiobot {
         await this.callWithUse('/pause')
     }
 
+    async seek(second = 0) {
+        await this.callWithUse(`/seek/${second}`);
+    }
+
     async getSong() {
         const response = await this.callWithUse('/song');
         return response.data;
