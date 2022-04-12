@@ -7,7 +7,7 @@ class TS3Audiobot {
 
     //TODO: Think about maybe outsourcing the player functions to a player class
 
-    //TODO: Implementation: seek / skip 
+    //TODO: Implementation: skip 
 
     /**
      * @param  {Object} auth
