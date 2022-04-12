@@ -26,7 +26,9 @@ class TS3Audiobot {
 
 
 
-
+    /**
+     * @param  {Number} volume=10 The volume you want the bot to be set to
+     */
     async changeVolume(volume = 10) {
         await this.callWithUse(`/volume/${volume}`);
     }
@@ -38,7 +40,9 @@ class TS3Audiobot {
     async pause() {
         await this.callWithUse('/pause')
     }
-
+    /**
+     * @param  {Number} second=0 The Second where you want the song to be played at
+     */
     async seek(second = 0) {
         await this.callWithUse(`/seek/${second}`);
     }
