@@ -9,7 +9,7 @@ class TS3Audiobot {
 
     //TODO: Implementation: skip 
 
-    //TODO: Maybe implement some type of setup
+    //TODO: Maybe implement some type of setup to auto generate address + name + autoplay
 
     /**
      * @param  {Object} auth
