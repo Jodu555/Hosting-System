@@ -9,6 +9,8 @@ class TS3Audiobot {
 
     //TODO: Implementation: skip 
 
+    //TODO: Maybe implement some type of setup
+
     /**
      * @param  {Object} auth
      * @param  {String} auth.API_URL
