@@ -25,8 +25,6 @@ commandManager.registerCommand(new Command(['reload', 'rl'], 'reload <name>', 'R
 }));
 //TODO: Commands: [reload, create]
 
-//TODO: Create a class instance wrapper
-
 const wait = (ms) => new Promise((resolve, _) => setTimeout(() => resolve(), ms));
 
 
@@ -90,7 +88,10 @@ const RadioBots = {
         'TEST'
     );
 
-    console.log(await bot.getSong());
+    console.log(await bot.getPlayer().getSong());
+    bot.getPlayer().play();
+
+    // console.log(await bot.getSong());
 
     // const out = await bot.getIDFromBotList();
 

@@ -27,6 +27,10 @@ class TS3Audiobot {
         this.player = new TS3AudiobotPlayer(this);
     }
 
+
+    /**
+     * @returns {TS3AudiobotPlayer}
+     */
     getPlayer() {
         return this.player;
     }
@@ -87,6 +91,7 @@ class TS3Audiobot {
                 status: bot.Status,
             }
         });
+        console.log(botList);
     }
     async getIDFromBotList() {
         if (Object.values(botList).length <= 0)
@@ -99,7 +104,6 @@ class TS3Audiobot {
         });
         return ret;
     }
-
     async callWithUse(url = '') {
         return await this.call(`/bot/use/${await this.getID()}/(` + url);
     }
@@ -132,25 +136,25 @@ class TS3AudiobotPlayer {
      * @param  {Number} volume=10 The volume you want the bot to be set to
      */
     async changeVolume(volume = 10) {
-        await this.callWithUse(`/volume/${volume}`);
+        await this.parent.callWithUse(`/volume/${volume}`);
     }
 
     async play(url = '') {
-        await this.callWithUse(`/play/${this.encUri(url)}`);
+        await this.parent.callWithUse(`/play/${this.parent.encUri(url)}`);
     }
 
     async pause() {
-        await this.callWithUse('/pause')
+        await this.parent.callWithUse('/pause')
     }
     /**
      * @param  {Number} second=0 The Second where you want the song to be played at
      */
     async seek(second = 0) {
-        await this.callWithUse(`/seek/${second}`);
+        await this.parent.callWithUse(`/seek/${second}`);
     }
 
     async getSong() {
-        const response = await this.callWithUse('/song');
+        const response = await this.parent.callWithUse('/song');
         return response.data;
     }
 }
