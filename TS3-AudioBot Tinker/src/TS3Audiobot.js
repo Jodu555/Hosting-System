@@ -24,34 +24,11 @@ class TS3Audiobot {
         this.name = name.replace(nameValidation, '');
 
         this.encUri = u => encodeURIComponent(u);
+        this.player = new TS3AudiobotPlayer(this);
     }
 
-
-
-    /**
-     * @param  {Number} volume=10 The volume you want the bot to be set to
-     */
-    async changeVolume(volume = 10) {
-        await this.callWithUse(`/volume/${volume}`);
-    }
-
-    async play(url = '') {
-        await this.callWithUse(`/play/${this.encUri(url)}`);
-    }
-
-    async pause() {
-        await this.callWithUse('/pause')
-    }
-    /**
-     * @param  {Number} second=0 The Second where you want the song to be played at
-     */
-    async seek(second = 0) {
-        await this.callWithUse(`/seek/${second}`);
-    }
-
-    async getSong() {
-        const response = await this.callWithUse('/song');
-        return response.data;
+    getPlayer() {
+        return this.player;
     }
 
     /**
@@ -143,6 +120,38 @@ class TS3Audiobot {
             console.error('Got Call error', url, error);
             return { status: error.response.status || 400, data: error.response.data, error: true, url, error_data: error };
         }
+    }
+}
+
+class TS3AudiobotPlayer {
+    constructor(parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * @param  {Number} volume=10 The volume you want the bot to be set to
+     */
+    async changeVolume(volume = 10) {
+        await this.callWithUse(`/volume/${volume}`);
+    }
+
+    async play(url = '') {
+        await this.callWithUse(`/play/${this.encUri(url)}`);
+    }
+
+    async pause() {
+        await this.callWithUse('/pause')
+    }
+    /**
+     * @param  {Number} second=0 The Second where you want the song to be played at
+     */
+    async seek(second = 0) {
+        await this.callWithUse(`/seek/${second}`);
+    }
+
+    async getSong() {
+        const response = await this.callWithUse('/song');
+        return response.data;
     }
 }
 
