@@ -89,7 +89,7 @@ const RadioBots = {
     );
 
     console.log(await bot.getPlayer().getSong());
-    bot.getPlayer().play();
+    // bot.getPlayer().play();
 
     // console.log(await bot.getSong());
 

@@ -65,6 +65,10 @@ class TS3Audiobot {
         await this.call(`/bot/connect/template/${this.name}`);
     }
 
+    async disconnect() {
+        this.callWithUse('/bot/disconnect');
+    }
+
     async pm(clientID, message) {
         await this.callWithUse(`/pm/user/${clientID}/${this.encUri(message)}`);
     }
