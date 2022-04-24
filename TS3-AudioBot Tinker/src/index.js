@@ -88,14 +88,10 @@ const RadioBots = {
         'TEST'
     );
 
-    console.log(await bot.getPlayer().getSong());
-    // bot.getPlayer().play();
+    // console.log(await bot.getPlayer().getSong());
+    bot.getPlayer().play('https://www.youtube.com/watch?v=cV5LCM8_9FI');
 
     // console.log(await bot.getSong());
-
-    // const out = await bot.getIDFromBotList();
-
-    // console.log(out);
 
     // bot.move(32);
 

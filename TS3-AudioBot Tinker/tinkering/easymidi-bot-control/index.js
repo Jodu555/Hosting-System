@@ -24,13 +24,13 @@ console.log(bot);
 const controle = (msg) => {
     if (msg._type == 'noteon' && msg.channel == 9) {
         if (msg.note == 46)
-            bot.pause();
+            bot.getPlayer().pause();
         if (msg.note == 42)
-            bot.play();
+            bot.getPlayer().play();
         if (msg.note == 41)
-            bot.seek(11);
+            bot.getPlayer().seek(11);
         if (msg.note == 49)
-            bot.seek(95);
+            bot.getPlayer().seek(95);
     }
 
     if ((msg._type == 'cc' || msg._type == 'pitch') && (msg.controller == 23 || msg.controller == 49 || msg.controller == undefined)) {
@@ -59,7 +59,7 @@ inputs.forEach(name => {
 
 const changeVolume = throttle((value) => {
     console.log('Want to change value!');
-    bot.changeVolume(value);
+    bot.getPlayer().changeVolume(value);
 }, 50);
 
 function debounce(cb, delay = 1000) {
