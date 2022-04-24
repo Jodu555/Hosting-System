@@ -30,8 +30,7 @@ const controle = async (msg) => {
         if (msg.note == 41)
             bot.getPlayer().seek(11);
         if (msg.note == 49) {
-            const song = await bot.getPlayer().getSong();
-            bot.getPlayer().seek(song.Position + 5);
+            bot.getPlayer().skip(5);
         }
 
     }

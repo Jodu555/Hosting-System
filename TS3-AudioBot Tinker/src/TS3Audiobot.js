@@ -5,8 +5,6 @@ let botList = {
 
 class TS3Audiobot {
 
-    //TODO: Implementation: skip 
-
     //TODO: Maybe implement some type of setup to auto generate address + name + autoplay
 
     /**
