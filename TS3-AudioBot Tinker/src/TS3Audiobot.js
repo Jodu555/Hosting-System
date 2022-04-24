@@ -95,7 +95,7 @@ class TS3Audiobot {
                 status: bot.Status,
             }
         });
-        console.log(botList);
+        // console.log(botList);
     }
     async getIDFromBotList() {
         if (Object.values(botList).length <= 0)
@@ -125,7 +125,7 @@ class TS3Audiobot {
             // console.log({ status: response.status, data: response.data });
             return { status: response.status, data: response.data, error: false };
         } catch (error) {
-            console.error('Got Call error', url, error);
+            console.error('Got Call error', url);
             return { status: error.response.status || 400, data: error.response.data, error: true, url, error_data: error };
         }
     }
