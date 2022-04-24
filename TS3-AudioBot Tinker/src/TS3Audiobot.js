@@ -156,6 +156,13 @@ class TS3AudiobotPlayer {
     async seek(second = 0) {
         await this.parent.callWithUse(`/seek/${second}`);
     }
+    /**
+     * @param  {Number} seconds=0 The Second you want the song to be skipped
+     */
+    async skip(seconds = 0) {
+        const song = await this.getSong();
+        this.seek(song.Position + seconds);
+    }
 
     /**
      * @typedef {Object} SongInfo
