@@ -21,7 +21,7 @@ const bot = new TS3Audiobot(
 
 console.log(bot);
 
-const controle = (msg) => {
+const controle = async (msg) => {
     if (msg._type == 'noteon' && msg.channel == 9) {
         if (msg.note == 46)
             bot.getPlayer().pause();
@@ -29,8 +29,12 @@ const controle = (msg) => {
             bot.getPlayer().play();
         if (msg.note == 41)
             bot.getPlayer().seek(11);
-        if (msg.note == 49)
-            bot.getPlayer().seek(95);
+        if (msg.note == 49) {
+            const song = await bot.getPlayer().getSong();
+            console.log(song);
+            bot.getPlayer().seek(song.Position + 5);
+        }
+
     }
 
     if ((msg._type == 'cc' || msg._type == 'pitch') && (msg.controller == 23 || msg.controller == 49 || msg.controller == undefined)) {
