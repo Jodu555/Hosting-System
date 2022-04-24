@@ -129,6 +129,8 @@ class TS3Audiobot {
     }
 }
 
+
+
 class TS3AudiobotPlayer {
     constructor(parent) {
         this.parent = parent;
@@ -155,6 +157,17 @@ class TS3AudiobotPlayer {
         await this.parent.callWithUse(`/seek/${second}`);
     }
 
+    /**
+     * @typedef {Object} SongInfo
+     * @property {Number} Position The Current playback song position
+     * @property {Number} Length The Full song Length
+     * @property {Boolean} Paused The information if the track is currently paused
+     * @property {String} AudioType Which AudioType the song has
+     */
+
+    /**
+     * @returns {SongInfo}
+     */
     async getSong() {
         const response = await this.parent.callWithUse('/song');
         return response.data;
