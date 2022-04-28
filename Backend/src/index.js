@@ -79,11 +79,13 @@ const { router: auth } = require('./routes/auth/index');
 const { router: packages } = require('./routes/packages/index');
 const { router: transactions } = require('./routes/transactions/index');
 const { router: purchase } = require('./routes/purchase/index');
+const { router: manage } = require('./routes/manage/index');
 
 app.use('/auth', auth);
 app.use('/packages', packages);
 app.use('/transactions', authManager.authentication(), transactions);
 app.use('/purchase', authManager.authentication(), purchase);
+app.use('/purchase', authManager.authentication(), manage);
 
 
 const { errorHandling, notFound } = require('./utils/middleware');
