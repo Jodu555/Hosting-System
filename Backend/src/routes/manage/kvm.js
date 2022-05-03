@@ -3,6 +3,7 @@ const router = express.Router();
 
 
 //TODO: Think maybe of other routes or also to implement these routes into the socket handling
+//TODO: Maybe implement some type of backup routes
 
 router.get('/start');  //To Start the KVM
 router.get('/stop');  //To Stop the KVM
