@@ -1,6 +1,8 @@
 const express = require('express');
+const { Database } = require('@jodu555/mysqlapi');
 const { getProxmoxApi } = require('../../utils/utils');
 const router = express.Router();
+const database = Database.getDatabase();
 
 
 //TODO: Think maybe of other routes or also to implement these routes into the socket handling
@@ -9,6 +11,8 @@ const router = express.Router();
 router.get('/start', async (req, res, next) => { //To Start the KVM
     const UUID = req.params.ID;
     const node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
+
+    const VM_ID = (await database.get('kvm_package_services').getOne({ UUID })).pve_ID;
 
     const vm = node.getVM(VM_ID);
 });
