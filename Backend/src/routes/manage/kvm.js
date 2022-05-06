@@ -10,6 +10,7 @@ const database = Database.getDatabase();
 
 router.get('/start', async (req, res, next) => { //To Start the KVM
     const { node, service, product } = req.credentials.kvm;
+    node.getVM(service.pve_ID).status.start();
 });
 router.get('/stop');  //To Stop the KVM
 router.get('/restart'); // To restart the KVM
