@@ -9,12 +9,7 @@ const database = Database.getDatabase();
 //TODO: Maybe implement some type of backup routes
 
 router.get('/start', async (req, res, next) => { //To Start the KVM
-    const UUID = req.params.ID;
-    const node = (await getProxmoxApi()).getNode(process.env.DEFAULT_NODE);
-
-    const VM_ID = (await database.get('kvm_package_services').getOne({ UUID })).pve_ID;
-
-    const vm = node.getVM(VM_ID);
+    const { node, service, product } = req.credentials.kvm;
 });
 router.get('/stop');  //To Stop the KVM
 router.get('/restart'); // To restart the KVM

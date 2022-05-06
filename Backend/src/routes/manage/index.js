@@ -22,7 +22,7 @@ router.use('/kvm/:ID', async (req, res, next) => {
 
     req.credentials.kvm = {
         node,
-        service: kvm_service,
+        service,
         product
     };
 }, kvm_controller); // Manage all the KVM Stuff
